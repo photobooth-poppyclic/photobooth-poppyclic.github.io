@@ -129,7 +129,7 @@ ul{margin:0;padding:0;list-style:none;}
 /* Hero */
 .section_hero{position:relative;overflow:hidden;}
 .hero_layout{
-  display:grid;grid-template-columns:1.15fr .85fr;gap:5rem;align-items:center;
+  display:grid;grid-template-columns:2.15fr .85fr;gap:5rem;align-items:center;
   padding-top:6rem;padding-bottom:6rem;
 }
 .hero_title{margin-top:1.4rem;margin-bottom:1.6rem;}
