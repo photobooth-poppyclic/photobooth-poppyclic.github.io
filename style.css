@@ -204,7 +204,7 @@ ul{margin:0;padding:0;list-style:none;}
 .section_header .heading-style-h2{margin-top:1.2rem;margin-bottom:1rem;}
 
 /* Occasions */
-.occasions_list{grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+.occasions_list{grid-template-columns:repeat(2,1fr);gap:1px;}
 .occasions_item{position:relative;background:var(--paper);padding:2.75rem 2.25rem;overflow:hidden;transition:background .4s var(--ease);}
 .occasions_item::before{
   content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--poppy);
