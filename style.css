@@ -2079,46 +2079,241 @@ ul{margin:0;padding:0;list-style:none;}
   }
 
 }
-/* PRIX VISIBLE DÈS L'ARRIVÉE */
 
-.hero_price{
+/* ============================================================
+   HERO PREMIUM FINAL — 159 € + pictogrammes
+   Ajout sur la base du CSS personnel existant.
+   ============================================================ */
+
+.hero_price-premium{
+  display:grid;
+  grid-template-columns:auto auto minmax(11rem,1fr);
+  align-items:center;
+  column-gap:1rem;
+  width:min(100%,39rem);
+  margin-top:1.25rem;
+  margin-bottom:.15rem;
+  padding:.9rem 0;
+  border-top:1px solid rgba(184,131,78,.58);
+  border-bottom:1px solid rgba(184,131,78,.58);
+}
+
+.hero_price-from{
+  color:var(--ink);
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.hero_price-amount{
   display:flex;
-  align-items:baseline;
-  gap:.55rem;
-
-  width:max-content;
-
-  margin-top:1.2rem;
-  padding:.6rem 1rem;
-
-  background:rgba(196,54,44,.08);
-  border-left:2px solid var(--poppy);
-}
-
-.hero_price span{
-  color:var(--ink-60);
-  font-size:.82rem;
-  font-weight:500;
-}
-
-.hero_price strong{
+  align-items:flex-start;
   color:var(--poppy);
-
-  font-family:var(--font-display);
-  font-size:1.8rem;
-  font-weight:500;
   line-height:1;
 }
 
-@media(max-width:640px){
-
-  .hero_price{
-    margin-top:1rem;
-    padding:.55rem .8rem;
-  }
-
-  .hero_price strong{
-    font-size:1.6rem;
-  }
-
+.hero_price-amount strong{
+  font-family:var(--font-display);
+  font-size:clamp(3.8rem,5vw,5.25rem);
+  font-weight:500;
+  line-height:.82;
+  letter-spacing:-.055em;
 }
+
+.hero_price-amount > span{
+  margin:.12rem 0 0 .15rem;
+  font-family:var(--font-display);
+  font-size:1.75rem;
+  line-height:1;
+}
+
+.hero_price-side{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:.2rem;
+  min-height:3.5rem;
+  padding-left:1.2rem;
+  border-left:1px solid rgba(184,131,78,.5);
+}
+
+.hero_price-side strong{
+  color:var(--ink);
+  font-size:.71rem;
+  font-weight:600;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.hero_price-side span{
+  color:var(--ink-60);
+  font-family:var(--font-display);
+  font-size:.9rem;
+  font-style:italic;
+  line-height:1.3;
+}
+
+.hero_price-premium + .hero_title{
+  margin-top:1.45rem;
+}
+
+/* Les trois bénéfices visuels sous les boutons */
+.hero_proof.hero_proof-premium{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;
+  margin-top:2.15rem;
+  padding-top:1.55rem;
+  border-top:1px solid var(--line);
+}
+
+.hero_proof-premium .hero_proof-item{
+  display:grid;
+  grid-template-columns:3.75rem minmax(0,1fr);
+  gap:.85rem;
+  align-items:start;
+  max-width:none;
+  min-width:0;
+  padding-right:1.15rem;
+}
+
+.hero_proof-premium .hero_proof-item + .hero_proof-item{
+  padding-left:1.15rem;
+  border-left:1px solid var(--line);
+}
+
+.hero_proof-icon{
+  display:grid;
+  place-items:center;
+  width:3.35rem;
+  height:3.35rem;
+  color:var(--wood);
+  border:1px solid rgba(184,131,78,.75);
+  border-radius:50%;
+  background:rgba(251,250,246,.18);
+}
+
+.hero_proof-icon svg{
+  display:block;
+  width:1.78rem;
+  height:1.78rem;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.hero_proof-premium .hero_proof-label{
+  margin-top:.12rem;
+  margin-bottom:.2rem;
+}
+
+.hero_proof-premium .hero_proof-item p{
+  line-height:1.42;
+}
+
+/* Le hero contient maintenant 3 éléments dans hero_intro : kicker, prix, titre. */
+.hero_intro > *:nth-child(1){animation-delay:.08s;}
+.hero_intro > *:nth-child(2){animation-delay:.17s;}
+.hero_intro > *:nth-child(3){animation-delay:.26s;}
+
+@media(max-width:991px){
+  .hero_price-premium{
+    width:min(100%,36rem);
+  }
+
+  .hero_proof.hero_proof-premium{
+    max-width:44rem;
+  }
+}
+
+@media(max-width:640px){
+  .hero_price-premium{
+    grid-template-columns:auto auto minmax(0,1fr);
+    column-gap:.65rem;
+    width:100%;
+    margin-top:1rem;
+    padding:.78rem 0;
+  }
+
+  .hero_price-from{
+    font-size:.56rem;
+    letter-spacing:.11em;
+  }
+
+  .hero_price-amount strong{
+    font-size:3.15rem;
+  }
+
+  .hero_price-amount > span{
+    font-size:1.25rem;
+  }
+
+  .hero_price-side{
+    min-height:3rem;
+    padding-left:.7rem;
+  }
+
+  .hero_price-side strong{
+    font-size:.58rem;
+    letter-spacing:.1em;
+  }
+
+  .hero_price-side span{
+    font-size:.7rem;
+  }
+
+  .hero_price-premium + .hero_title{
+    margin-top:1.15rem;
+  }
+
+  .hero_proof.hero_proof-premium{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:.8rem;
+    margin-top:1.6rem;
+    padding-top:1.15rem;
+  }
+
+  .hero_proof-premium .hero_proof-item{
+    grid-template-columns:3.15rem 1fr;
+    gap:.8rem;
+    padding:0;
+  }
+
+  .hero_proof-premium .hero_proof-item + .hero_proof-item{
+    padding:0;
+    padding-top:.85rem;
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
+
+  .hero_proof-icon{
+    width:2.9rem;
+    height:2.9rem;
+  }
+
+  .hero_proof-icon svg{
+    width:1.52rem;
+    height:1.52rem;
+  }
+}
+
+@media(max-width:390px){
+  .hero_price-premium{
+    grid-template-columns:auto auto;
+    row-gap:.5rem;
+  }
+
+  .hero_price-side{
+    grid-column:1 / -1;
+    min-height:0;
+    padding:.5rem 0 0;
+    border-left:0;
+    border-top:1px solid rgba(184,131,78,.38);
+  }
+}
+
