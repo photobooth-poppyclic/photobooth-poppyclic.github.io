@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/hero-photobooth.png" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,8 +23,7 @@
   <img
     src="images/logo-poppy-clic.png"
     alt="Poppy Clic Photobooth"
-    class="navbar_logo-image"
-  >
+    class="navbar_logo-image" decoding="async">
 </a>
       <nav class="navbar_menu">
         <a href="#occasions" class="navbar_link">Occasions</a>
@@ -68,7 +68,7 @@
 
       <figure class="hero_visual" aria-label="Photobooth Poppy Clic installé lors d'un mariage">
         <div class="hero_visual-frame">
-          <img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic en bois installé pendant un mariage">
+          <img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic en bois installé pendant un mariage" loading="eager" decoding="async" fetchpriority="high">
         </div>
         <figcaption class="hero_visual-badge">
           <span>Location clé en main</span>
@@ -174,7 +174,7 @@
             <h3>Mariages</h3>
             <p>Des souvenirs élégants pour une journée unique.</p>
           </div>
-          <img src="images/mariage-poppy.png" alt="Ambiance de mariage">
+          <img src="images/mariage-poppy.png" alt="Ambiance de mariage" loading="lazy" decoding="async">
         </article>
 
         <article class="occasion_card">
@@ -183,7 +183,7 @@
             <h3>Anniversaires</h3>
             <p>Petits ou grands, tout le monde finit devant l'objectif.</p>
           </div>
-          <img src="images/anniversaire-poppy.png" alt="Ambiance d'anniversaire">
+          <img src="images/anniversaire-poppy.png" alt="Ambiance d'anniversaire" loading="lazy" decoding="async">
         </article>
 
         <article class="occasion_card">
@@ -193,7 +193,7 @@
             <p>Un souvenir doux et joyeux à partager avec vos proches.</p>
           </div>
           <img src="images/Baptêmes.png
-" alt="Ambiance de baptême">
+" alt="Ambiance de baptême" loading="lazy" decoding="async">
         </article>
 
         <article class="occasion_card">
@@ -203,7 +203,7 @@
             <p>Une animation qui crée du lien sans alourdir l'événement.</p>
           </div>
           <img src="images/entreprise.png
-" alt="Soirée professionnelle">
+" alt="Soirée professionnelle" loading="lazy" decoding="async">
         </article>
       </div>
 
@@ -238,7 +238,7 @@
 
       <figure class="artisan_media" data-reveal style="--i:1">
         <img src="images/photobooth-poppy2.jpg
-" alt="Détail du photobooth Poppy Clic en bois massif">
+" alt="Détail du photobooth Poppy Clic en bois massif" loading="lazy" decoding="async">
         <figcaption>
           <span>Fabrication locale</span>
           <strong>Un vrai meuble en bois massif.</strong>
@@ -339,9 +339,9 @@
         <p class="text-size-large text-color-muted">Poppy Clic trouve sa place aussi bien dans une réception élégante que dans une soirée plus festive.</p>
       </div>
       <div class="gallery_grid" data-reveal>
-        <figure class="gallery_photo is-large"><img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic installé lors d’un mariage"></figure>
-        <figure class="gallery_photo"><img src="images/ambiance-02.jpg" alt="Invités réunis pour une photo de soirée"></figure>
-        <figure class="gallery_photo"><img src="images/ambiance-03.jpg" alt="Ambiance festive pendant une soirée"></figure>
+        <figure class="gallery_photo is-large"><img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic installé lors d’un mariage" loading="lazy" decoding="async"></figure>
+        <figure class="gallery_photo"><img src="images/ambiance-02.jpg" alt="Invités réunis pour une photo de soirée" loading="lazy" decoding="async"></figure>
+        <figure class="gallery_photo"><img src="images/ambiance-03.jpg" alt="Ambiance festive pendant une soirée" loading="lazy" decoding="async"></figure>
       </div>
     </div>
   </div>
