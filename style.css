@@ -1196,7 +1196,7 @@ ul{margin:0;padding:0;list-style:none;}
 .experience_title{
   margin-top:1.2rem;
   max-width:29rem;
-  font-size:clamp(2.45rem,4vw,4.2rem);
+  font-size:clamp(2.45rem,4vw,2.55rem);
   line-height:.98;
 }
 
@@ -1308,7 +1308,7 @@ ul{margin:0;padding:0;list-style:none;}
 .reservation_header .heading-style-h2{
   margin-top:1.05rem;
   max-width:34rem;
-  font-size:clamp(2.25rem,3.6vw,3.55rem);
+  font-size: clamp(2.25rem, 3.6vw, 2.55rem);
   line-height:1;
 }
 
