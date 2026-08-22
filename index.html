@@ -9,12 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/hero-photobooth.png" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page-wrapper">
 
-<!-- NAVBARe -->
+<!-- NAVBAR -->
 <header class="navbar_component" id="navbar">
   <div class="padding-global">
     <div class="container-large navbar_container">
@@ -22,8 +23,7 @@
   <img
     src="images/logo-poppy-clic.png"
     alt="Poppy Clic Photobooth"
-    class="navbar_logo-image"
-  >
+    class="navbar_logo-image" decoding="async" fetchpriority="high">
 </a>
       <nav class="navbar_menu">
         <a href="#occasions" class="navbar_link">Occasions</a>
@@ -42,33 +42,25 @@
 <section class="section_hero">
   <div class="padding-global">
     <div class="container-large hero_layout">
-
       <div class="hero_intro">
-        <span class="eyebrow is-visible hero_kicker">
-          Location de photobooth · Mariages &amp; événements
-        </span>
+<span class="eyebrow is-visible hero_kicker">
+  Location de photobooth · Mariages &amp; événements
+</span>
 
-        <div class="hero_price-premium" aria-label="Location à partir de 159 euros la soirée">
-          <span class="hero_price-from">À partir de</span>
+<div class="hero_price">
+  <span>À partir de</span>
+  <strong>159 €</strong>
+  <span>la soirée</span>
+</div>
 
-          <div class="hero_price-amount">
-            <strong>159</strong><span>€</span>
-          </div>
-
-          <div class="hero_price-side">
-            <strong>La soirée</strong>
-            <span>Photos numériques illimitées</span>
-          </div>
-        </div>
-
-        <h1 class="heading-style-h1 hero_title">
-          Un photobooth élégant <em>à louer</em> pour vos plus beaux événements.
-        </h1>
+<h1 class="heading-style-h1 hero_title">
+  Un photobooth élégant <em>à louer</em> pour vos plus beaux événements.
+</h1>
       </div>
 
       <figure class="hero_visual" aria-label="Photobooth Poppy Clic installé lors d'un mariage">
         <div class="hero_visual-frame">
-          <img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic en bois installé pendant un mariage">
+          <img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic en bois installé pendant un mariage" loading="eager" decoding="async" fetchpriority="high">
         </div>
         <figcaption class="hero_visual-badge">
           <span>Location clé en main</span>
@@ -79,57 +71,27 @@
 
       <div class="hero_detail">
         <p class="text-size-large text-color-muted hero_text">
-          Mariages, anniversaires, baptêmes et soirées : Poppy Clic anime votre événement
-          et permet à vos invités de repartir avec leurs plus beaux souvenirs.
+Mariages, anniversaires, baptêmes et soirées : Poppy Clic anime votre événement et permet à vos invités de repartir avec leurs plus beaux souvenirs.
         </p>
-
         <div class="button-group hero_actions">
           <a href="#reservation" class="button">Vérifier la disponibilité</a>
           <a href="#tarifs" class="button is-secondary">Voir les formules</a>
         </div>
-
-        <div class="hero_proof hero_proof-premium">
+        <div class="hero_proof">
           <div class="hero_proof-item">
-            <span class="hero_proof-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <path d="M29 8a9 9 0 0 0-10 12L7 32a4 4 0 0 0 0 6 4 4 0 0 0 6 0l12-12A9 9 0 0 0 37 16l-6 6-5-5 6-6A9 9 0 0 0 29 8z"/>
-              </svg>
-            </span>
-            <div>
-              <span class="hero_proof-label">Clé en main</span>
-              <p class="text-size-small text-color-muted">Installation, mise en service et reprise</p>
-            </div>
+            <span class="hero_proof-label">Clé en main</span>
+            <p class="text-size-small text-color-muted">Installation, mise en service et reprise</p>
           </div>
-
           <div class="hero_proof-item">
-            <span class="hero_proof-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <rect x="8" y="14" width="32" height="24" rx="3"/>
-                <path d="M17 14l3-5h8l3 5"/>
-                <circle cx="24" cy="26" r="8"/>
-              </svg>
-            </span>
-            <div>
-              <span class="hero_proof-label">Sur place</span>
-              <p class="text-size-small text-color-muted">Appareil photo Nikon haute qualité</p>
-            </div>
+            <span class="hero_proof-label">Sur place</span>
+            <p class="text-size-small text-color-muted">Appareil photo Nikon haute qualité</p>
           </div>
-
           <div class="hero_proof-item">
-            <span class="hero_proof-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <path d="M42 7L19 29"/>
-                <path d="M42 7L29 41l-10-12L7 20z"/>
-              </svg>
-            </span>
-            <div>
-              <span class="hero_proof-label">Après</span>
-              <p class="text-size-small text-color-muted">Toutes les photos envoyées sous 24 h</p>
-            </div>
+            <span class="hero_proof-label">Après</span>
+            <p class="text-size-small text-color-muted">Toutes les photos envoyées sous 24 h</p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -174,7 +136,7 @@
             <h3>Mariages</h3>
             <p>Des souvenirs élégants pour une journée unique.</p>
           </div>
-          <img src="images/mariage-poppy.png" alt="Ambiance de mariage">
+          <img src="images/mariage-poppy.png" alt="Ambiance de mariage" loading="lazy" decoding="async" fetchpriority="low">
         </article>
 
         <article class="occasion_card">
@@ -183,7 +145,7 @@
             <h3>Anniversaires</h3>
             <p>Petits ou grands, tout le monde finit devant l'objectif.</p>
           </div>
-          <img src="images/anniversaire-poppy.png" alt="Ambiance d'anniversaire">
+          <img src="images/anniversaire-poppy.png" alt="Ambiance d'anniversaire" loading="lazy" decoding="async" fetchpriority="low">
         </article>
 
         <article class="occasion_card">
@@ -193,7 +155,7 @@
             <p>Un souvenir doux et joyeux à partager avec vos proches.</p>
           </div>
           <img src="images/Baptêmes.png
-" alt="Ambiance de baptême">
+" alt="Ambiance de baptême" loading="lazy" decoding="async" fetchpriority="low">
         </article>
 
         <article class="occasion_card">
@@ -203,7 +165,7 @@
             <p>Une animation qui crée du lien sans alourdir l'événement.</p>
           </div>
           <img src="images/entreprise.png
-" alt="Soirée professionnelle">
+" alt="Soirée professionnelle" loading="lazy" decoding="async" fetchpriority="low">
         </article>
       </div>
 
@@ -238,7 +200,7 @@
 
       <figure class="artisan_media" data-reveal style="--i:1">
         <img src="images/photobooth-poppy2.jpg
-" alt="Détail du photobooth Poppy Clic en bois massif">
+" alt="Détail du photobooth Poppy Clic en bois massif" loading="lazy" decoding="async" fetchpriority="low">
         <figcaption>
           <span>Fabrication locale</span>
           <strong>Un vrai meuble en bois massif.</strong>
@@ -339,9 +301,9 @@
         <p class="text-size-large text-color-muted">Poppy Clic trouve sa place aussi bien dans une réception élégante que dans une soirée plus festive.</p>
       </div>
       <div class="gallery_grid" data-reveal>
-        <figure class="gallery_photo is-large"><img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic installé lors d’un mariage"></figure>
-        <figure class="gallery_photo"><img src="images/ambiance-02.jpg" alt="Invités réunis pour une photo de soirée"></figure>
-        <figure class="gallery_photo"><img src="images/ambiance-03.jpg" alt="Ambiance festive pendant une soirée"></figure>
+        <figure class="gallery_photo is-large"><img src="images/hero-photobooth.png" alt="Photobooth Poppy Clic installé lors d’un mariage" loading="lazy" decoding="async" fetchpriority="low"></figure>
+        <figure class="gallery_photo"><img src="images/ambiance-02.jpg" alt="Invités réunis pour une photo de soirée" loading="lazy" decoding="async" fetchpriority="low"></figure>
+        <figure class="gallery_photo"><img src="images/ambiance-03.jpg" alt="Ambiance festive pendant une soirée" loading="lazy" decoding="async" fetchpriority="low"></figure>
       </div>
     </div>
   </div>
