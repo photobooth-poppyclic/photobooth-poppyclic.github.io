@@ -2079,3 +2079,46 @@ ul{margin:0;padding:0;list-style:none;}
   }
 
 }
+/* PRIX VISIBLE DÈS L'ARRIVÉE */
+
+.hero_price{
+  display:flex;
+  align-items:baseline;
+  gap:.55rem;
+
+  width:max-content;
+
+  margin-top:1.2rem;
+  padding:.6rem 1rem;
+
+  background:rgba(196,54,44,.08);
+  border-left:2px solid var(--poppy);
+}
+
+.hero_price span{
+  color:var(--ink-60);
+  font-size:.82rem;
+  font-weight:500;
+}
+
+.hero_price strong{
+  color:var(--poppy);
+
+  font-family:var(--font-display);
+  font-size:1.8rem;
+  font-weight:500;
+  line-height:1;
+}
+
+@media(max-width:640px){
+
+  .hero_price{
+    margin-top:1rem;
+    padding:.55rem .8rem;
+  }
+
+  .hero_price strong{
+    font-size:1.6rem;
+  }
+
+}
