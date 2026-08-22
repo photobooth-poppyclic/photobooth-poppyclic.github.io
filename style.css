@@ -759,3 +759,228 @@ ul{margin:0;padding:0;list-style:none;}
 @media (prefers-reduced-motion:reduce){
   .hero_intro > *, .hero_detail > *, .hero_visual{opacity:1!important;transform:none!important;}
 }
+
+/* ============================================================
+   8. AJUSTEMENTS CONTENU — à partir de TON CSS
+   Photos plus présentes + sections plus compactes
+   ============================================================ */
+
+/* Occasions : photos plus présentes sans changer tes cartes */
+.occasions_cards{
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+.occasion_card{
+  min-height:22rem;
+}
+.occasion_card img{
+  height:11rem;
+  object-fit:cover;
+}
+.occasion_card:first-child img{object-position:center 45%;}
+
+/* Objet : grande photo du photobooth à droite */
+.artisan_second-text{margin-top:1.15rem;}
+.artisan_media{
+  position:relative;
+  margin:0;
+  min-height:34rem;
+  overflow:hidden;
+  border-radius:var(--radius-lg);
+  background:var(--forest-soft);
+  box-shadow:0 32px 65px -42px rgba(0,0,0,.8);
+}
+.artisan_media img{
+  width:100%;
+  height:100%;
+  min-height:34rem;
+  object-fit:cover;
+  object-position:center;
+}
+.artisan_media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(23,26,21,.68),transparent 48%);
+  pointer-events:none;
+}
+.artisan_media figcaption{
+  position:absolute;
+  z-index:2;
+  left:1.5rem;
+  right:1.5rem;
+  bottom:1.5rem;
+}
+.artisan_media figcaption span{
+  display:block;
+  margin-bottom:.35rem;
+  color:var(--wood);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.artisan_media figcaption strong{
+  display:block;
+  color:var(--chalk);
+  font-family:var(--font-display);
+  font-size:1.55rem;
+  font-weight:500;
+  line-height:1.15;
+}
+
+/* Tarifs : on conserve notamment TA carte Signature rouge */
+.pricing_header{margin-bottom:3rem;}
+.pricing_item{padding:2.2rem 1.8rem;}
+.pricing_price{margin-bottom:1.4rem;}
+.pricing_amount{font-size:3.15rem;}
+.pricing_feature{line-height:1.45;}
+
+.rental_infos{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+  margin-top:2.4rem;
+}
+.rental_info{
+  padding:1.45rem 1.5rem;
+  border:1px solid var(--line);
+  background:var(--paper-2);
+  border-radius:var(--radius-lg);
+}
+.rental_info-title{
+  display:block;
+  margin-bottom:.55rem;
+  color:var(--poppy);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.rental_info p{
+  color:var(--ink-60);
+  font-size:.88rem;
+  line-height:1.55;
+}
+.rental_info strong{color:var(--ink);}
+.rental_info.is-caution{
+  background:var(--chalk);
+  border-color:rgba(196,54,44,.28);
+}
+
+/* Galerie photos */
+.section_gallery{
+  padding:5rem 0;
+  background:var(--paper-2);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.gallery_layout{
+  display:grid;
+  grid-template-columns:.68fr 1.32fr;
+  gap:3.5rem;
+  align-items:center;
+}
+.gallery_intro{max-width:30rem;}
+.gallery_intro .heading-style-h2{
+  margin-top:1.15rem;
+  margin-bottom:1rem;
+}
+.gallery_grid{
+  display:grid;
+  grid-template-columns:1.18fr .82fr;
+  grid-template-rows:1fr 1fr;
+  gap:.85rem;
+  min-height:29rem;
+}
+.gallery_photo{
+  margin:0;
+  overflow:hidden;
+  border-radius:var(--radius-lg);
+  background:var(--forest-soft);
+}
+.gallery_photo.is-large{grid-row:1 / 3;}
+.gallery_photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .65s var(--ease-out);
+}
+.gallery_photo:hover img{transform:scale(1.025);}
+.gallery_photo.is-large img{object-position:center 45%;}
+
+/* Expérience : moins de vide vertical */
+.section_included .padding-section-large{
+  padding-top:4.5rem;
+  padding-bottom:4.5rem;
+}
+.included_layout{
+  grid-template-columns:.8fr 1.2fr;
+  gap:3.5rem;
+  align-items:start;
+}
+.included_title{max-width:28rem;}
+.included_list{gap:1.55rem 2rem;}
+.included_item{padding-top:1rem;}
+.included_item h3{margin-bottom:.4rem;}
+.included_item p{font-size:.94rem;line-height:1.55;}
+
+/* Étapes : bloc plus compact */
+.section_steps .padding-section-medium{
+  padding-top:3.8rem;
+  padding-bottom:3.8rem;
+}
+.section_steps .section_header{margin-bottom:2.4rem;}
+.section_steps .heading-style-h2{
+  max-width:38rem;
+  font-size:clamp(2.15rem,3.4vw,3.15rem);
+}
+.steps_list{gap:2rem;}
+.steps_item{padding-top:2.15rem;}
+.steps_item h3{margin-bottom:.45rem;}
+.steps_item p{font-size:.94rem;line-height:1.55;}
+
+/* Contact */
+.contact_reassurance a{
+  color:var(--wood);
+  font-weight:600;
+  text-decoration:none;
+}
+.contact_reassurance a:hover{text-decoration:underline;}
+
+@media (max-width:991px){
+  .occasions_cards{grid-template-columns:repeat(2,1fr);}
+  .artisan_media,.artisan_media img{min-height:30rem;}
+  .rental_infos{grid-template-columns:1fr;}
+  .gallery_layout{grid-template-columns:1fr;gap:2.5rem;}
+  .gallery_intro{max-width:42rem;}
+  .gallery_grid{min-height:27rem;}
+  .included_layout{grid-template-columns:1fr;gap:2.5rem;}
+}
+
+@media (max-width:640px){
+  .occasions_cards{grid-template-columns:1fr;}
+  .occasion_card{min-height:0;}
+  .occasion_card-copy{min-height:0;}
+  .occasion_card img{height:13rem;}
+  .artisan_media,.artisan_media img{min-height:26rem;}
+  .pricing_item{padding:1.8rem 1.4rem;}
+  .rental_info{padding:1.25rem;}
+  .section_gallery{padding:3.75rem 0;}
+  .gallery_grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:18rem 11rem;
+    min-height:0;
+  }
+  .gallery_photo.is-large{grid-column:1 / 3;grid-row:1;}
+  .gallery_photo:not(.is-large){grid-row:2;}
+  .section_included .padding-section-large{
+    padding-top:3.75rem;
+    padding-bottom:3.75rem;
+  }
+  .section_steps .padding-section-medium{
+    padding-top:3.25rem;
+    padding-bottom:3.25rem;
+  }
+}
+
