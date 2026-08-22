@@ -256,7 +256,7 @@ ul{margin:0;padding:0;list-style:none;}
   transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .45s var(--ease);
 }
 .pricing_item:hover{transform:translateY(-6px);border-color:rgba(23,26,21,.28);box-shadow:0 26px 50px -34px rgba(23,26,21,.65);}
-.pricing_item.is-featured{background:var(--forest);color:var(--chalk);border-color:var(--forest);}
+.pricing_item.is-featured{background:#c4362cc9;color:var(--chalk);border-color:var(--forest);}
 .pricing_item.is-featured .pricing_meta,.pricing_item.is-featured .pricing_note{color:rgba(251,250,246,.62);}
 .pricing_item.is-featured .pricing_feature{border-color:rgba(251,250,246,.16);}
 .pricing_item.is-featured .pricing_feature::before{color:var(--wood);}
@@ -265,6 +265,7 @@ ul{margin:0;padding:0;list-style:none;}
   background:var(--poppy);color:var(--chalk);border-radius:100px;
   font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   animation:pulse 3.2s var(--ease) infinite;
+   display: none;
 }
 .pricing_meta{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-60);}
 .pricing_name{margin:.5rem 0 1.4rem;font-size:1.7rem;}
