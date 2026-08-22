@@ -1167,75 +1167,117 @@ ul{margin:0;padding:0;list-style:none;}
     height:2.8rem;
   }
 }
+
 /* ============================================================
-   EXPÉRIENCE — NOUVELLE MISE EN PAGE
+   EXPÉRIENCE + RÉSERVATION — VERSION "IMAGE 3"
+   Conserve toute la charte et les modifications personnelles.
    ============================================================ */
+
+/* ---------- EXPÉRIENCE ---------- */
 
 .section_included{
   background:var(--paper);
+  border-top:1px solid var(--line);
 }
 
 .experience_layout{
   display:grid;
-  grid-template-columns:.72fr 1.28fr;
-  gap:5rem;
-  padding-top:5rem;
-  padding-bottom:5rem;
-  align-items:start;
+  grid-template-columns:minmax(18rem,.72fr) minmax(0,1.28fr);
+  gap:4.5rem;
+  align-items:center;
+  padding-top:4.6rem;
+  padding-bottom:4.6rem;
 }
 
 .experience_intro{
-  position:sticky;
-  top:7rem;
+  max-width:31rem;
 }
 
 .experience_title{
   margin-top:1.2rem;
-  max-width:30rem;
+  max-width:29rem;
+  font-size:clamp(2.45rem,4vw,4.2rem);
+  line-height:.98;
 }
 
 .experience_intro-text{
-  max-width:26rem;
-  margin-top:1.5rem;
-  font-size:.95rem;
+  max-width:27rem;
+  margin-top:1.45rem;
+  color:var(--ink-60);
+  font-size:.96rem;
   line-height:1.65;
 }
 
 .experience_cards{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1rem;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.9rem;
 }
 
 .experience_card{
-  position:relative;
-  min-height:13.5rem;
-  padding:1.65rem;
-  background:var(--paper-2);
+  display:grid;
+  grid-template-columns:5.6rem minmax(0,1fr);
+  gap:1.25rem;
+  align-items:center;
+  min-height:12.2rem;
+  padding:1.45rem 1.5rem;
+  background:rgba(251,250,246,.48);
   border:1px solid var(--line);
   border-radius:var(--radius-lg);
   transition:
-    transform .4s var(--ease-out),
-    background .4s var(--ease-out);
+    transform .38s var(--ease-out),
+    background .38s var(--ease-out),
+    box-shadow .38s var(--ease-out);
 }
 
 .experience_card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-3px);
   background:var(--chalk);
+  box-shadow:0 20px 42px -34px rgba(23,26,21,.45);
+}
+
+.experience_icon{
+  display:grid;
+  place-items:center;
+  width:5rem;
+  height:5rem;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:rgba(251,250,246,.38);
+  color:var(--ink);
+}
+
+.experience_icon svg{
+  width:2.65rem;
+  height:2.65rem;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.experience_icon.is-gold{
+  color:var(--wood);
+}
+
+.experience_icon .icon-accent{
+  stroke:var(--poppy);
 }
 
 .experience_number{
   display:block;
-  margin-bottom:1.8rem;
+  margin-bottom:.45rem;
   color:var(--poppy);
   font-size:.72rem;
   font-weight:600;
-  letter-spacing:.14em;
+  letter-spacing:.12em;
 }
 
 .experience_card h3{
-  margin-bottom:.65rem;
+  margin-bottom:.45rem;
   font-size:1.3rem;
+  line-height:1.12;
 }
 
 .experience_card p{
@@ -1245,9 +1287,7 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 
-/* ============================================================
-   RÉSERVATION — FRISE
-   ============================================================ */
+/* ---------- RÉSERVATION ---------- */
 
 .section_steps{
   background:var(--paper-2);
@@ -1256,87 +1296,171 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 .reservation_layout{
-  padding-top:4.5rem;
-  padding-bottom:4.5rem;
+  padding-top:3.9rem;
+  padding-bottom:3.9rem;
 }
 
 .reservation_header{
-  display:grid;
-  grid-template-columns:.45fr 1fr;
-  gap:3rem;
-  align-items:end;
-  margin-bottom:3.5rem;
+  max-width:38rem;
+  margin-bottom:2.55rem;
 }
 
 .reservation_header .heading-style-h2{
-  max-width:38rem;
+  margin-top:1.05rem;
+  max-width:34rem;
+  font-size:clamp(2.25rem,3.6vw,3.55rem);
+  line-height:1;
 }
 
 .reservation_steps{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:0;
-  border-top:1px solid var(--ink);
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:2.5rem;
+  align-items:start;
 }
 
 .reservation_step{
   position:relative;
-  padding:1.7rem 2.2rem 0 0;
+  display:grid;
+  grid-template-columns:auto 5.25rem minmax(0,1fr);
+  gap:1rem;
+  align-items:center;
+  min-width:0;
 }
 
-.reservation_step:not(:last-child){
-  border-right:1px solid var(--line);
-  margin-right:2rem;
+.reservation_step:not(:last-child)::after{
+  content:"";
+  position:absolute;
+  top:2.6rem;
+  right:-1.65rem;
+  width:1.25rem;
+  border-top:1px dashed rgba(184,131,78,.8);
+}
+
+.reservation_step:not(:last-child)::before{
+  content:"";
+  position:absolute;
+  top:2.43rem;
+  right:-1.68rem;
+  width:.34rem;
+  height:.34rem;
+  border-radius:50%;
+  background:var(--wood);
+  transform:translateX(100%);
 }
 
 .reservation_step-number{
-  margin-bottom:1.4rem;
-  font-family:var(--font-display);
-  font-size:3.2rem;
-  line-height:1;
+  margin:0;
   color:var(--poppy);
-  opacity:.9;
+  font-family:var(--font-display);
+  font-size:3.35rem;
+  font-weight:400;
+  line-height:.9;
+  letter-spacing:-.05em;
+}
+
+.reservation_step-icon{
+  display:grid;
+  place-items:center;
+  width:4.8rem;
+  height:4.8rem;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:rgba(251,250,246,.5);
+  color:var(--ink);
+}
+
+.reservation_step-icon svg{
+  width:2.7rem;
+  height:2.7rem;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.65;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.reservation_step-icon .icon-accent{
+  stroke:var(--wood);
+}
+
+.reservation_step-icon .icon-accent-fill{
+  fill:var(--wood);
+  stroke:none;
+}
+
+.reservation_step-content{
+  min-width:0;
 }
 
 .reservation_step-content h3{
-  margin-bottom:.55rem;
-  font-size:1.35rem;
+  margin-bottom:.45rem;
+  font-size:1.28rem;
+  line-height:1.15;
 }
 
 .reservation_step-content p{
-  max-width:24rem;
+  max-width:20rem;
   color:var(--ink-60);
-  font-size:.9rem;
-  line-height:1.6;
+  font-size:.88rem;
+  line-height:1.55;
 }
 
 
-/* TABLETTE */
-@media(max-width:991px){
+/* ---------- TABLETTE ---------- */
+
+@media(max-width:1100px){
 
   .experience_layout{
     grid-template-columns:1fr;
-    gap:2.5rem;
+    gap:2.3rem;
   }
 
   .experience_intro{
-    position:static;
+    max-width:42rem;
   }
 
-  .reservation_header{
-    grid-template-columns:1fr;
-    gap:1rem;
+  .experience_title{
+    max-width:38rem;
   }
 
+  .reservation_steps{
+    gap:1.4rem;
+  }
+
+  .reservation_step{
+    grid-template-columns:auto 4.4rem 1fr;
+    gap:.75rem;
+  }
+
+  .reservation_step-icon{
+    width:4.2rem;
+    height:4.2rem;
+  }
+
+  .reservation_step-number{
+    font-size:2.8rem;
+  }
+
+  .reservation_step:not(:last-child)::after,
+  .reservation_step:not(:last-child)::before{
+    display:none;
+  }
 }
 
 
-/* MOBILE */
-@media(max-width:640px){
+/* ---------- MOBILE ---------- */
+
+@media(max-width:700px){
 
   .experience_layout{
-    padding-top:3.5rem;
-    padding-bottom:3.5rem;
+    gap:2rem;
+    padding-top:3.3rem;
+    padding-bottom:3.3rem;
+  }
+
+  .experience_title{
+    font-size:clamp(2.35rem,11vw,3.35rem);
   }
 
   .experience_cards{
@@ -1344,35 +1468,93 @@ ul{margin:0;padding:0;list-style:none;}
   }
 
   .experience_card{
+    grid-template-columns:4.6rem 1fr;
     min-height:0;
+    padding:1.25rem;
+  }
+
+  .experience_icon{
+    width:4rem;
+    height:4rem;
+  }
+
+  .experience_icon svg{
+    width:2.2rem;
+    height:2.2rem;
   }
 
   .reservation_layout{
-    padding-top:3.5rem;
-    padding-bottom:3.5rem;
+    padding-top:3.2rem;
+    padding-bottom:3.2rem;
+  }
+
+  .reservation_header{
+    margin-bottom:2rem;
   }
 
   .reservation_steps{
     grid-template-columns:1fr;
-    border-top:none;
+    gap:0;
   }
 
   .reservation_step{
-    display:grid;
-    grid-template-columns:4rem 1fr;
-    gap:1rem;
-    padding:1.5rem 0;
-    border-top:1px solid var(--ink);
+    grid-template-columns:3.4rem 4rem 1fr;
+    gap:.75rem;
+    padding:1.35rem 0;
+    border-top:1px solid var(--line);
   }
 
-  .reservation_step:not(:last-child){
-    margin-right:0;
-    border-right:none;
+  .reservation_step:last-child{
+    border-bottom:1px solid var(--line);
   }
 
   .reservation_step-number{
-    margin:0;
-    font-size:2.5rem;
+    font-size:2.25rem;
   }
 
+  .reservation_step-icon{
+    width:3.75rem;
+    height:3.75rem;
+  }
+
+  .reservation_step-icon svg{
+    width:2.15rem;
+    height:2.15rem;
+  }
+
+  .reservation_step-content p{
+    max-width:none;
+  }
 }
+
+
+/* ---------- PETITS MOBILES ---------- */
+
+@media(max-width:430px){
+
+  .experience_card{
+    grid-template-columns:3.9rem 1fr;
+    gap:.9rem;
+    padding:1.1rem;
+  }
+
+  .experience_icon{
+    width:3.5rem;
+    height:3.5rem;
+  }
+
+  .experience_icon svg{
+    width:1.95rem;
+    height:1.95rem;
+  }
+
+  .reservation_step{
+    grid-template-columns:3rem 3.5rem 1fr;
+  }
+
+  .reservation_step-icon{
+    width:3.3rem;
+    height:3.3rem;
+  }
+}
+
