@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales — Poppy Clic</title>
+<meta name="description" content="Informations légales relatives au site Poppy Clic, activité de SOS ORDI 03.">
+<meta name="theme-color" content="#232B21">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  .legal-page{
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .legal-hero{
+    padding:5rem 0 2.6rem;
+    border-bottom:1px solid var(--line);
+  }
+  .legal-hero-inner{
+    max-width:58rem;
+  }
+  .legal-hero h1{
+    margin-top:1.2rem;
+    font-size:clamp(2.65rem,6vw,5.6rem);
+    line-height:.95;
+    letter-spacing:-.045em;
+  }
+  .legal-hero p{
+    max-width:46rem;
+    margin-top:1.35rem;
+    color:var(--ink-60);
+    font-size:1rem;
+    line-height:1.65;
+  }
+  .legal-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.6rem 1.2rem;
+    margin-top:1.4rem;
+    color:var(--ink-60);
+    font-size:.78rem;
+  }
+  .legal-content{
+    max-width:58rem;
+    padding-top:3.4rem;
+    padding-bottom:5.5rem;
+  }
+  .legal-content section{
+    padding:0 0 2.4rem;
+    margin-bottom:2.4rem;
+    border-bottom:1px solid var(--line);
+  }
+  .legal-content section:last-child{
+    margin-bottom:0;
+    border-bottom:0;
+  }
+  .legal-content h2{
+    margin-bottom:1rem;
+    color:var(--forest);
+    font-size:clamp(1.55rem,2.5vw,2.05rem);
+    line-height:1.1;
+  }
+  .legal-content h3{
+    margin:1.45rem 0 .65rem;
+    font-size:1.12rem;
+    line-height:1.25;
+  }
+  .legal-content p,
+  .legal-content li{
+    color:var(--ink-60);
+    font-size:.96rem;
+    line-height:1.75;
+  }
+  .legal-content p + p{
+    margin-top:.85rem;
+  }
+  .legal-content ul{
+    display:grid;
+    gap:.55rem;
+    margin:.8rem 0 0;
+  }
+  .legal-content li{
+    position:relative;
+    padding-left:1.25rem;
+  }
+  .legal-content li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.78rem;
+    width:.34rem;
+    height:.34rem;
+    border-radius:50%;
+    background:var(--poppy);
+  }
+  .legal-content strong{
+    color:var(--ink);
+  }
+  .legal-content a{
+    color:var(--poppy-dark);
+    text-decoration-thickness:1px;
+    text-underline-offset:3px;
+  }
+  .legal-card{
+    margin-top:1rem;
+    padding:1.25rem 1.35rem;
+    background:rgba(251,250,246,.58);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+  }
+  .legal-card p{
+    color:var(--ink-60);
+  }
+  .legal-warning{
+    margin-top:1rem;
+    padding:1.15rem 1.25rem;
+    border-left:3px solid var(--poppy);
+    background:rgba(196,54,44,.06);
+  }
+  .legal-warning strong{
+    display:block;
+    margin-bottom:.25rem;
+    color:var(--poppy-dark);
+  }
+  .legal-table{
+    width:100%;
+    margin-top:1rem;
+    border-collapse:collapse;
+    background:rgba(251,250,246,.42);
+  }
+  .legal-table th,
+  .legal-table td{
+    padding:.9rem 1rem;
+    border:1px solid var(--line);
+    text-align:left;
+    vertical-align:top;
+    font-size:.9rem;
+    line-height:1.55;
+  }
+  .legal-table th{
+    color:var(--forest);
+    font-weight:600;
+    background:rgba(184,131,78,.08);
+  }
+  .legal-table td{
+    color:var(--ink-60);
+  }
+  .legal-offers{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:.8rem;
+    margin-top:1rem;
+  }
+  .legal-offer{
+    padding:1rem;
+    border:1px solid var(--line);
+    background:rgba(251,250,246,.45);
+  }
+  .legal-offer span{
+    display:block;
+    color:var(--poppy);
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .legal-offer strong{
+    display:block;
+    margin-top:.2rem;
+    font-family:var(--font-display);
+    font-size:1.55rem;
+    font-weight:500;
+  }
+  .legal-offer p{
+    margin-top:.35rem;
+    font-size:.83rem;
+    line-height:1.5;
+  }
+  .legal-footer{
+    background:var(--ink);
+    color:var(--chalk);
+  }
+  .legal-footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:1.2rem 2rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+  }
+  .legal-footer-brand{
+    font-family:var(--font-display);
+    font-size:1.2rem;
+  }
+  .legal-footer-brand span{color:var(--poppy);}
+  .legal-footer nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.9rem 1.4rem;
+  }
+  .legal-footer a{
+    color:rgba(251,250,246,.68);
+    font-size:.8rem;
+    text-decoration:none;
+  }
+  .legal-footer a:hover{color:var(--wood);}
+  .legal-back{
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    margin-top:1.4rem;
+    color:var(--ink);
+    font-size:.86rem;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .legal-back::before{
+    content:"←";
+    color:var(--poppy);
+  }
+  @media(max-width:700px){
+    .legal-hero{
+      padding:3.2rem 0 2rem;
+    }
+    .legal-hero h1{
+      font-size:clamp(2.5rem,13vw,4rem);
+    }
+    .legal-content{
+      padding-top:2.5rem;
+      padding-bottom:4rem;
+    }
+    .legal-content section{
+      padding-bottom:1.9rem;
+      margin-bottom:1.9rem;
+    }
+    .legal-offers{
+      grid-template-columns:1fr;
+    }
+    .legal-table{
+      display:block;
+      overflow-x:auto;
+    }
+    .legal-footer-inner{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+  }
+</style>
+
+</head>
+<body class="legal-page">
+<div class="page-wrapper">
+
+<header class="navbar_component" id="navbar">
+  <div class="padding-global">
+    <div class="container-large navbar_container">
+      <a href="index.html#top" class="navbar_brand">
+        <img src="images/logo-poppy-clic.png" alt="Poppy Clic Photobooth" class="navbar_logo-image">
+      </a>
+      <nav class="navbar_menu">
+        <a href="index.html#occasions" class="navbar_link">Occasions</a>
+        <a href="index.html#artisan" class="navbar_link">Le photobooth</a>
+        <a href="index.html#tarifs" class="navbar_link">Formules</a>
+        <a href="index.html#faq" class="navbar_link">Questions</a>
+      </nav>
+      <a href="index.html#reservation" class="button">Réservation</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="legal-hero">
+    <div class="padding-global">
+      <div class="container-large legal-hero-inner">
+        <span class="eyebrow is-visible">Informations légales</span>
+        <h1>Mentions légales</h1>
+        <p>Informations légales relatives au site Poppy Clic, activité de SOS ORDI 03.</p>
+        <div class="legal-meta">
+          <span>Poppy Clic · SOS ORDI 03</span>
+          <span>Mise à jour : 22 août 2026</span>
+        </div>
+        <a href="index.html" class="legal-back">Retour au site</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="padding-global">
+    <div class="container-large legal-content">
+
+<section>
+  <h2>1. Éditeur du site</h2>
+  <div class="legal-card">
+    <p><strong>Poppy Clic</strong> est une activité proposée par <strong>SOS ORDI 03</strong>.</p>
+    <p>
+      <strong>Nelly Lacombe — Entrepreneur individuel (EI)</strong><br>
+      13 rue du Meuble, 03230 Beaulon, France<br>
+      Téléphone : <a href="tel:+33661499712">06 61 49 97 12</a><br>
+      E-mail : <a href="mailto:infos@sosordi03.com">infos@sosordi03.com</a><br>
+      Site principal : <a href="https://sosordi03.com" target="_blank" rel="noopener">sosordi03.com</a>
+    </p>
+    <p>
+      SIREN : <strong>493 789 572</strong><br>
+      SIRET : <strong>493 789 572 00010</strong><br>
+      RCS : <strong>493 789 572 R.C.S. Cusset</strong><br>
+      TVA intracommunautaire : <strong>FR54493789572</strong>
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>2. Direction de la publication</h2>
+  <p>Directrice de la publication : <strong>Nelly Lacombe</strong>, en qualité d’entrepreneure individuelle exploitant SOS ORDI 03 et l’activité Poppy Clic.</p>
+</section>
+
+<section>
+  <h2>3. Hébergement</h2>
+  <p>Le site <strong>poppyclic.github.io</strong> est hébergé via le service GitHub Pages.</p>
+  <div class="legal-card">
+    <p>
+      <strong>GitHub, Inc.</strong><br>
+      88 Colin P. Kelly Jr. Street<br>
+      San Francisco, CA 94107<br>
+      États-Unis
+    </p>
+    <p>GitHub indique ne pas proposer d’assistance téléphonique et privilégier ses moyens de contact électroniques.</p>
+  </div>
+</section>
+
+<section>
+  <h2>4. Propriété intellectuelle</h2>
+  <p>
+    Sauf mention contraire, la structure du site, les textes, éléments graphiques, logos, visuels et contenus présentés sur ce site sont destinés à la communication de Poppy Clic / SOS ORDI 03.
+    Toute reproduction, représentation, adaptation ou exploitation substantielle de ces éléments sans autorisation préalable est interdite, sous réserve des exceptions prévues par la loi.
+  </p>
+  <p>Les marques, noms, logos, photographies ou contenus appartenant à des tiers restent la propriété de leurs titulaires respectifs.</p>
+</section>
+
+<section>
+  <h2>5. Informations et responsabilité</h2>
+  <p>
+    SOS ORDI 03 s’efforce de maintenir les informations publiées sur le site exactes et à jour. Les informations relatives aux disponibilités, conditions de location et prestations sont confirmées au client dans le devis et les échanges précédant la réservation.
+  </p>
+  <p>
+    Le site peut contenir des liens vers des sites tiers. SOS ORDI 03 n’exerce pas de contrôle sur leur contenu et ne peut être tenue responsable de leur fonctionnement ou de leurs pratiques.
+  </p>
+</section>
+
+<section>
+  <h2>6. Données personnelles</h2>
+  <p>
+    Les informations relatives à la collecte et au traitement des données personnelles sont détaillées dans la
+    <a href="confidentialite.html">Politique de confidentialité</a>.
+  </p>
+</section>
+
+<section>
+  <h2>7. Médiation de la consommation</h2>
+  <p>
+    Après une réclamation écrite préalable restée sans solution, un consommateur peut avoir recours gratuitement au médiateur de la consommation dont relève le professionnel, conformément aux dispositions applicables du Code de la consommation.
+  </p>
+  <div class="legal-warning">
+    <strong>MÉDIATEUR À COMPLÉTER</strong>
+    <p>Le nom, l’adresse et le site internet du médiateur de la consommation choisi par SOS ORDI 03 doivent être ajoutés ici avant publication définitive.</p>
+  </div>
+</section>
+
+<section>
+  <h2>8. Droit applicable</h2>
+  <p>Le présent site et les présentes mentions légales sont soumis au droit français, sous réserve des règles impératives protectrices applicables aux consommateurs.</p>
+</section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="legal-footer">
+  <div class="padding-global">
+    <div class="container-large legal-footer-inner">
+      <div class="legal-footer-brand">Poppy Clic<span>.</span> <small>· SOS ORDI 03</small></div>
+      <nav>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cgv.html">CGV</a>
+        <a href="index.html#reservation">Réservation</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</div>
+<script>
+const nav=document.getElementById('navbar');
+addEventListener('scroll',()=>nav.classList.toggle('is-scrolled',scrollY>20),{passive:true});
+</script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions générales de vente — Poppy Clic</title>
+<meta name="description" content="Conditions générales applicables aux prestations de location du photobooth Poppy Clic proposées par SOS ORDI 03.">
+<meta name="theme-color" content="#232B21">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  .legal-page{
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .legal-hero{
+    padding:5rem 0 2.6rem;
+    border-bottom:1px solid var(--line);
+  }
+  .legal-hero-inner{
+    max-width:58rem;
+  }
+  .legal-hero h1{
+    margin-top:1.2rem;
+    font-size:clamp(2.65rem,6vw,5.6rem);
+    line-height:.95;
+    letter-spacing:-.045em;
+  }
+  .legal-hero p{
+    max-width:46rem;
+    margin-top:1.35rem;
+    color:var(--ink-60);
+    font-size:1rem;
+    line-height:1.65;
+  }
+  .legal-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.6rem 1.2rem;
+    margin-top:1.4rem;
+    color:var(--ink-60);
+    font-size:.78rem;
+  }
+  .legal-content{
+    max-width:58rem;
+    padding-top:3.4rem;
+    padding-bottom:5.5rem;
+  }
+  .legal-content section{
+    padding:0 0 2.4rem;
+    margin-bottom:2.4rem;
+    border-bottom:1px solid var(--line);
+  }
+  .legal-content section:last-child{
+    margin-bottom:0;
+    border-bottom:0;
+  }
+  .legal-content h2{
+    margin-bottom:1rem;
+    color:var(--forest);
+    font-size:clamp(1.55rem,2.5vw,2.05rem);
+    line-height:1.1;
+  }
+  .legal-content h3{
+    margin:1.45rem 0 .65rem;
+    font-size:1.12rem;
+    line-height:1.25;
+  }
+  .legal-content p,
+  .legal-content li{
+    color:var(--ink-60);
+    font-size:.96rem;
+    line-height:1.75;
+  }
+  .legal-content p + p{
+    margin-top:.85rem;
+  }
+  .legal-content ul{
+    display:grid;
+    gap:.55rem;
+    margin:.8rem 0 0;
+  }
+  .legal-content li{
+    position:relative;
+    padding-left:1.25rem;
+  }
+  .legal-content li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.78rem;
+    width:.34rem;
+    height:.34rem;
+    border-radius:50%;
+    background:var(--poppy);
+  }
+  .legal-content strong{
+    color:var(--ink);
+  }
+  .legal-content a{
+    color:var(--poppy-dark);
+    text-decoration-thickness:1px;
+    text-underline-offset:3px;
+  }
+  .legal-card{
+    margin-top:1rem;
+    padding:1.25rem 1.35rem;
+    background:rgba(251,250,246,.58);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+  }
+  .legal-card p{
+    color:var(--ink-60);
+  }
+  .legal-warning{
+    margin-top:1rem;
+    padding:1.15rem 1.25rem;
+    border-left:3px solid var(--poppy);
+    background:rgba(196,54,44,.06);
+  }
+  .legal-warning strong{
+    display:block;
+    margin-bottom:.25rem;
+    color:var(--poppy-dark);
+  }
+  .legal-table{
+    width:100%;
+    margin-top:1rem;
+    border-collapse:collapse;
+    background:rgba(251,250,246,.42);
+  }
+  .legal-table th,
+  .legal-table td{
+    padding:.9rem 1rem;
+    border:1px solid var(--line);
+    text-align:left;
+    vertical-align:top;
+    font-size:.9rem;
+    line-height:1.55;
+  }
+  .legal-table th{
+    color:var(--forest);
+    font-weight:600;
+    background:rgba(184,131,78,.08);
+  }
+  .legal-table td{
+    color:var(--ink-60);
+  }
+  .legal-offers{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:.8rem;
+    margin-top:1rem;
+  }
+  .legal-offer{
+    padding:1rem;
+    border:1px solid var(--line);
+    background:rgba(251,250,246,.45);
+  }
+  .legal-offer span{
+    display:block;
+    color:var(--poppy);
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .legal-offer strong{
+    display:block;
+    margin-top:.2rem;
+    font-family:var(--font-display);
+    font-size:1.55rem;
+    font-weight:500;
+  }
+  .legal-offer p{
+    margin-top:.35rem;
+    font-size:.83rem;
+    line-height:1.5;
+  }
+  .legal-footer{
+    background:var(--ink);
+    color:var(--chalk);
+  }
+  .legal-footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:1.2rem 2rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+  }
+  .legal-footer-brand{
+    font-family:var(--font-display);
+    font-size:1.2rem;
+  }
+  .legal-footer-brand span{color:var(--poppy);}
+  .legal-footer nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.9rem 1.4rem;
+  }
+  .legal-footer a{
+    color:rgba(251,250,246,.68);
+    font-size:.8rem;
+    text-decoration:none;
+  }
+  .legal-footer a:hover{color:var(--wood);}
+  .legal-back{
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    margin-top:1.4rem;
+    color:var(--ink);
+    font-size:.86rem;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .legal-back::before{
+    content:"←";
+    color:var(--poppy);
+  }
+  @media(max-width:700px){
+    .legal-hero{
+      padding:3.2rem 0 2rem;
+    }
+    .legal-hero h1{
+      font-size:clamp(2.5rem,13vw,4rem);
+    }
+    .legal-content{
+      padding-top:2.5rem;
+      padding-bottom:4rem;
+    }
+    .legal-content section{
+      padding-bottom:1.9rem;
+      margin-bottom:1.9rem;
+    }
+    .legal-offers{
+      grid-template-columns:1fr;
+    }
+    .legal-table{
+      display:block;
+      overflow-x:auto;
+    }
+    .legal-footer-inner{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+  }
+</style>
+
+</head>
+<body class="legal-page">
+<div class="page-wrapper">
+
+<header class="navbar_component" id="navbar">
+  <div class="padding-global">
+    <div class="container-large navbar_container">
+      <a href="index.html#top" class="navbar_brand">
+        <img src="images/logo-poppy-clic.png" alt="Poppy Clic Photobooth" class="navbar_logo-image">
+      </a>
+      <nav class="navbar_menu">
+        <a href="index.html#occasions" class="navbar_link">Occasions</a>
+        <a href="index.html#artisan" class="navbar_link">Le photobooth</a>
+        <a href="index.html#tarifs" class="navbar_link">Formules</a>
+        <a href="index.html#faq" class="navbar_link">Questions</a>
+      </nav>
+      <a href="index.html#reservation" class="button">Réservation</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="legal-hero">
+    <div class="padding-global">
+      <div class="container-large legal-hero-inner">
+        <span class="eyebrow is-visible">Location Poppy Clic</span>
+        <h1>Conditions générales de vente</h1>
+        <p>Conditions générales applicables aux prestations de location du photobooth Poppy Clic proposées par SOS ORDI 03.</p>
+        <div class="legal-meta">
+          <span>Poppy Clic · SOS ORDI 03</span>
+          <span>Mise à jour : 22 août 2026</span>
+        </div>
+        <a href="index.html" class="legal-back">Retour au site</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="padding-global">
+    <div class="container-large legal-content">
+
+<section>
+  <h2>1. Identité du prestataire et objet</h2>
+  <p>
+    Les présentes conditions générales de vente encadrent les prestations de location du photobooth <strong>Poppy Clic</strong>, activité proposée par <strong>SOS ORDI 03 — Nelly Lacombe, Entrepreneur individuel (EI)</strong>, 13 rue du Meuble, 03230 Beaulon.
+  </p>
+  <p>
+    Elles s’appliquent aux prestations conclues avec les clients consommateurs, sans préjudice des conditions particulières figurant sur le devis accepté.
+  </p>
+</section>
+
+<section>
+  <h2>2. Prestations proposées</h2>
+  <p>Poppy Clic est un photobooth en bois massif équipé d’un appareil photo Nikon. Selon la formule retenue, une imprimante professionnelle permet également l’impression des photographies pendant la soirée.</p>
+
+  <div class="legal-offers">
+    <div class="legal-offer">
+      <span>Essentiel</span>
+      <strong>159 € / soirée</strong>
+      <p>Photos numériques illimitées, sans impressions incluses.</p>
+    </div>
+    <div class="legal-offer">
+      <span>Signature</span>
+      <strong>259 € / soirée</strong>
+      <p>Photos numériques illimitées + 250 impressions photo HD.</p>
+    </div>
+    <div class="legal-offer">
+      <span>Grand Jour</span>
+      <strong>359 € / soirée</strong>
+      <p>Photos numériques illimitées + 500 impressions photo HD.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:1rem;">
+    Les formules comprennent également l’installation et la récupération dans un rayon de 30 km autour de Beaulon, un contour photo personnalisé proposé au client, ainsi que l’envoi d’un lien permettant de télécharger les photographies numériques dans les 24 heures suivant la récupération du matériel.
+  </p>
+  <p>Poppy Clic met également à disposition des accessoires photo destinés aux invités.</p>
+</section>
+
+<section>
+  <h2>3. Tarifs et devis</h2>
+  <p>
+    Les tarifs présentés sur le site sont ceux indiqués ci-dessus au jour de la mise à jour des présentes CGV. Le prix réellement applicable à une réservation est celui confirmé sur le devis adressé au client.
+  </p>
+  <p>
+    Pour un événement situé au-delà du rayon de 30 km autour de Beaulon, la faisabilité et les éventuels frais supplémentaires sont précisés au client avant la réservation et figurent, le cas échéant, sur le devis.
+  </p>
+  <p>Le devis précise également les modalités et l’échéancier de paiement applicables à la prestation concernée.</p>
+</section>
+
+<section>
+  <h2>4. Réservation</h2>
+  <p>
+    L’envoi du formulaire disponible sur le site constitue une <strong>demande de disponibilité et de devis</strong> et non une réservation définitive.
+  </p>
+  <p>
+    La réservation devient ferme selon les modalités indiquées sur le devis transmis au client et accepté par celui-ci. Les éventuelles conditions particulières convenues par écrit complètent les présentes CGV.
+  </p>
+</section>
+
+<section>
+  <h2>5. Installation, mise en service et récupération</h2>
+  <p>
+    Poppy Clic est installé et mis en service personnellement par SOS ORDI 03 avant l’événement, puis récupéré après la soirée selon les horaires et modalités convenus avec le client.
+  </p>
+  <p>
+    Les conditions pratiques nécessaires à l’installation — accès au lieu, emplacement, horaires et contraintes techniques — sont précisées lors de la préparation de la prestation. Le client s’engage à communiquer les informations utiles concernant le lieu de l’événement.
+  </p>
+</section>
+
+<section>
+  <h2>6. Utilisation du matériel</h2>
+  <p>
+    Le photobooth est destiné à une utilisation normale et conforme à sa fonction. Le client s’engage à veiller à ce que le matériel ne soit pas déplacé, démonté, exposé volontairement à un risque anormal ou utilisé d’une manière susceptible de l’endommager.
+  </p>
+  <p>
+    Les accessoires photo mis à disposition doivent également être utilisés de manière normale et restitués avec le matériel lorsqu’ils sont récupérables.
+  </p>
+</section>
+
+<section>
+  <h2>7. Caution</h2>
+  <p>
+    Un chèque de caution de <strong>1 500 €</strong> est demandé dans le cadre de la location. Il <strong>n’est pas encaissé</strong> et est restitué lors de la récupération du matériel lorsque celui-ci est rendu en bon état.
+  </p>
+  <p>
+    En cas de perte, de non-restitution ou de dommage imputable à une utilisation anormale, SOS ORDI 03 informe le client des dommages constatés et des conséquences financières éventuelles correspondant à la remise en état ou au remplacement du matériel concerné.
+  </p>
+</section>
+
+<section>
+  <h2>8. Photographies et impressions</h2>
+  <p>
+    Les photographies numériques sont illimitées pendant la durée de la soirée, sous réserve du fonctionnement normal du matériel et des conditions techniques de l’événement.
+  </p>
+  <p>
+    Pour les formules Signature et Grand Jour, le nombre d’impressions incluses correspond respectivement à 250 et 500 tirages HD. Une fois le nombre d’impressions incluses atteint, aucune impression supplémentaire n’est garantie sauf accord spécifique préalable.
+  </p>
+  <p>
+    Le client reçoit, dans les 24 heures suivant la récupération de Poppy Clic, un lien lui permettant de télécharger l’ensemble des photographies numériques de la soirée.
+  </p>
+</section>
+
+<section>
+  <h2>9. Incident technique</h2>
+  <p>
+    SOS ORDI 03 installe et teste le matériel avant sa mise à disposition. En cas d’incident technique imprévisible pendant l’événement, SOS ORDI 03 met en œuvre les moyens raisonnables permettant d’en limiter les conséquences.
+  </p>
+  <p>
+    Lorsque l’incident est directement imputable au matériel ou à la prestation fournie et prive le client d’une partie substantielle du service prévu, la situation est examinée avec le client afin de déterminer une solution proportionnée, sans exclure les garanties légales applicables.
+  </p>
+</section>
+
+<section>
+  <h2>10. Modification ou annulation par le client</h2>
+  <p>
+    Toute demande de modification de date, de lieu ou de formule doit être adressée à SOS ORDI 03 dans les meilleurs délais et reste soumise à disponibilité.
+  </p>
+  <p>
+    Les conditions financières éventuellement applicables en cas d’annulation après confirmation de la réservation sont celles figurant sur le devis accepté ou dans les conditions particulières convenues avec le client.
+  </p>
+</section>
+
+<section>
+  <h2>11. Droit de rétractation</h2>
+  <p>
+    Lorsqu’un contrat est conclu à distance ou hors établissement avec un consommateur, celui-ci bénéficie en principe d’un délai légal de rétractation de quatorze jours à compter de la conclusion du contrat, sauf lorsqu’une exception légale est applicable à la prestation concernée.
+  </p>
+  <p>
+    Lorsque le client demande expressément que l’exécution d’une prestation commence avant l’expiration du délai de rétractation, les conséquences prévues par le Code de la consommation peuvent s’appliquer. Les droits impératifs du consommateur restent en tout état de cause applicables.
+  </p>
+
+  <h3>Modèle de formulaire de rétractation</h3>
+  <div class="legal-card">
+    <p>
+      À l’attention de : SOS ORDI 03 / Poppy Clic — Nelly Lacombe EI, 13 rue du Meuble, 03230 Beaulon — infos@sosordi03.com
+    </p>
+    <p>
+      Je vous notifie par la présente ma rétractation du contrat portant sur la prestation suivante : …<br>
+      Commandée / conclue le : …<br>
+      Nom du consommateur : …<br>
+      Adresse du consommateur : …<br>
+      Date : …<br>
+      Signature (uniquement en cas d’envoi sur papier) : …
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>12. Force majeure</h2>
+  <p>
+    Aucune partie ne peut être tenue responsable d’un manquement résultant d’un événement de force majeure au sens du droit français. Les parties se rapprochent alors afin d’examiner les conséquences de l’événement sur la prestation et, lorsque cela est possible, une solution de report.
+  </p>
+</section>
+
+<section>
+  <h2>13. Données personnelles</h2>
+  <p>
+    Les données nécessaires à la demande de devis, à la réservation et à l’exécution de la prestation sont traitées conformément à la
+    <a href="confidentialite.html">Politique de confidentialité</a> du site.
+  </p>
+</section>
+
+<section>
+  <h2>14. Réclamation et médiation de la consommation</h2>
+  <p>
+    En cas de difficulté, le client est invité à contacter en priorité SOS ORDI 03 par e-mail à
+    <a href="mailto:infos@sosordi03.com">infos@sosordi03.com</a> ou par téléphone au
+    <a href="tel:+33661499712">06 61 49 97 12</a>.
+  </p>
+  <p>
+    Après une réclamation écrite préalable restée sans solution, le consommateur peut recourir gratuitement au médiateur de la consommation dont relève SOS ORDI 03.
+  </p>
+  <div class="legal-warning">
+    <strong>MÉDIATEUR À COMPLÉTER</strong>
+    <p>Le nom, l’adresse et l’adresse du site internet du médiateur choisi doivent être ajoutés ici avant publication définitive.</p>
+  </div>
+</section>
+
+<section>
+  <h2>15. Droit applicable et litiges</h2>
+  <p>
+    Les présentes CGV sont soumises au droit français. En cas de litige avec un consommateur, les règles impératives de compétence territoriale et de protection du consommateur demeurent applicables.
+  </p>
+</section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="legal-footer">
+  <div class="padding-global">
+    <div class="container-large legal-footer-inner">
+      <div class="legal-footer-brand">Poppy Clic<span>.</span> <small>· SOS ORDI 03</small></div>
+      <nav>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cgv.html">CGV</a>
+        <a href="index.html#reservation">Réservation</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</div>
+<script>
+const nav=document.getElementById('navbar');
+addEventListener('scroll',()=>nav.classList.toggle('is-scrolled',scrollY>20),{passive:true});
+</script>
+</body>
+</html>
