@@ -1153,3 +1153,16 @@ ul{margin:0;padding:0;list-style:none;}
   }
 }
 
+/* Logo Poppy Clic dans la navigation */
+.navbar_logo-image{
+  display:block;
+  width:auto;
+  height:3.6rem;
+  object-fit:contain;
+}
+
+@media(max-width:640px){
+  .navbar_logo-image{
+    height:2.8rem;
+  }
+}
