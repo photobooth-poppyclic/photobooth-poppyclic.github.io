@@ -574,8 +574,11 @@ ul{margin:0;padding:0;list-style:none;}
   padding-top:3.1rem;
   padding-bottom:4rem;
 }
-.hero_intro{grid-area:intro;align-self:end;max-width:48rem;}
-.hero_detail{grid-area:detail;align-self:start;max-width:43rem;}
+span.eyebrow.is-visible.hero_kicker {
+    margin-bottom: 40px;
+}
+.hero_intro{grid-area:intro;align-self:start;max-width:48rem;margin-top: 50px;}
+.hero_detail{grid-area:detail;align-self:start;max-width:43rem;margin-top: -110px;}
 .hero_kicker{font-size:.75rem;letter-spacing:.17em;}
 .hero_title{
   margin-top:1.15rem;
