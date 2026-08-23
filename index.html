@@ -561,47 +561,6 @@
   </div>
 </section>
 
-<!-- DISPONIBILITÉS -->
-<section class="section_availability" id="disponibilites">
-  <div class="padding-global">
-    <div class="container-large padding-section-large availability_layout">
-
-      <div class="availability_intro" data-reveal>
-        <span class="eyebrow">Disponibilités</span>
-        <h2 class="heading-style-h2 availability_title">Votre date est-elle encore libre&nbsp;?</h2>
-        <p class="text-size-large text-color-muted">
-          Consultez le calendrier avant d’envoyer votre demande. Les dates déjà réservées apparaissent comme occupées.
-        </p>
-
-        <div class="availability_note">
-          <span class="availability_dot" aria-hidden="true"></span>
-          <p>Une date sans réservation affichée reste à confirmer au moment de votre demande.</p>
-        </div>
-
-        <a href="#reservation" class="button availability_button">Faire une demande</a>
-      </div>
-
-      <div class="availability_calendar" data-reveal style="--i:1">
-        <div class="availability_calendar-head">
-          <span>Poppy Clic</span>
-          <strong>Calendrier des réservations</strong>
-        </div>
-
-        <div class="availability_calendar-frame">
-          <iframe
-            src="https://calendar.google.com/calendar/embed?src=b93cf9e280fa94d907abe97120cdd96d10d26eff4b33da25ce602ed80405b85b%40group.calendar.google.com&ctz=Europe%2FParis"
-            title="Calendrier des disponibilités Poppy Clic"
-            loading="lazy"
-            frameborder="0"
-            scrolling="no">
-          </iframe>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- FORMULAIRE -->
 <section class="section_contact" id="reservation">
   <div class="padding-global">
@@ -615,6 +574,41 @@
         <div class="contact_reassurance">
           <strong>Une question avant de réserver ?</strong>
           <p>Vous pouvez également me joindre au <a href="tel:+33661499712">06 61 49 97 12</a>.</p>
+        </div>
+
+        <div class="availability_checker" id="disponibilites">
+          <span class="availability_checker-kicker">Disponibilités</span>
+          <h3>Vérifiez votre date.</h3>
+          <p class="availability_checker-copy">
+            Choisissez la date de votre événement : Poppy Clic vérifie instantanément si elle est encore libre.
+          </p>
+
+          <div class="availability_checker-controls">
+            <label class="availability_checker-label" for="availability-date">Date de votre événement</label>
+            <div class="availability_checker-row">
+              <input
+                class="availability_checker-input"
+                type="date"
+                id="availability-date"
+                aria-describedby="availability-check-status">
+              <button
+                class="button availability_checker-button"
+                type="button"
+                id="availability-check-button">
+                Vérifier la date
+              </button>
+            </div>
+          </div>
+
+          <p
+            id="availability-check-status"
+            class="availability_checker-status"
+            role="status"
+            aria-live="polite"></p>
+
+          <p class="availability_checker-note">
+            Une date disponible reste à confirmer au moment de votre demande.
+          </p>
         </div>
       </div>
 
@@ -996,14 +990,17 @@ if (mobileMenuToggle && mobileMenu) {
 </script>
   <script>
 /* ============================================================
-   VÉRIFICATION DE DISPONIBILITÉ
-   Remplacer uniquement la valeur ci-dessous par l'URL du webhook
-   Make "Disponibilité Poppy Clic".
+   VÉRIFICATION DE DISPONIBILITÉ POPPY CLIC
+   Le webhook Make existant est conservé.
    ============================================================ */
 const AVAILABILITY_WEBHOOK_URL = 'https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv';
 
 const dateInput = document.getElementById('date');
 const dateAvailabilityStatus = document.getElementById('date-availability-status');
+
+const availabilityCheckInput = document.getElementById('availability-date');
+const availabilityCheckButton = document.getElementById('availability-check-button');
+const availabilityCheckStatus = document.getElementById('availability-check-status');
 
 let dateAvailabilityState = 'unknown';
 let lastCheckedDate = '';
@@ -1020,6 +1017,38 @@ function setDateAvailabilityStatus(state, message) {
   dateAvailabilityStatus.className =
     'date-availability-status' + (state ? ' is-' + state : '');
   dateAvailabilityStatus.textContent = message || '';
+}
+
+function setQuickAvailabilityStatus(state, message) {
+  if (!availabilityCheckStatus) return;
+
+  availabilityCheckStatus.className =
+    'availability_checker-status' + (state ? ' is-' + state : '');
+  availabilityCheckStatus.textContent = message || '';
+}
+
+async function requestDateAvailability(date) {
+  if (!date || !availabilityIsConfigured) return 'unknown';
+
+  try {
+    const separator = AVAILABILITY_WEBHOOK_URL.includes('?') ? '&' : '?';
+    const response = await fetch(
+      AVAILABILITY_WEBHOOK_URL + separator + 'date=' + encodeURIComponent(date),
+      { method: 'GET', cache: 'no-store' }
+    );
+
+    if (!response.ok) throw new Error('Réponse indisponible');
+
+    const result = (await response.text()).trim();
+
+    if (result === '1') return 'busy';
+    if (result === '0') return 'available';
+
+    throw new Error('Réponse inattendue');
+
+  } catch (error) {
+    return 'error';
+  }
 }
 
 async function checkDateAvailability(date) {
@@ -1040,50 +1069,91 @@ async function checkDateAvailability(date) {
   lastCheckedDate = date;
   setDateAvailabilityStatus('checking', 'Vérification de la disponibilité…');
 
-  try {
-    const separator = AVAILABILITY_WEBHOOK_URL.includes('?') ? '&' : '?';
-    const response = await fetch(
-      AVAILABILITY_WEBHOOK_URL + separator + 'date=' + encodeURIComponent(date),
-      { method: 'GET', cache: 'no-store' }
+  const state = await requestDateAvailability(date);
+
+  if (state === 'busy') {
+    if (dateInput) dateInput.setCustomValidity('Cette date est déjà réservée.');
+    setDateAvailabilityStatus(
+      'busy',
+      'Cette date est déjà réservée. Choisissez une autre date.'
+    );
+    return 'busy';
+  }
+
+  if (state === 'available') {
+    if (dateInput) dateInput.setCustomValidity('');
+    setDateAvailabilityStatus(
+      'available',
+      'Cette date est disponible. Vous pouvez envoyer votre demande.'
+    );
+    return 'available';
+  }
+
+  if (dateInput) dateInput.setCustomValidity('');
+  setDateAvailabilityStatus(
+    'error',
+    'Vérification automatique momentanément indisponible. La date sera confirmée avec votre demande.'
+  );
+  return 'error';
+}
+
+async function runQuickAvailabilityCheck() {
+  if (!availabilityCheckInput || !availabilityCheckButton) return;
+
+  const selectedDate = availabilityCheckInput.value;
+
+  if (!selectedDate) {
+    setQuickAvailabilityStatus('busy', 'Choisissez d’abord une date.');
+    availabilityCheckInput.focus();
+    return;
+  }
+
+  availabilityCheckButton.disabled = true;
+  const originalText = availabilityCheckButton.textContent;
+  availabilityCheckButton.textContent = 'Vérification…';
+  setQuickAvailabilityStatus('checking', 'Vérification en cours…');
+
+  const state = await requestDateAvailability(selectedDate);
+
+  if (state === 'available') {
+    setQuickAvailabilityStatus(
+      'available',
+      'Cette date est disponible. Elle a été ajoutée à votre demande.'
     );
 
-    if (!response.ok) throw new Error('Réponse indisponible');
-
-    const result = (await response.text()).trim();
-
-    /* Le scénario Make renvoie 1 = occupé, 0 = libre */
-    if (result === '1') {
-      if (dateInput) {
-        dateInput.setCustomValidity('Cette date est déjà réservée.');
-      }
-      setDateAvailabilityStatus(
-        'busy',
-        'Cette date est déjà réservée. Choisissez une autre date.'
-      );
-      return 'busy';
-    }
-
-    if (result === '0') {
-      if (dateInput) dateInput.setCustomValidity('');
+    if (dateInput) {
+      dateInput.value = selectedDate;
+      dateInput.setCustomValidity('');
+      lastCheckedDate = selectedDate;
       setDateAvailabilityStatus(
         'available',
         'Cette date est disponible. Vous pouvez envoyer votre demande.'
       );
-      return 'available';
     }
-
-    throw new Error('Réponse inattendue');
-
-  } catch (error) {
-    if (dateInput) dateInput.setCustomValidity('');
-
-    /* On ne bloque pas une demande si Make est momentanément indisponible. */
-    setDateAvailabilityStatus(
-      'error',
-      'Vérification automatique momentanément indisponible. La date sera confirmée avec votre demande.'
+  } else if (state === 'busy') {
+    setQuickAvailabilityStatus(
+      'busy',
+      'Cette date est déjà réservée. Essayez une autre date.'
     );
-    return 'error';
+  } else {
+    setQuickAvailabilityStatus(
+      'error',
+      'Vérification momentanément indisponible. Vous pouvez tout de même envoyer votre demande.'
+    );
   }
+
+  availabilityCheckButton.disabled = false;
+  availabilityCheckButton.textContent = originalText;
+}
+
+if (availabilityCheckButton) {
+  availabilityCheckButton.addEventListener('click', runQuickAvailabilityCheck);
+}
+
+if (availabilityCheckInput) {
+  availabilityCheckInput.addEventListener('change', () => {
+    setQuickAvailabilityStatus('unknown', '');
+  });
 }
 
 if (dateInput) {
