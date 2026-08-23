@@ -653,6 +653,12 @@
           <div class="form_field">
             <label class="form_label" for="date">Date souhaitée *</label>
             <input class="form_input" type="date" id="date" name="date" required>
+            <p
+              id="date-availability-status"
+              class="date-availability-status"
+              role="status"
+              aria-live="polite">
+            </p>
           </div>
           <div class="form_field">
             <label class="form_label" for="lieu">Lieu / ville *</label>
@@ -989,11 +995,129 @@ if (mobileMenuToggle && mobileMenu) {
 }
 </script>
   <script>
+/* ============================================================
+   VÉRIFICATION DE DISPONIBILITÉ
+   Remplacer uniquement la valeur ci-dessous par l'URL du webhook
+   Make "Disponibilité Poppy Clic".
+   ============================================================ */
+const AVAILABILITY_WEBHOOK_URL = 'COLLER_ICI_URL_WEBHOOK_DISPONIBILITE';
+
+const dateInput = document.getElementById('date');
+const dateAvailabilityStatus = document.getElementById('date-availability-status');
+
+let dateAvailabilityState = 'unknown';
+let lastCheckedDate = '';
+
+const availabilityIsConfigured =
+  AVAILABILITY_WEBHOOK_URL.startsWith('https://') &&
+  !AVAILABILITY_WEBHOOK_URL.includes('COLLER_ICI');
+
+function setDateAvailabilityStatus(state, message) {
+  dateAvailabilityState = state;
+
+  if (!dateAvailabilityStatus) return;
+
+  dateAvailabilityStatus.className =
+    'date-availability-status' + (state ? ' is-' + state : '');
+  dateAvailabilityStatus.textContent = message || '';
+}
+
+async function checkDateAvailability(date) {
+  if (!date) {
+    lastCheckedDate = '';
+    setDateAvailabilityStatus('unknown', '');
+    if (dateInput) dateInput.setCustomValidity('');
+    return 'unknown';
+  }
+
+  if (!availabilityIsConfigured) {
+    lastCheckedDate = '';
+    setDateAvailabilityStatus('unknown', '');
+    if (dateInput) dateInput.setCustomValidity('');
+    return 'unknown';
+  }
+
+  lastCheckedDate = date;
+  setDateAvailabilityStatus('checking', 'Vérification de la disponibilité…');
+
+  try {
+    const separator = AVAILABILITY_WEBHOOK_URL.includes('?') ? '&' : '?';
+    const response = await fetch(
+      AVAILABILITY_WEBHOOK_URL + separator + 'date=' + encodeURIComponent(date),
+      { method: 'GET', cache: 'no-store' }
+    );
+
+    if (!response.ok) throw new Error('Réponse indisponible');
+
+    const result = (await response.text()).trim();
+
+    /* Le scénario Make renvoie 1 = occupé, 0 = libre */
+    if (result === '1') {
+      if (dateInput) {
+        dateInput.setCustomValidity('Cette date est déjà réservée.');
+      }
+      setDateAvailabilityStatus(
+        'busy',
+        'Cette date est déjà réservée. Choisissez une autre date.'
+      );
+      return 'busy';
+    }
+
+    if (result === '0') {
+      if (dateInput) dateInput.setCustomValidity('');
+      setDateAvailabilityStatus(
+        'available',
+        'Cette date est disponible. Vous pouvez envoyer votre demande.'
+      );
+      return 'available';
+    }
+
+    throw new Error('Réponse inattendue');
+
+  } catch (error) {
+    if (dateInput) dateInput.setCustomValidity('');
+
+    /* On ne bloque pas une demande si Make est momentanément indisponible. */
+    setDateAvailabilityStatus(
+      'error',
+      'Vérification automatique momentanément indisponible. La date sera confirmée avec votre demande.'
+    );
+    return 'error';
+  }
+}
+
+if (dateInput) {
+  dateInput.addEventListener('change', () => {
+    checkDateAvailability(dateInput.value);
+  });
+}
+</script>
+
+  <script>
 const form = document.getElementById('reservation-form');
 const success = document.getElementById('form-success');
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
+
+  /* Recontrôle la date au moment de l'envoi.
+     Une date confirmée occupée bloque uniquement l'envoi du formulaire. */
+  if (availabilityIsConfigured && dateInput && dateInput.value) {
+    let availabilityState = dateAvailabilityState;
+
+    if (
+      lastCheckedDate !== dateInput.value ||
+      !['available', 'busy', 'error'].includes(availabilityState)
+    ) {
+      availabilityState = await checkDateAvailability(dateInput.value);
+    }
+
+    if (availabilityState === 'busy') {
+      dateInput.reportValidity();
+      dateInput.focus();
+      return;
+    }
+  }
 
   const button = form.querySelector('button[type="submit"]');
   const originalText = button.textContent;
