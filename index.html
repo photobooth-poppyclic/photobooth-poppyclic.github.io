@@ -34,12 +34,13 @@
       <a href="#reservation" class="button">Réservation</a>
 
       <button
-        class="navbar_mobile-toggle"
+        class="mobile-menu-toggle"
         type="button"
         aria-label="Ouvrir le menu"
         aria-expanded="false"
-        aria-controls="navbar-mobile-menu"
+        aria-controls="mobile-menu"
       >
+        <span></span>
         <span></span>
         <span></span>
       </button>
@@ -47,18 +48,13 @@
     </div>
   </div>
 
-  <nav
-    class="navbar_mobile-menu"
-    id="navbar-mobile-menu"
-    aria-label="Navigation mobile"
-    aria-hidden="true"
-  >
+  <nav class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <div class="padding-global">
-      <div class="container-large navbar_mobile-menu-inner">
-        <a href="#occasions">Occasions</a>
-        <a href="#artisan">Le photobooth</a>
-        <a href="#tarifs">Formules</a>
-        <a href="#faq">Questions</a>
+      <div class="container-large mobile-menu-inner">
+        <a href="#occasions"><span>01</span><strong>Occasions</strong></a>
+        <a href="#artisan"><span>02</span><strong>Le photobooth</strong></a>
+        <a href="#tarifs"><span>03</span><strong>Formules</strong></a>
+        <a href="#faq"><span>04</span><strong>Questions</strong></a>
       </div>
     </div>
   </nav>
@@ -922,35 +918,33 @@ const io = new IntersectionObserver((entries) => {
 }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-// Menu mobile
-const mobileMenuToggle = document.querySelector('.navbar_mobile-toggle');
-const mobileMenu = document.getElementById('navbar-mobile-menu');
+// Navigation mobile
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
 
 if (mobileMenuToggle && mobileMenu) {
-
-  const closeMobileMenu = () => {
-    nav.classList.remove('menu-open');
-    mobileMenuToggle.setAttribute('aria-expanded', 'false');
-    mobileMenuToggle.setAttribute('aria-label', 'Ouvrir le menu');
-    mobileMenu.setAttribute('aria-hidden', 'true');
+  const setMenu = (open) => {
+    nav.classList.toggle('mobile-menu-open', open);
+    mobileMenuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileMenuToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
   };
 
   mobileMenuToggle.addEventListener('click', () => {
-    const opening = !nav.classList.contains('menu-open');
-
-    nav.classList.toggle('menu-open', opening);
-    mobileMenuToggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
-    mobileMenuToggle.setAttribute('aria-label', opening ? 'Fermer le menu' : 'Ouvrir le menu');
-    mobileMenu.setAttribute('aria-hidden', opening ? 'false' : 'true');
+    setMenu(!nav.classList.contains('mobile-menu-open'));
   });
 
   mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMobileMenu);
+    link.addEventListener('click', () => setMenu(false));
   });
 
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') closeMobileMenu();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenu(false);
   });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 991) setMenu(false);
+  }, {passive:true});
 }
 </script>
   <script>
