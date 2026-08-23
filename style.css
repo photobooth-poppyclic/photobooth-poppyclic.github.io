@@ -2473,3 +2473,146 @@ ul{margin:0;padding:0;list-style:none;}
   }
 }
 
+/* ============================================================
+   DISPONIBILITÉS — CALENDRIER POPPY CLIC
+   Ajout uniquement : aucune règle existante n'est modifiée.
+   ============================================================ */
+
+.section_availability{
+  background:var(--chalk);
+  border-top:1px solid var(--line);
+}
+
+.availability_layout{
+  display:grid;
+  grid-template-columns:.72fr 1.28fr;
+  gap:4.5rem;
+  align-items:start;
+}
+
+.availability_intro{
+  position:sticky;
+  top:7rem;
+}
+
+.availability_title{
+  max-width:28rem;
+  margin-top:1.2rem;
+  margin-bottom:1.1rem;
+}
+
+.availability_intro > .text-size-large{
+  max-width:31rem;
+}
+
+.availability_note{
+  display:flex;
+  align-items:flex-start;
+  gap:.75rem;
+  max-width:31rem;
+  margin-top:2rem;
+  padding-top:1.25rem;
+  border-top:1px solid var(--line);
+  color:var(--ink-60);
+  font-size:.88rem;
+  line-height:1.55;
+}
+
+.availability_dot{
+  flex:0 0 auto;
+  width:.62rem;
+  height:.62rem;
+  margin-top:.33rem;
+  border-radius:50%;
+  background:var(--poppy);
+  box-shadow:0 0 0 4px rgba(196,54,44,.08);
+}
+
+.availability_button{
+  margin-top:2rem;
+}
+
+.availability_calendar{
+  min-width:0;
+  overflow:hidden;
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:0 24px 55px -42px rgba(23,26,21,.6);
+}
+
+.availability_calendar-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:1rem;
+  padding:1rem 1.2rem;
+  border-bottom:1px solid var(--line);
+  background:var(--paper);
+}
+
+.availability_calendar-head span{
+  color:var(--poppy);
+  font-size:.67rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.availability_calendar-head strong{
+  font-family:var(--font-display);
+  font-size:1rem;
+  font-weight:500;
+}
+
+.availability_calendar-frame{
+  position:relative;
+  width:100%;
+  height:38rem;
+  overflow:hidden;
+  background:#fff;
+}
+
+.availability_calendar-frame iframe{
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+  background:#fff;
+}
+
+@media(max-width:991px){
+  .availability_layout{
+    grid-template-columns:1fr;
+    gap:2.5rem;
+  }
+
+  .availability_intro{
+    position:static;
+  }
+
+  .availability_calendar-frame{
+    height:34rem;
+  }
+}
+
+@media(max-width:640px){
+  .availability_calendar-head{
+    display:block;
+    padding:.9rem 1rem;
+  }
+
+  .availability_calendar-head span{
+    display:block;
+    margin-bottom:.2rem;
+  }
+
+  .availability_calendar-frame{
+    height:32rem;
+  }
+
+  .availability_button{
+    width:100%;
+  }
+}
+
