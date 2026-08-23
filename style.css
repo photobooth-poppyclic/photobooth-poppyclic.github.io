@@ -2320,172 +2320,155 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ============================================================
-   MENU MOBILE — AJOUT SUR TON CSS DU 23/08/2026
-   Aucun autre style du site n'est modifié.
+   MENU MOBILE — VERSION SIMPLE ET ROBUSTE
+   Ajout uniquement. Aucune règle existante n'est remplacée.
    ============================================================ */
 
-.navbar_mobile-toggle{
-  display:none;
-  position:relative;
-  flex:0 0 auto;
-  width:2.7rem;
-  height:2.7rem;
-  padding:0;
-  border:1px solid var(--line);
-  border-radius:50%;
-  background:rgba(251,250,246,.35);
-  color:var(--ink);
-  cursor:pointer;
-}
-
-.navbar_mobile-toggle span{
-  position:absolute;
-  left:50%;
-  width:1rem;
-  height:1px;
-  background:currentColor;
-  transform:translateX(-50%);
-  transition:top .28s var(--ease-out),transform .28s var(--ease-out);
-}
-
-.navbar_mobile-toggle span:first-child{top:1.05rem;}
-.navbar_mobile-toggle span:last-child{top:1.5rem;}
-
-.navbar_component.menu-open .navbar_mobile-toggle span:first-child{
-  top:1.28rem;
-  transform:translateX(-50%) rotate(45deg);
-}
-
-.navbar_component.menu-open .navbar_mobile-toggle span:last-child{
-  top:1.28rem;
-  transform:translateX(-50%) rotate(-45deg);
-}
-
-.navbar_mobile-menu{
+.mobile-menu-toggle,
+.mobile-menu{
   display:none;
 }
 
+@media (max-width:991px){
 
-@media(max-width:991px){
+  .mobile-menu-toggle{
+    display:grid;
+    place-content:center;
+    gap:4px;
 
-  .navbar_mobile-toggle{
-    display:block;
+    flex:0 0 auto;
+    width:2.75rem;
+    height:2.75rem;
+    padding:0;
+
+    border:1px solid rgba(23,26,21,.18);
+    border-radius:50%;
+    background:rgba(251,250,246,.55);
+    color:var(--ink);
+
+    cursor:pointer;
   }
 
-  .navbar_mobile-menu{
+  .mobile-menu-toggle span{
+    display:block;
+    width:1rem;
+    height:1.5px;
+    background:currentColor;
+    border-radius:2px;
+    transition:transform .25s var(--ease-out), opacity .2s ease;
+  }
+
+  .navbar_component.mobile-menu-open .mobile-menu-toggle span:nth-child(1){
+    transform:translateY(5.5px) rotate(45deg);
+  }
+
+  .navbar_component.mobile-menu-open .mobile-menu-toggle span:nth-child(2){
+    opacity:0;
+  }
+
+  .navbar_component.mobile-menu-open .mobile-menu-toggle span:nth-child(3){
+    transform:translateY(-5.5px) rotate(-45deg);
+  }
+
+  /* Fermé = réellement absent. Aucun lien visible par accident. */
+  .mobile-menu{
+    display:none;
+  }
+
+  .navbar_component.mobile-menu-open .mobile-menu{
     display:block;
     position:absolute;
     top:100%;
     left:0;
     right:0;
-    z-index:59;
+    z-index:58;
 
-    background:rgba(231,232,222,.98);
+    background:rgba(231,232,222,.985);
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
-    box-shadow:0 22px 40px -32px rgba(23,26,21,.55);
-
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transform:translateY(-8px);
-
-    transition:
-      opacity .28s var(--ease-out),
-      transform .28s var(--ease-out),
-      visibility .28s;
+    box-shadow:0 22px 45px -34px rgba(23,26,21,.55);
   }
 
-  .navbar_component.menu-open .navbar_mobile-menu{
-    opacity:1;
-    visibility:visible;
-    pointer-events:auto;
-    transform:none;
-  }
-
-  .navbar_mobile-menu-inner{
+  .mobile-menu-inner{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
+    padding-top:.75rem;
+    padding-bottom:.75rem;
   }
 
-  .navbar_mobile-menu a{
-    display:flex;
+  .mobile-menu a{
+    display:grid;
+    grid-template-columns:2rem 1fr;
     align-items:center;
+    gap:.7rem;
+
     min-height:4rem;
-    padding:.85rem 1rem;
+    padding:.8rem 1rem;
 
     color:var(--ink);
-    border-bottom:1px solid var(--line);
-
-    font-family:var(--font-display);
-    font-size:1.08rem;
-    font-weight:500;
-    line-height:1.2;
     text-decoration:none;
+    border-bottom:1px solid var(--line);
   }
 
-  .navbar_mobile-menu a:nth-child(odd){
+  .mobile-menu a:nth-child(odd){
     border-right:1px solid var(--line);
+  }
+
+  .mobile-menu a span{
+    color:var(--poppy);
+    font-size:.6rem;
+    font-weight:600;
+    letter-spacing:.12em;
+  }
+
+  .mobile-menu a strong{
+    font-family:var(--font-display);
+    font-size:1.05rem;
+    font-weight:500;
+    line-height:1.15;
   }
 }
 
+@media (max-width:640px){
 
-@media(max-width:640px){
-
-  /* Tes règles actuelles pour le logo et Réservation restent en place. */
   .navbar_container{
     gap:.5rem;
   }
 
-  .navbar_mobile-toggle{
+  .mobile-menu-toggle{
     width:2.6rem;
     height:2.6rem;
   }
 
-  .navbar_mobile-toggle span:first-child{top:1rem;}
-  .navbar_mobile-toggle span:last-child{top:1.43rem;}
-
-  .navbar_component.menu-open .navbar_mobile-toggle span:first-child,
-  .navbar_component.menu-open .navbar_mobile-toggle span:last-child{
-    top:1.23rem;
-  }
-
-  .navbar_mobile-menu-inner{
+  .mobile-menu-inner{
     grid-template-columns:1fr;
   }
 
-  .navbar_mobile-menu a{
-    min-height:3.6rem;
-    padding:.75rem 0;
+  .mobile-menu a{
+    min-height:3.65rem;
+    padding:.72rem 0;
     border-right:0 !important;
+  }
+
+  .mobile-menu a:last-child{
+    border-bottom:0;
   }
 }
 
+@media (max-width:390px){
 
-@media(max-width:390px){
-
-  .navbar_mobile-toggle{
+  .mobile-menu-toggle{
     width:2.45rem;
     height:2.45rem;
   }
 
-  .navbar_mobile-toggle span{
+  .mobile-menu-toggle span{
     width:.9rem;
-  }
-
-  .navbar_mobile-toggle span:first-child{top:.94rem;}
-  .navbar_mobile-toggle span:last-child{top:1.34rem;}
-
-  .navbar_component.menu-open .navbar_mobile-toggle span:first-child,
-  .navbar_component.menu-open .navbar_mobile-toggle span:last-child{
-    top:1.15rem;
   }
 }
 
-
-@media(prefers-reduced-motion:reduce){
-  .navbar_mobile-menu,
-  .navbar_mobile-toggle span{
+@media (prefers-reduced-motion:reduce){
+  .mobile-menu-toggle span{
     transition:none!important;
   }
 }
