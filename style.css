@@ -2319,3 +2319,174 @@ ul{margin:0;padding:0;list-style:none;}
   }
 }
 
+/* ============================================================
+   MENU MOBILE — AJOUT SUR TON CSS DU 23/08/2026
+   Aucun autre style du site n'est modifié.
+   ============================================================ */
+
+.navbar_mobile-toggle{
+  display:none;
+  position:relative;
+  flex:0 0 auto;
+  width:2.7rem;
+  height:2.7rem;
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:rgba(251,250,246,.35);
+  color:var(--ink);
+  cursor:pointer;
+}
+
+.navbar_mobile-toggle span{
+  position:absolute;
+  left:50%;
+  width:1rem;
+  height:1px;
+  background:currentColor;
+  transform:translateX(-50%);
+  transition:top .28s var(--ease-out),transform .28s var(--ease-out);
+}
+
+.navbar_mobile-toggle span:first-child{top:1.05rem;}
+.navbar_mobile-toggle span:last-child{top:1.5rem;}
+
+.navbar_component.menu-open .navbar_mobile-toggle span:first-child{
+  top:1.28rem;
+  transform:translateX(-50%) rotate(45deg);
+}
+
+.navbar_component.menu-open .navbar_mobile-toggle span:last-child{
+  top:1.28rem;
+  transform:translateX(-50%) rotate(-45deg);
+}
+
+.navbar_mobile-menu{
+  display:none;
+}
+
+
+@media(max-width:991px){
+
+  .navbar_mobile-toggle{
+    display:block;
+  }
+
+  .navbar_mobile-menu{
+    display:block;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    z-index:59;
+
+    background:rgba(231,232,222,.98);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 22px 40px -32px rgba(23,26,21,.55);
+
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(-8px);
+
+    transition:
+      opacity .28s var(--ease-out),
+      transform .28s var(--ease-out),
+      visibility .28s;
+  }
+
+  .navbar_component.menu-open .navbar_mobile-menu{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:none;
+  }
+
+  .navbar_mobile-menu-inner{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .navbar_mobile-menu a{
+    display:flex;
+    align-items:center;
+    min-height:4rem;
+    padding:.85rem 1rem;
+
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+
+    font-family:var(--font-display);
+    font-size:1.08rem;
+    font-weight:500;
+    line-height:1.2;
+    text-decoration:none;
+  }
+
+  .navbar_mobile-menu a:nth-child(odd){
+    border-right:1px solid var(--line);
+  }
+}
+
+
+@media(max-width:640px){
+
+  /* Tes règles actuelles pour le logo et Réservation restent en place. */
+  .navbar_container{
+    gap:.5rem;
+  }
+
+  .navbar_mobile-toggle{
+    width:2.6rem;
+    height:2.6rem;
+  }
+
+  .navbar_mobile-toggle span:first-child{top:1rem;}
+  .navbar_mobile-toggle span:last-child{top:1.43rem;}
+
+  .navbar_component.menu-open .navbar_mobile-toggle span:first-child,
+  .navbar_component.menu-open .navbar_mobile-toggle span:last-child{
+    top:1.23rem;
+  }
+
+  .navbar_mobile-menu-inner{
+    grid-template-columns:1fr;
+  }
+
+  .navbar_mobile-menu a{
+    min-height:3.6rem;
+    padding:.75rem 0;
+    border-right:0 !important;
+  }
+}
+
+
+@media(max-width:390px){
+
+  .navbar_mobile-toggle{
+    width:2.45rem;
+    height:2.45rem;
+  }
+
+  .navbar_mobile-toggle span{
+    width:.9rem;
+  }
+
+  .navbar_mobile-toggle span:first-child{top:.94rem;}
+  .navbar_mobile-toggle span:last-child{top:1.34rem;}
+
+  .navbar_component.menu-open .navbar_mobile-toggle span:first-child,
+  .navbar_component.menu-open .navbar_mobile-toggle span:last-child{
+    top:1.15rem;
+  }
+}
+
+
+@media(prefers-reduced-motion:reduce){
+  .navbar_mobile-menu,
+  .navbar_mobile-toggle span{
+    transition:none!important;
+  }
+}
+
