@@ -729,7 +729,7 @@ ul{margin:0;padding:0;list-style:none;}
   }
   .hero_visual::before{display:none;}
   .hero_visual img{
-    aspect-ratio:16/11;
+   
     object-position:center 43%;
   }
   .hero_visual-badge{
