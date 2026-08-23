@@ -32,8 +32,37 @@
         <a href="#faq" class="navbar_link">Questions</a>
       </nav>
       <a href="#reservation" class="button">Réservation</a>
+
+      <button
+        class="navbar_mobile-toggle"
+        type="button"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="navbar-mobile-menu"
+      >
+        <span></span>
+        <span></span>
+      </button>
+
     </div>
   </div>
+
+  <nav
+    class="navbar_mobile-menu"
+    id="navbar-mobile-menu"
+    aria-label="Navigation mobile"
+    aria-hidden="true"
+  >
+    <div class="padding-global">
+      <div class="container-large navbar_mobile-menu-inner">
+        <a href="#occasions">Occasions</a>
+        <a href="#artisan">Le photobooth</a>
+        <a href="#tarifs">Formules</a>
+        <a href="#faq">Questions</a>
+      </div>
+    </div>
+  </nav>
+
 </header>
 
 <main id="top">
@@ -892,6 +921,37 @@ const io = new IntersectionObserver((entries) => {
   });
 }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// Menu mobile
+const mobileMenuToggle = document.querySelector('.navbar_mobile-toggle');
+const mobileMenu = document.getElementById('navbar-mobile-menu');
+
+if (mobileMenuToggle && mobileMenu) {
+
+  const closeMobileMenu = () => {
+    nav.classList.remove('menu-open');
+    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+    mobileMenuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+  };
+
+  mobileMenuToggle.addEventListener('click', () => {
+    const opening = !nav.classList.contains('menu-open');
+
+    nav.classList.toggle('menu-open', opening);
+    mobileMenuToggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    mobileMenuToggle.setAttribute('aria-label', opening ? 'Fermer le menu' : 'Ouvrir le menu');
+    mobileMenu.setAttribute('aria-hidden', opening ? 'false' : 'true');
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMobileMenu();
+  });
+}
 </script>
   <script>
 const form = document.getElementById('reservation-form');
