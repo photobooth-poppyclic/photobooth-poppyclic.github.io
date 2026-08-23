@@ -2474,144 +2474,164 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ============================================================
-   DISPONIBILITÉS — CALENDRIER POPPY CLIC
-   Ajout uniquement : aucune règle existante n'est modifiée.
+   DISPONIBILITÉS — CARTE INTÉGRÉE AU FORMULAIRE
+   Remplace uniquement l'ancien grand calendrier Google.
    ============================================================ */
 
-.section_availability{
-  background:var(--chalk);
-  border-top:1px solid var(--line);
-}
-
-.availability_layout{
-  display:grid;
-  grid-template-columns:.72fr 1.28fr;
-  gap:4.5rem;
-  align-items:start;
-}
-
-.availability_intro{
-  position:sticky;
-  top:7rem;
-}
-
-.availability_title{
-  max-width:28rem;
-  margin-top:1.2rem;
-  margin-bottom:1.1rem;
-}
-
-.availability_intro > .text-size-large{
-  max-width:31rem;
-}
-
-.availability_note{
-  display:flex;
-  align-items:flex-start;
-  gap:.75rem;
-  max-width:31rem;
-  margin-top:2rem;
-  padding-top:1.25rem;
-  border-top:1px solid var(--line);
-  color:var(--ink-60);
-  font-size:.88rem;
-  line-height:1.55;
-}
-
-.availability_dot{
-  flex:0 0 auto;
-  width:.62rem;
-  height:.62rem;
-  margin-top:.33rem;
-  border-radius:50%;
-  background:var(--poppy);
-  box-shadow:0 0 0 4px rgba(196,54,44,.08);
-}
-
-.availability_button{
-  margin-top:2rem;
-}
-
-.availability_calendar{
-  min-width:0;
+.availability_checker{
+  position:relative;
+  margin-top:1.5rem;
+  padding:1.65rem;
   overflow:hidden;
-  background:var(--paper-2);
-  border:1px solid var(--line);
+  border:1px solid rgba(251,250,246,.18);
   border-radius:var(--radius-lg);
-  box-shadow:0 24px 55px -42px rgba(23,26,21,.6);
+  background:
+    linear-gradient(135deg,rgba(251,250,246,.07),rgba(251,250,246,.025));
 }
 
-.availability_calendar-head{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:1rem;
-  padding:1rem 1.2rem;
-  border-bottom:1px solid var(--line);
-  background:var(--paper);
+.availability_checker::after{
+  content:"";
+  position:absolute;
+  right:-3rem;
+  bottom:-3rem;
+  width:8rem;
+  height:8rem;
+  border:1px solid rgba(184,131,78,.2);
+  border-radius:50%;
+  pointer-events:none;
 }
 
-.availability_calendar-head span{
-  color:var(--poppy);
-  font-size:.67rem;
+.availability_checker-kicker{
+  display:block;
+  margin-bottom:.65rem;
+  color:var(--wood);
+  font-size:.66rem;
   font-weight:600;
-  letter-spacing:.16em;
+  letter-spacing:.17em;
   text-transform:uppercase;
 }
 
-.availability_calendar-head strong{
-  font-family:var(--font-display);
-  font-size:1rem;
-  font-weight:500;
+.availability_checker h3{
+  margin-bottom:.65rem;
+  color:var(--chalk);
+  font-size:clamp(1.45rem,2vw,1.85rem);
+  line-height:1.08;
 }
 
-.availability_calendar-frame{
-  position:relative;
-  width:100%;
-  height:38rem;
-  overflow:hidden;
-  background:#fff;
+.availability_checker-copy{
+  max-width:32rem;
+  color:rgba(251,250,246,.68);
+  font-size:.9rem;
+  line-height:1.55;
 }
 
-.availability_calendar-frame iframe{
+.availability_checker-controls{
+  margin-top:1.25rem;
+}
+
+.availability_checker-label{
   display:block;
-  width:100%;
-  height:100%;
-  border:0;
-  background:#fff;
+  margin-bottom:.45rem;
+  color:rgba(251,250,246,.68);
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
 }
 
-@media(max-width:991px){
-  .availability_layout{
-    grid-template-columns:1fr;
-    gap:2.5rem;
-  }
+.availability_checker-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:.65rem;
+  align-items:stretch;
+}
 
-  .availability_intro{
-    position:static;
-  }
+.availability_checker-input{
+  width:100%;
+  min-width:0;
+  min-height:3.25rem;
+  padding:.8rem .9rem;
+  border:1px solid rgba(251,250,246,.22);
+  border-radius:var(--radius);
+  background:var(--chalk);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:.95rem;
+}
 
-  .availability_calendar-frame{
-    height:34rem;
-  }
+.availability_checker-input:focus{
+  border-color:var(--wood);
+  outline:none;
+  box-shadow:0 0 0 3px rgba(184,131,78,.14);
+}
+
+.availability_checker-button{
+  min-height:3.25rem;
+  padding:.8rem 1.1rem;
+  white-space:nowrap;
+}
+
+.availability_checker-button:disabled{
+  opacity:.62;
+  cursor:wait;
+  transform:none;
+}
+
+.availability_checker-status{
+  min-height:1.35rem;
+  margin-top:.8rem;
+  font-size:.82rem;
+  font-weight:600;
+  line-height:1.45;
+}
+
+.availability_checker-status:empty{
+  min-height:0;
+  margin-top:0;
+}
+
+.availability_checker-status.is-checking,
+.availability_checker-status.is-error{
+  color:rgba(251,250,246,.62);
+}
+
+.availability_checker-status.is-available{
+  color:#e7e8de;
+}
+
+.availability_checker-status.is-available::before{
+  content:"✓ ";
+  color:var(--wood);
+}
+
+.availability_checker-status.is-busy{
+  color:#f3b5ae;
+}
+
+.availability_checker-status.is-busy::before{
+  content:"× ";
+}
+
+.availability_checker-note{
+  margin-top:1rem;
+  padding-top:.9rem;
+  border-top:1px solid rgba(251,250,246,.13);
+  color:rgba(251,250,246,.5);
+  font-size:.74rem;
+  line-height:1.45;
 }
 
 @media(max-width:640px){
-  .availability_calendar-head{
-    display:block;
-    padding:.9rem 1rem;
+  .availability_checker{
+    margin-top:1.25rem;
+    padding:1.35rem;
   }
 
-  .availability_calendar-head span{
-    display:block;
-    margin-bottom:.2rem;
+  .availability_checker-row{
+    grid-template-columns:1fr;
   }
 
-  .availability_calendar-frame{
-    height:32rem;
-  }
-
-  .availability_button{
+  .availability_checker-button{
     width:100%;
   }
 }
