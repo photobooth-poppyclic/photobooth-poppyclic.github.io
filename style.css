@@ -2599,7 +2599,7 @@ span.eyebrow.is-visible.hero_kicker {
 }
 
 .availability_checker-status.is-available{
-  color:#e7e8de;
+  color:#00cd5d;
 }
 
 .availability_checker-status.is-available::before{
@@ -2608,7 +2608,7 @@ span.eyebrow.is-visible.hero_kicker {
 }
 
 .availability_checker-status.is-busy{
-  color:#f3b5ae;
+  color:#ff978c;
 }
 
 .availability_checker-status.is-busy::before{
