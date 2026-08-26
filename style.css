@@ -2694,3 +2694,9 @@ span.eyebrow.is-visible.hero_kicker {
   }
 }
 
+.location-info {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666;
+}
