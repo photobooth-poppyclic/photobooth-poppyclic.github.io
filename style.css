@@ -2699,4 +2699,5 @@ span.eyebrow.is-visible.hero_kicker {
   font-size: 13px;
   line-height: 1.5;
   color: #c4362c;
+   text-transform: none;
 }
