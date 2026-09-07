@@ -702,15 +702,16 @@
            
             <input class="form_input" type="text" id="lieu" name="lieu" required>
           </div>
-          <div class="form_field">
-            <label class="form_label" for="formule">Formule</label>
-            <select class="form_select" id="formule" name="formule">
-              <option>Je ne sais pas encore</option>
-              <option>Essentiel</option>
-              <option>Signature</option>
-              <option>Grand Jour</option>
-            </select>
-          </div>
+<div class="form_field">
+  <label class="form_label" for="formule">Formule *</label>
+  <select class="form_select" id="formule" name="formule" required>
+    <option value="">Choisir une formule…</option>
+    <option>Je ne sais pas encore</option>
+    <option>Essentiel</option>
+    <option>Signature</option>
+    <option>Grand Jour</option>
+  </select>
+</div>
           <div class="form_field is-full">
             <label class="form_label" for="message">Votre événement en quelques mots</label>
             <textarea class="form_textarea" id="message" name="message" placeholder="Nombre d'invités, horaires, salle, idée de cadre photo…"></textarea>
