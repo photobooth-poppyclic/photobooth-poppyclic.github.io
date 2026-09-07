@@ -672,7 +672,7 @@
   id="email"
   name="email"
   required
-  pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
+  pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}"
   title="Veuillez saisir une adresse e-mail valide, par exemple nom@exemple.fr"
 >
           </div>
@@ -684,7 +684,7 @@
   id="tel"
   name="telephone"
   required
-  pattern="0[1-9]([ .-]?[0-9]{2}){4}"
+  pattern="0[1-9]([ .\-]?[0-9]{2}){4}"
   title="Veuillez saisir un numéro français à 10 chiffres, par exemple 06 12 34 56 78"
 >
           </div>
