@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://photobooth-poppyclic.github.io/sitemap.xml
+Sitemap: https://poppyclic.fr/sitemap.xml
