@@ -1273,8 +1273,15 @@ form.addEventListener('submit', async function(e) {
       mode: 'no-cors'
     });
 
-    form.style.display = 'none';
-    success.style.display = 'block';
+form.style.display = 'none';
+success.style.display = 'block';
+
+requestAnimationFrame(() => {
+  success.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+});
 
   } catch (error) {
     button.disabled = false;
