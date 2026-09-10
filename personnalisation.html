@@ -93,6 +93,11 @@
     </div><div class="personalisation-submit"><button type="submit" class="button" id="submit-personnalisation">Envoyer mes choix</button><p>Merci pour votre confiance ♥</p></div></section>
   </form>
 
+  <div class="personalisation-success" id="personalisation-success">
+    <h2>Merci, vos choix ont bien été envoyés.</h2>
+    <p>Je vais préparer votre personnalisation à partir de ces informations et je vous recontacterai si nécessaire.</p>
+  </div>
+
   <a class="personalisation-back" href="index.html">← Retour à Poppy Clic</a>
 </div></main>
 </div>
@@ -115,6 +120,33 @@ document.getElementById('personalisation-form').addEventListener('submit', async
 
   try {
     const data = new FormData(form);
+
+    const couleursChoisies = [...document.querySelectorAll('input[name="couleurs"]:checked')]
+      .map(input => input.value);
+
+    const couleurs = document.getElementById('choix_libre').checked
+      ? 'Je vous laisse choisir les couleurs'
+      : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Non précisées');
+
+    const visuel = document.getElementById('visuel');
+    const visuelTexte = visuel && visuel.files && visuel.files.length
+      ? 'Oui - ' + visuel.files[0].name
+      : 'Non';
+
+    const message = [
+      'PERSONNALISATION POPPY CLIC',
+      '',
+      'TEXTE PRINCIPAL : ' + (document.getElementById('texte_principal').value || ''),
+      'TEXTE SECONDAIRE : ' + (document.getElementById('texte_secondaire').value || 'Aucun'),
+      'STYLE : ' + (document.getElementById('style').value || 'Non précisé'),
+      'COULEURS : ' + couleurs,
+      'AUTRE COULEUR : ' + (document.getElementById('couleur_autre').value || 'Non précisée'),
+      'AMBIANCE / THÈME : ' + (document.getElementById('ambiance').value || 'Non précisé'),
+      'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune'),
+      'VISUEL SÉLECTIONNÉ : ' + visuelTexte
+    ].join('\n');
+
+    data.set('message', message);
 
     await fetch(form.action, {
       method: 'POST',
