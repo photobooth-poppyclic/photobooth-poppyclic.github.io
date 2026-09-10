@@ -724,7 +724,7 @@
   <label class="form_label" for="formule">Formule *</label>
   <select class="form_select" id="formule" name="formule" required>
     <option value="">Choisir une formule…</option>
-    <option>Je ne sais pas encore</option>
+    
     <option>Essentiel</option>
     <option>Signature</option>
     <option>Grand Jour</option>
@@ -1277,6 +1277,17 @@ form.addEventListener('submit', async function(e) {
     button.disabled = false;
     button.textContent = originalText;
     alert("Une erreur est survenue. Merci de réessayer.");
+  }
+});
+</script>
+  <script>
+['prenom', 'nom', 'lieu'].forEach(function(id) {
+  const field = document.getElementById(id);
+
+  if (field) {
+    field.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
   }
 });
 </script>
