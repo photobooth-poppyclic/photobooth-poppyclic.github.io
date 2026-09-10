@@ -62,7 +62,8 @@
   <section class="personalisation-hero"><span class="personalisation-kicker">Personnalisation</span><h1>Créons ensemble vos photos&nbsp;!</h1><p>Ce formulaire me permet de préparer le contour de vos photos selon vos envies.</p><p>Indiquez vos textes, votre ambiance et les couleurs que vous aimez.</p></section>
   <div class="personalisation-note"><span class="personalisation-note-icon">i</span><div><strong>Votre réservation doit déjà être confirmée.</strong><br>Remplissez ce formulaire tranquillement. Je vous recontacterai si un détail doit être précisé.</div></div>
 
-  <form id="personalisation-form" autocomplete="on">
+  <form id="personalisation-form" method="POST" action="https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv" autocomplete="on">
+    <input type="hidden" name="action" value="personnalisation">
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">1</span><span>Votre réservation</span></div><div class="personalisation-grid">
       <div class="personalisation-field"><label for="prenom">Prénom <span class="required">*</span></label><input class="personalisation-input" type="text" id="prenom" name="prenom" autocomplete="given-name" required></div>
       <div class="personalisation-field"><label for="nom">Nom <span class="required">*</span></label><input class="personalisation-input" type="text" id="nom" name="nom" autocomplete="family-name" required></div>
@@ -101,7 +102,38 @@ const mobileMenuToggle=document.querySelector('.mobile-menu-toggle'),mobileMenu=
 ['prenom','nom','lieu'].forEach(id=>{const field=document.getElementById(id);if(field)field.addEventListener('input',function(){this.value=this.value.toUpperCase()})});
 const choixLibre=document.getElementById('choix_libre'),colourInputs=[...document.querySelectorAll('input[name="couleurs"]')],couleurAutre=document.getElementById('couleur_autre');choixLibre.addEventListener('change',function(){colourInputs.forEach(input=>{if(this.checked)input.checked=false;input.disabled=this.checked});couleurAutre.disabled=this.checked});
 const params=new URLSearchParams(window.location.search);['prenom','nom','email','date','lieu','type'].forEach(id=>{const value=params.get(id),field=document.getElementById(id);if(value&&field)field.value=value});
-document.getElementById('personalisation-form').addEventListener('submit',function(event){event.preventDefault();alert("La page est prête. Il reste à brancher l'envoi sur Make avant de l'utiliser avec les clients.")});
+document.getElementById('personalisation-form').addEventListener('submit', async function(event){
+  event.preventDefault();
+
+  const form = this;
+  const button = document.getElementById('submit-personnalisation');
+  const success = document.getElementById('personalisation-success');
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = 'Envoi en cours…';
+
+  try {
+    const data = new FormData(form);
+
+    await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      mode: 'no-cors'
+    });
+
+    form.style.display = 'none';
+    success.style.display = 'block';
+
+    requestAnimationFrame(() => {
+      success.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = originalText;
+    alert('Une erreur est survenue. Merci de réessayer.');
+  }
+});
 </script>
 </body>
 </html>
