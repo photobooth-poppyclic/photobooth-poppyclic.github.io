@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS Poppy Clic</title>
+</head>
+<body>
+
+<p>Ouverture du SMS…</p>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const tel = params.get('tel');
+
+const message =
+`Bonjour,
+
+Votre réservation Poppy Clic a bien été acceptée.
+
+Toutes les informations concernant votre réservation viennent de vous être envoyées par e-mail.
+
+Si vous ne trouvez pas le message dans votre boîte de réception, pensez à vérifier vos spams.
+
+Nelly - Poppy Clic`;
+
+if (tel) {
+  window.location.href =
+    'sms:' + tel + '?body=' + encodeURIComponent(message);
+}
+</script>
+
+</body>
+</html>
