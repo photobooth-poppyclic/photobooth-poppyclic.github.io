@@ -1293,5 +1293,20 @@ form.addEventListener('submit', async function(e) {
   }
 });
 </script>
+  <script>
+if (new URLSearchParams(window.location.search).get('test') === '1') {
+  document.getElementById('prenom').value = 'TEST';
+  document.getElementById('nom').value = 'POPPY CLIC';
+  document.getElementById('email').value = 'nellylac@gmail.com';
+  document.getElementById('tel').value = '0661499712';
+  document.getElementById('type').value = 'Mariage';
+  document.getElementById('lieu').value = 'BEAULON';
+  document.getElementById('formule').value = 'Signature';
+  document.getElementById('message').value = 'Ceci est une demande de test Poppy Clic.';
+
+  const rgpd = document.querySelector('input[name="rgpd"]');
+  if (rgpd) rgpd.checked = true;
+}
+</script>
 </body>
 </html>
