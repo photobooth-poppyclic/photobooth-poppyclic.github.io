@@ -83,8 +83,8 @@
 
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">3</span><span>Le style et les couleurs</span></div><div class="personalisation-grid">
       <div class="personalisation-field"><label for="style">Style souhaité</label><select class="personalisation-select" id="style" name="style"><option value="">Choisir un style…</option><option>Élégant</option><option>Champêtre</option><option>Bohème</option><option>Floral</option><option>Minimaliste</option><option>Festif</option><option>Romantique</option><option>Je vous laisse choisir</option><option>Autre</option></select></div>
-      <div><p class="colour-title">Couleurs principales <small>(plusieurs choix possibles)</small></p><div class="colour-grid" id="colour-grid">
-        <label class="colour-choice" title="Rouge"><input type="checkbox" name="couleurs" value="Rouge"><span class="colour-dot c-red"></span></label><label class="colour-choice" title="Rose"><input type="checkbox" name="couleurs" value="Rose"><span class="colour-dot c-pink"></span></label><label class="colour-choice" title="Rose poudré"><input type="checkbox" name="couleurs" value="Rose poudré"><span class="colour-dot c-blush"></span></label><label class="colour-choice" title="Orange"><input type="checkbox" name="couleurs" value="Orange"><span class="colour-dot c-orange"></span></label><label class="colour-choice" title="Jaune"><input type="checkbox" name="couleurs" value="Jaune"><span class="colour-dot c-yellow"></span></label><label class="colour-choice" title="Vert"><input type="checkbox" name="couleurs" value="Vert"><span class="colour-dot c-green"></span></label><label class="colour-choice" title="Bleu canard"><input type="checkbox" name="couleurs" value="Bleu canard"><span class="colour-dot c-teal"></span></label><label class="colour-choice" title="Bleu"><input type="checkbox" name="couleurs" value="Bleu"><span class="colour-dot c-blue"></span></label><label class="colour-choice" title="Violet"><input type="checkbox" name="couleurs" value="Violet"><span class="colour-dot c-purple"></span></label><label class="colour-choice" title="Lilas"><input type="checkbox" name="couleurs" value="Lilas"><span class="colour-dot c-lilac"></span></label><label class="colour-choice" title="Noir"><input type="checkbox" name="couleurs" value="Noir"><span class="colour-dot c-black"></span></label><label class="colour-choice" title="Gris"><input type="checkbox" name="couleurs" value="Gris"><span class="colour-dot c-grey"></span></label><label class="colour-choice" title="Blanc"><input type="checkbox" name="couleurs" value="Blanc"><span class="colour-dot c-white"></span></label><label class="colour-choice" title="Doré"><input type="checkbox" name="couleurs" value="Doré"><span class="colour-dot c-gold"></span></label><label class="colour-choice" title="Brun"><input type="checkbox" name="couleurs" value="Brun"><span class="colour-dot c-brown"></span></label>
+      <div><p class="colour-title">Couleurs principales <small>(plusieurs choix possibles · le code couleur sera transmis)</small></p><div class="colour-grid" id="colour-grid">
+        <label class="colour-choice" title="Rouge"><input type="checkbox" name="couleurs" value="#C92727"><span class="colour-dot c-red"></span></label><label class="colour-choice" title="Rose"><input type="checkbox" name="couleurs" value="#EF8EA0"><span class="colour-dot c-pink"></span></label><label class="colour-choice" title="Rose poudré"><input type="checkbox" name="couleurs" value="#F3B8AE"><span class="colour-dot c-blush"></span></label><label class="colour-choice" title="Orange"><input type="checkbox" name="couleurs" value="#EF7C2F"><span class="colour-dot c-orange"></span></label><label class="colour-choice" title="Jaune"><input type="checkbox" name="couleurs" value="#F4C13B"><span class="colour-dot c-yellow"></span></label><label class="colour-choice" title="Vert"><input type="checkbox" name="couleurs" value="#45A24D"><span class="colour-dot c-green"></span></label><label class="colour-choice" title="Bleu canard"><input type="checkbox" name="couleurs" value="#328C96"><span class="colour-dot c-teal"></span></label><label class="colour-choice" title="Bleu"><input type="checkbox" name="couleurs" value="#2F5DA8"><span class="colour-dot c-blue"></span></label><label class="colour-choice" title="Violet"><input type="checkbox" name="couleurs" value="#9966CC"><span class="colour-dot c-purple"></span></label><label class="colour-choice" title="Lilas"><input type="checkbox" name="couleurs" value="#B8A9DC"><span class="colour-dot c-lilac"></span></label><label class="colour-choice" title="Noir"><input type="checkbox" name="couleurs" value="#222222"><span class="colour-dot c-black"></span></label><label class="colour-choice" title="Gris"><input type="checkbox" name="couleurs" value="#8B8B8B"><span class="colour-dot c-grey"></span></label><label class="colour-choice" title="Blanc"><input type="checkbox" name="couleurs" value="#FFFFFF"><span class="colour-dot c-white"></span></label><label class="colour-choice" title="Doré"><input type="checkbox" name="couleurs" value="#C89E48"><span class="colour-dot c-gold"></span></label><label class="colour-choice" title="Brun"><input type="checkbox" name="couleurs" value="#91603A"><span class="colour-dot c-brown"></span></label>
       </div><div class="colour-custom-wrap"><label for="couleur_autre">Autre couleur :</label><input type="color" id="couleur_autre" name="couleur_autre" value="#c83c32"></div><label class="choice-line"><input type="checkbox" id="choix_libre" name="choix_libre" value="Oui"><span>Je vous laisse choisir les couleurs</span></label></div>
     </div></section>
 
@@ -121,15 +121,19 @@ personnalisationButton.addEventListener('click', function() {
   if (!personnalisationForm.reportValidity()) return;
 
   const couleursChoisies = [...document.querySelectorAll('input[name="couleurs"]:checked')]
-    .map(input => input.value);
+    .map(input => input.value.toUpperCase());
+
+  const couleursPerso = customColourToggles
+    .filter(toggle => toggle.checked)
+    .map(toggle => document.getElementById(toggle.dataset.target).value.toUpperCase());
 
   const couleurs = document.getElementById('choix_libre').checked
     ? 'Je vous laisse choisir les couleurs'
-    : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Non précisées');
+    : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Aucune');
 
-  const autreCouleur = document.getElementById('choix_libre').checked
+  const couleursPersonnalisees = document.getElementById('choix_libre').checked
     ? 'Sans objet'
-    : (document.getElementById('couleur_autre').value || 'Non précisée');
+    : (couleursPerso.length ? couleursPerso.join(', ') : 'Aucune');
 
   const visuel = document.getElementById('visuel');
   const visuelInfo = (visuel && visuel.files && visuel.files.length)
@@ -143,7 +147,7 @@ personnalisationButton.addEventListener('click', function() {
     'TEXTE SECONDAIRE : ' + (document.getElementById('texte_secondaire').value || 'Aucun'),
     'STYLE : ' + (document.getElementById('style').value || 'Non précisé'),
     'COULEURS : ' + couleurs,
-    'AUTRE COULEUR : ' + autreCouleur,
+    'COULEURS PERSONNALISÉES : ' + couleursPersonnalisees,
     'AMBIANCE / THÈME : ' + (document.getElementById('ambiance').value || 'Non précisé'),
     'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune'),
     'VISUEL / LOGO : ' + visuelInfo
