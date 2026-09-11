@@ -43,6 +43,9 @@
     .colour-custom-wrap{display:flex;align-items:center;gap:.7rem;margin-top:1rem}.colour-custom-wrap input[type="color"]{width:46px;height:38px;padding:2px;border:1px solid var(--pc-line);border-radius:8px;background:#fff}
     .choice-line{display:flex;align-items:center;gap:.55rem;margin-top:1rem}
     .personalisation-submit{text-align:center;padding:1.25rem 0 .25rem}.personalisation-submit .button{min-width:min(100%,330px)}.personalisation-submit p{color:var(--pc-muted);font-size:.95rem;margin-top:1rem}
+    .personalisation-success{display:none;max-width:680px;margin:0 auto;padding:1.15rem 1rem;border-radius:12px;background:#eee8dc;text-align:center}
+    .personalisation-success h2{font-family:"Fraunces",serif;font-size:1.45rem;margin:0 0 .4rem;color:var(--pc-ink)}
+    .personalisation-success p{margin:0;color:var(--pc-muted);line-height:1.55}
     .personalisation-back{display:inline-block;margin-top:1.5rem;color:var(--pc-ink)}
     @media(max-width:760px){.personalisation-page{padding-top:.5rem}.personalisation-wrap{width:min(100% - 1.2rem,1120px)}.personalisation-hero{text-align:left;padding:1.5rem .25rem .8rem}.personalisation-hero p{margin-left:0}.personalisation-grid{grid-template-columns:1fr}.personalisation-field.is-full{grid-column:auto}.personalisation-card{padding:1rem;border-radius:13px}.personalisation-card-title{font-size:.92rem}.personalisation-note{align-items:flex-start}.colour-dot{width:40px;height:40px}}
   </style>
@@ -90,13 +93,15 @@
       <div class="personalisation-field"><label for="ambiance">Thème ou ambiance à respecter</label><textarea class="personalisation-textarea" id="ambiance" name="ambiance" placeholder="Ex. champêtre, fleurs séchées, terracotta, chic, années 80…"></textarea></div>
       <div class="personalisation-field is-full"><label for="remarques">Une remarque ou une demande particulière ?</label><textarea class="personalisation-textarea" id="remarques" name="remarques" placeholder="Dites-moi tout ce qui peut m'aider à préparer votre contour photo."></textarea></div>
       <label class="choice-line personalisation-field is-full"><input type="checkbox" name="rgpd" required><span>J'accepte que ces informations soient utilisées pour préparer la personnalisation de mes photos.</span></label>
-    </div><div class="personalisation-submit"><button type="button" class="button" id="submit-personnalisation">Envoyer mes choix</button><p>Merci pour votre confiance ♥</p></div></section>
+    </div><div class="personalisation-submit">
+      <button type="button" class="button" id="submit-personnalisation">Envoyer mes choix</button>
+      <p id="personalisation-trust">Merci pour votre confiance ♥</p>
+      <div class="personalisation-success" id="personalisation-success" role="status" aria-live="polite">
+        <h2>Merci, vos choix ont bien été envoyés.</h2>
+        <p>Je vais préparer votre personnalisation à partir de ces informations et je vous recontacterai si nécessaire.</p>
+      </div>
+    </div></section>
   </form>
-
-  <div class="personalisation-success" id="personalisation-success">
-    <h2>Merci, vos choix ont bien été envoyés.</h2>
-    <p>Je vais préparer votre personnalisation à partir de ces informations et je vous recontacterai si nécessaire.</p>
-  </div>
 
   <a class="personalisation-back" href="index.html">← Retour à Poppy Clic</a>
 </div></main>
@@ -110,6 +115,7 @@ const params=new URLSearchParams(window.location.search);['prenom','nom','email'
 const personnalisationForm = document.getElementById('personalisation-form');
 const personnalisationButton = document.getElementById('submit-personnalisation');
 const personnalisationSuccess = document.getElementById('personalisation-success');
+const personnalisationTrust = document.getElementById('personalisation-trust');
 
 personnalisationButton.addEventListener('click', function() {
   if (!personnalisationForm.reportValidity()) return;
@@ -159,9 +165,11 @@ personnalisationButton.addEventListener('click', function() {
   const webhook = 'https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv';
   const requestUrl = webhook + '?' + params.toString();
 
-  // Confirmation immédiate côté client : on n'attend pas la réponse de Make.
+  // Confirmation immédiate côté client : le bouton disparaît et
+  // le message de confirmation apparaît exactement à sa place.
   personnalisationButton.disabled = true;
-  personnalisationForm.style.display = 'none';
+  personnalisationButton.style.display = 'none';
+  if (personnalisationTrust) personnalisationTrust.style.display = 'none';
   personnalisationSuccess.style.display = 'block';
 
   requestAnimationFrame(() => {
