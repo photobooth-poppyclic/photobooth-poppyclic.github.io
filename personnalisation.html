@@ -313,7 +313,7 @@ max-width: 560px;
     </section>
 
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">4</span><span>Vos autres préférences</span></div><div class="personalisation-grid">
-      <div class="personalisation-field"><label for="visuel">Logo, invitation ou visuel de référence</label><input class="personalisation-input" type="file" id="visuel" name="visuel" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"><small>Formats acceptés : JPG, PNG ou PDF.</small></div>
+      <div class="personalisation-field"><label for="visuel">Logo, invitation ou visuel de référence</label><input class="personalisation-input" type="file" id="visuel" name="visuel" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"><small>Formats acceptés : JPG, PNG ou PDF · 10 Mo maximum.</small></div>
       <div class="personalisation-field"><label for="ambiance">Thème ou ambiance à respecter</label><textarea class="personalisation-textarea" id="ambiance" name="ambiance" placeholder="Ex. champêtre, fleurs séchées, terracotta, chic, années 80…"></textarea></div>
       <div class="personalisation-field is-full"><label for="remarques">Une remarque ou une demande particulière ?</label><textarea class="personalisation-textarea" id="remarques" name="remarques" placeholder="Dites-moi tout ce qui peut m'aider à préparer votre contour photo."></textarea></div>
       <label class="choice-line personalisation-field is-full"><input type="checkbox" name="rgpd" required><span>J'accepte que ces informations soient utilisées pour préparer la personnalisation de mes photos.</span></label>
@@ -508,6 +508,28 @@ const personnalisationForm = document.getElementById('personalisation-form');
 const personnalisationButton = document.getElementById('submit-personnalisation');
 const personnalisationSuccess = document.getElementById('personalisation-success');
 const personnalisationTrust = document.getElementById('personalisation-trust');
+const visuelInput = document.getElementById('visuel');
+if (visuelInput) {
+  visuelInput.addEventListener('change', function() {
+    const file = this.files && this.files[0];
+    if (!file) return;
+
+    const maxSize = 10 * 1024 * 1024;
+    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert('Format non accepté. Choisissez un fichier JPG, PNG ou PDF.');
+      this.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      alert('Le fichier est trop volumineux. Taille maximale : 10 Mo.');
+      this.value = '';
+    }
+  });
+}
+
 
 personnalisationButton.addEventListener('click', function() {
   if (!personnalisationForm.reportValidity()) return;
@@ -529,8 +551,8 @@ personnalisationButton.addEventListener('click', function() {
 
   const visuel = document.getElementById('visuel');
   const visuelInfo = (visuel && visuel.files && visuel.files.length)
-    ? 'Fichier sélectionné : ' + visuel.files[0].name + ' (le fichier lui-même sera branché séparément)'
-    : 'Aucun fichier sélectionné';
+    ? 'Fichier joint : ' + visuel.files[0].name
+    : 'Aucun fichier joint';
 
   const message = [
     'PERSONNALISATION POPPY CLIC',
@@ -545,45 +567,46 @@ personnalisationButton.addEventListener('click', function() {
     'VISUEL / LOGO : ' + visuelInfo
   ].join('\n');
 
-  const params = new URLSearchParams({
-    action: 'personnalisation',
-    prenom: document.getElementById('prenom').value,
-    nom: document.getElementById('nom').value,
-    email: document.getElementById('email').value,
-    date: document.getElementById('date').value,
-    type: document.getElementById('type').value,
-    lieu: document.getElementById('lieu').value,
-    telephone: '',
-    formule: '',
-    message: message
-  });
+  // Envoi multipart/form-data : permet d'envoyer le vrai fichier à Make.
+  const data = new FormData(personnalisationForm);
+  data.set('action', 'personnalisation');
+  data.set('prenom', document.getElementById('prenom').value);
+  data.set('nom', document.getElementById('nom').value);
+  data.set('email', document.getElementById('email').value);
+  data.set('date', document.getElementById('date').value);
+  data.set('type', document.getElementById('type').value);
+  data.set('lieu', document.getElementById('lieu').value);
+  data.set('telephone', '');
+  data.set('formule', '');
+  data.set('message', message);
 
   const webhook = 'https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv';
-  const requestUrl = webhook + '?' + params.toString();
 
-  // Confirmation immédiate côté client : le bouton disparaît et
-  // le message de confirmation apparaît exactement à sa place.
   personnalisationButton.disabled = true;
-  personnalisationButton.style.display = 'none';
-  if (personnalisationTrust) personnalisationTrust.style.display = 'none';
-  personnalisationSuccess.style.display = 'block';
+  personnalisationButton.textContent = 'Envoi en cours…';
 
-  requestAnimationFrame(() => {
-    personnalisationSuccess.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    });
-  });
-
-  // Envoi en arrière-plan vers le webhook Make existant.
-  fetch(requestUrl, {
-    method: 'GET',
+  fetch(webhook, {
+    method: 'POST',
+    body: data,
     mode: 'no-cors',
-    cache: 'no-store',
-    keepalive: true
-  }).catch(() => {
-    // Le webhook fonctionne déjà dans le scénario.
-    // On n'affiche pas d'erreur technique au client après validation.
+    cache: 'no-store'
+  })
+  .then(() => {
+    personnalisationButton.style.display = 'none';
+    if (personnalisationTrust) personnalisationTrust.style.display = 'none';
+    personnalisationSuccess.style.display = 'block';
+
+    requestAnimationFrame(() => {
+      personnalisationSuccess.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    });
+  })
+  .catch(() => {
+    personnalisationButton.disabled = false;
+    personnalisationButton.textContent = 'Envoyer mes choix';
+    alert('L’envoi du fichier a échoué. Merci de réessayer.');
   });
 });
 </script>
