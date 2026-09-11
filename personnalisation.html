@@ -40,8 +40,15 @@
     .colour-dot{width:42px;height:42px;border-radius:50%;display:block;border:3px solid transparent;outline:1px solid rgba(0,0,0,.1);cursor:pointer;box-sizing:border-box}
     .colour-choice input:checked + .colour-dot{border-color:#fff;outline:3px solid var(--pc-ink)}
     .c-red{background:#c92727}.c-pink{background:#ef8ea0}.c-blush{background:#f3b8ae}.c-orange{background:#ef7c2f}.c-yellow{background:#f4c13b}.c-green{background:#45a24d}.c-teal{background:#328c96}.c-blue{background:#2f5da8}.c-purple{background:#9966cc}.c-lilac{background:#b8a9dc}.c-black{background:#222}.c-grey{background:#8b8b8b}.c-white{background:#fff}.c-gold{background:#c89e48}.c-brown{background:#91603a}
-    .colour-custom-wrap{display:flex;align-items:center;gap:.7rem;margin-top:1rem}.colour-custom-wrap input[type="color"]{width:46px;height:38px;padding:2px;border:1px solid var(--pc-line);border-radius:8px;background:#fff}
+    .custom-colours{margin-top:1rem}
+    .custom-colours-title{margin-bottom:.55rem}
+    .custom-colour-row{display:grid;grid-template-columns:1fr auto 78px;align-items:center;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--pc-line)}
+    .custom-colour-check{display:flex;align-items:center;gap:.55rem;cursor:pointer}
+    .custom-colour-row input[type="color"]{width:48px;height:38px;padding:2px;border:1px solid var(--pc-line);border-radius:8px;background:#fff}
+    .custom-colour-row input[type="color"]:disabled{opacity:.35;cursor:not-allowed}
+    .custom-colour-row code{font-family:monospace;font-size:.88rem;color:var(--pc-muted);text-align:right}
     .choice-line{display:flex;align-items:center;gap:.55rem;margin-top:1rem}
+    @media(max-width:520px){.custom-colour-row{grid-template-columns:1fr auto}.custom-colour-row code{grid-column:1/-1;text-align:left;padding-left:1.6rem}}
     .personalisation-submit{text-align:center;padding:1.25rem 0 .25rem}.personalisation-submit .button{min-width:min(100%,330px)}.personalisation-submit p{color:var(--pc-muted);font-size:.95rem;margin-top:1rem}
     .personalisation-success{display:none;max-width:680px;margin:0 auto;padding:1.15rem 1rem;border-radius:12px;background:#eee8dc;text-align:center}
     .personalisation-success h2{font-family:"Fraunces",serif;font-size:1.45rem;margin:0 0 .4rem;color:var(--pc-ink)}
@@ -85,7 +92,41 @@
       <div class="personalisation-field"><label for="style">Style souhaité</label><select class="personalisation-select" id="style" name="style"><option value="">Choisir un style…</option><option>Élégant</option><option>Champêtre</option><option>Bohème</option><option>Floral</option><option>Minimaliste</option><option>Festif</option><option>Romantique</option><option>Je vous laisse choisir</option><option>Autre</option></select></div>
       <div><p class="colour-title">Couleurs principales <small>(plusieurs choix possibles · le code couleur sera transmis)</small></p><div class="colour-grid" id="colour-grid">
         <label class="colour-choice" title="Rouge"><input type="checkbox" name="couleurs" value="#C92727"><span class="colour-dot c-red"></span></label><label class="colour-choice" title="Rose"><input type="checkbox" name="couleurs" value="#EF8EA0"><span class="colour-dot c-pink"></span></label><label class="colour-choice" title="Rose poudré"><input type="checkbox" name="couleurs" value="#F3B8AE"><span class="colour-dot c-blush"></span></label><label class="colour-choice" title="Orange"><input type="checkbox" name="couleurs" value="#EF7C2F"><span class="colour-dot c-orange"></span></label><label class="colour-choice" title="Jaune"><input type="checkbox" name="couleurs" value="#F4C13B"><span class="colour-dot c-yellow"></span></label><label class="colour-choice" title="Vert"><input type="checkbox" name="couleurs" value="#45A24D"><span class="colour-dot c-green"></span></label><label class="colour-choice" title="Bleu canard"><input type="checkbox" name="couleurs" value="#328C96"><span class="colour-dot c-teal"></span></label><label class="colour-choice" title="Bleu"><input type="checkbox" name="couleurs" value="#2F5DA8"><span class="colour-dot c-blue"></span></label><label class="colour-choice" title="Violet"><input type="checkbox" name="couleurs" value="#9966CC"><span class="colour-dot c-purple"></span></label><label class="colour-choice" title="Lilas"><input type="checkbox" name="couleurs" value="#B8A9DC"><span class="colour-dot c-lilac"></span></label><label class="colour-choice" title="Noir"><input type="checkbox" name="couleurs" value="#222222"><span class="colour-dot c-black"></span></label><label class="colour-choice" title="Gris"><input type="checkbox" name="couleurs" value="#8B8B8B"><span class="colour-dot c-grey"></span></label><label class="colour-choice" title="Blanc"><input type="checkbox" name="couleurs" value="#FFFFFF"><span class="colour-dot c-white"></span></label><label class="colour-choice" title="Doré"><input type="checkbox" name="couleurs" value="#C89E48"><span class="colour-dot c-gold"></span></label><label class="colour-choice" title="Brun"><input type="checkbox" name="couleurs" value="#91603A"><span class="colour-dot c-brown"></span></label>
-      </div><div class="colour-custom-wrap"><label for="couleur_autre">Autre couleur :</label><input type="color" id="couleur_autre" name="couleur_autre" value="#c83c32"></div><label class="choice-line"><input type="checkbox" id="choix_libre" name="choix_libre" value="Oui"><span>Je vous laisse choisir les couleurs</span></label></div>
+      </div><div class="custom-colours">
+        <p class="colour-title custom-colours-title">Couleurs personnalisées <small>(facultatif · jusqu’à 3)</small></p>
+
+        <div class="custom-colour-row">
+          <label class="custom-colour-check">
+            <input type="checkbox" class="custom-colour-toggle" data-target="couleur_perso_1">
+            <span>Couleur personnalisée 1</span>
+          </label>
+          <input type="color" id="couleur_perso_1" value="#FFFFFF" disabled>
+          <code id="code_couleur_perso_1">—</code>
+        </div>
+
+        <div class="custom-colour-row">
+          <label class="custom-colour-check">
+            <input type="checkbox" class="custom-colour-toggle" data-target="couleur_perso_2">
+            <span>Couleur personnalisée 2</span>
+          </label>
+          <input type="color" id="couleur_perso_2" value="#FFFFFF" disabled>
+          <code id="code_couleur_perso_2">—</code>
+        </div>
+
+        <div class="custom-colour-row">
+          <label class="custom-colour-check">
+            <input type="checkbox" class="custom-colour-toggle" data-target="couleur_perso_3">
+            <span>Couleur personnalisée 3</span>
+          </label>
+          <input type="color" id="couleur_perso_3" value="#FFFFFF" disabled>
+          <code id="code_couleur_perso_3">—</code>
+        </div>
+      </div>
+
+      <label class="choice-line">
+        <input type="checkbox" id="choix_libre" name="choix_libre" value="Oui">
+        <span>Je vous laisse choisir les couleurs</span>
+      </label></div>
     </div></section>
 
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">4</span><span>Vos autres préférences</span></div><div class="personalisation-grid">
@@ -110,7 +151,50 @@
 const nav=document.getElementById('navbar');addEventListener('scroll',()=>nav.classList.toggle('is-scrolled',scrollY>20),{passive:true});
 const mobileMenuToggle=document.querySelector('.mobile-menu-toggle'),mobileMenu=document.getElementById('mobile-menu');if(mobileMenuToggle&&mobileMenu){const setMenu=open=>{nav.classList.toggle('mobile-menu-open',open);mobileMenuToggle.setAttribute('aria-expanded',open?'true':'false');mobileMenuToggle.setAttribute('aria-label',open?'Fermer le menu':'Ouvrir le menu');mobileMenu.setAttribute('aria-hidden',open?'false':'true')};mobileMenuToggle.addEventListener('click',()=>setMenu(!nav.classList.contains('mobile-menu-open')));mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)))}
 ['prenom','nom','lieu'].forEach(id=>{const field=document.getElementById(id);if(field)field.addEventListener('input',function(){this.value=this.value.toUpperCase()})});
-const choixLibre=document.getElementById('choix_libre'),colourInputs=[...document.querySelectorAll('input[name="couleurs"]')],couleurAutre=document.getElementById('couleur_autre');choixLibre.addEventListener('change',function(){colourInputs.forEach(input=>{if(this.checked)input.checked=false;input.disabled=this.checked});couleurAutre.disabled=this.checked});
+const choixLibre=document.getElementById('choix_libre');
+const colourInputs=[...document.querySelectorAll('input[name="couleurs"]')];
+const customColourToggles=[...document.querySelectorAll('.custom-colour-toggle')];
+
+customColourToggles.forEach(toggle=>{
+  const picker=document.getElementById(toggle.dataset.target);
+  const code=document.getElementById('code_'+toggle.dataset.target);
+
+  toggle.addEventListener('change',function(){
+    picker.disabled=!this.checked || choixLibre.checked;
+
+    if(this.checked){
+      code.textContent=picker.value.toUpperCase();
+    }else{
+      picker.value='#FFFFFF';
+      code.textContent='—';
+    }
+  });
+
+  picker.addEventListener('input',function(){
+    code.textContent=this.value.toUpperCase();
+  });
+});
+
+choixLibre.addEventListener('change',function(){
+  colourInputs.forEach(input=>{
+    if(this.checked) input.checked=false;
+    input.disabled=this.checked;
+  });
+
+  customColourToggles.forEach(toggle=>{
+    const picker=document.getElementById(toggle.dataset.target);
+    const code=document.getElementById('code_'+toggle.dataset.target);
+
+    if(this.checked){
+      toggle.checked=false;
+      picker.value='#FFFFFF';
+      code.textContent='—';
+    }
+
+    toggle.disabled=this.checked;
+    picker.disabled=this.checked || !toggle.checked;
+  });
+});
 const params=new URLSearchParams(window.location.search);['prenom','nom','email','date','lieu','type'].forEach(id=>{const value=params.get(id),field=document.getElementById(id);if(value&&field)field.value=value});
 const personnalisationForm = document.getElementById('personalisation-form');
 const personnalisationButton = document.getElementById('submit-personnalisation');
@@ -123,17 +207,17 @@ personnalisationButton.addEventListener('click', function() {
   const couleursChoisies = [...document.querySelectorAll('input[name="couleurs"]:checked')]
     .map(input => input.value.toUpperCase());
 
-  const couleursPerso = customColourToggles
+  const couleursPersonnalisees = customColourToggles
     .filter(toggle => toggle.checked)
     .map(toggle => document.getElementById(toggle.dataset.target).value.toUpperCase());
 
-  const couleurs = document.getElementById('choix_libre').checked
+  const couleurs = choixLibre.checked
     ? 'Je vous laisse choisir les couleurs'
     : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Aucune');
 
-  const couleursPersonnalisees = document.getElementById('choix_libre').checked
+  const couleursPersoTexte = choixLibre.checked
     ? 'Sans objet'
-    : (couleursPerso.length ? couleursPerso.join(', ') : 'Aucune');
+    : (couleursPersonnalisees.length ? couleursPersonnalisees.join(', ') : 'Aucune');
 
   const visuel = document.getElementById('visuel');
   const visuelInfo = (visuel && visuel.files && visuel.files.length)
@@ -147,7 +231,7 @@ personnalisationButton.addEventListener('click', function() {
     'TEXTE SECONDAIRE : ' + (document.getElementById('texte_secondaire').value || 'Aucun'),
     'STYLE : ' + (document.getElementById('style').value || 'Non précisé'),
     'COULEURS : ' + couleurs,
-    'COULEURS PERSONNALISÉES : ' + couleursPersonnalisees,
+    'COULEURS PERSONNALISÉES : ' + couleursPersoTexte,
     'AMBIANCE / THÈME : ' + (document.getElementById('ambiance').value || 'Non précisé'),
     'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune'),
     'VISUEL / LOGO : ' + visuelInfo
@@ -183,7 +267,7 @@ personnalisationButton.addEventListener('click', function() {
     });
   });
 
-  // Envoi en arrière-plan vers le webhook Make existant..
+  // Envoi en arrière-plan vers le webhook Make existant.
   fetch(requestUrl, {
     method: 'GET',
     mode: 'no-cors',
