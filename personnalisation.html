@@ -471,6 +471,11 @@ customColourToggles.forEach(toggle=>{
     picker.disabled=!this.checked || choixLibre.checked;
 
     if(this.checked){
+      // Sur certains sélecteurs Android, partir du blanc peut ouvrir le
+      // sélecteur natif sur du noir. On démarre donc sur une vraie couleur.
+      if(picker.value.toUpperCase()==='#FFFFFF'){
+        picker.value='#C92727';
+      }
       code.textContent=picker.value.toUpperCase();
     }else{
       picker.value='#FFFFFF';
@@ -478,9 +483,13 @@ customColourToggles.forEach(toggle=>{
     }
   });
 
-  picker.addEventListener('input',function(){
-    code.textContent=this.value.toUpperCase();
-  });
+  // "input" fonctionne sur la plupart des navigateurs ; "change" couvre
+  // aussi les sélecteurs Android qui ne valident la couleur qu'avec "Définir".
+  const updateCustomColourCode=()=>{
+    code.textContent=picker.value.toUpperCase();
+  };
+  picker.addEventListener('input',updateCustomColourCode);
+  picker.addEventListener('change',updateCustomColourCode);
 });
 
 choixLibre.addEventListener('change',function(){
