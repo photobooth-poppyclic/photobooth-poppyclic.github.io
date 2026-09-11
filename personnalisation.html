@@ -111,12 +111,8 @@ const personnalisationForm = document.getElementById('personalisation-form');
 const personnalisationButton = document.getElementById('submit-personnalisation');
 const personnalisationSuccess = document.getElementById('personalisation-success');
 
-personnalisationButton.addEventListener('click', async function() {
+personnalisationButton.addEventListener('click', function() {
   if (!personnalisationForm.reportValidity()) return;
-
-  const originalText = personnalisationButton.textContent;
-  personnalisationButton.disabled = true;
-  personnalisationButton.textContent = 'Envoi en cours…';
 
   const couleursChoisies = [...document.querySelectorAll('input[name="couleurs"]:checked')]
     .map(input => input.value);
@@ -125,16 +121,26 @@ personnalisationButton.addEventListener('click', async function() {
     ? 'Je vous laisse choisir les couleurs'
     : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Non précisées');
 
+  const autreCouleur = document.getElementById('choix_libre').checked
+    ? 'Sans objet'
+    : (document.getElementById('couleur_autre').value || 'Non précisée');
+
+  const visuel = document.getElementById('visuel');
+  const visuelInfo = (visuel && visuel.files && visuel.files.length)
+    ? 'Fichier sélectionné : ' + visuel.files[0].name + ' (le fichier lui-même sera branché séparément)'
+    : 'Aucun fichier sélectionné';
+
   const message = [
     'PERSONNALISATION POPPY CLIC',
     '',
-    'TEXTE PRINCIPAL : ' + (document.getElementById('texte_principal').value || ''),
+    'TEXTE PRINCIPAL : ' + (document.getElementById('texte_principal').value || 'Non précisé'),
     'TEXTE SECONDAIRE : ' + (document.getElementById('texte_secondaire').value || 'Aucun'),
     'STYLE : ' + (document.getElementById('style').value || 'Non précisé'),
     'COULEURS : ' + couleurs,
-    'AUTRE COULEUR : ' + (document.getElementById('couleur_autre').value || 'Non précisée'),
+    'AUTRE COULEUR : ' + autreCouleur,
     'AMBIANCE / THÈME : ' + (document.getElementById('ambiance').value || 'Non précisé'),
-    'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune')
+    'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune'),
+    'VISUEL / LOGO : ' + visuelInfo
   ].join('\n');
 
   const params = new URLSearchParams({
@@ -151,28 +157,30 @@ personnalisationButton.addEventListener('click', async function() {
   });
 
   const webhook = 'https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv';
+  const requestUrl = webhook + '?' + params.toString();
 
-  try {
-    await fetch(webhook + '?' + params.toString(), {
-      method: 'GET',
-      mode: 'no-cors',
-      cache: 'no-store'
+  // Confirmation immédiate côté client : on n'attend pas la réponse de Make.
+  personnalisationButton.disabled = true;
+  personnalisationForm.style.display = 'none';
+  personnalisationSuccess.style.display = 'block';
+
+  requestAnimationFrame(() => {
+    personnalisationSuccess.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
     });
+  });
 
-    personnalisationForm.style.display = 'none';
-    personnalisationSuccess.style.display = 'block';
-
-    requestAnimationFrame(() => {
-      personnalisationSuccess.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      });
-    });
-  } catch (error) {
-    personnalisationButton.disabled = false;
-    personnalisationButton.textContent = originalText;
-    alert('Une erreur est survenue. Merci de réessayer.');
-  }
+  // Envoi en arrière-plan vers le webhook Make existant.
+  fetch(requestUrl, {
+    method: 'GET',
+    mode: 'no-cors',
+    cache: 'no-store',
+    keepalive: true
+  }).catch(() => {
+    // Le webhook fonctionne déjà dans le scénario.
+    // On n'affiche pas d'erreur technique au client après validation.
+  });
 });
 </script>
 </body>
