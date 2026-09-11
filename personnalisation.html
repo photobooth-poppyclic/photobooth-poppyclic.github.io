@@ -62,11 +62,7 @@
   <section class="personalisation-hero"><span class="personalisation-kicker">Personnalisation</span><h1>Créons ensemble vos photos&nbsp;!</h1><p>Ce formulaire me permet de préparer le contour de vos photos selon vos envies.</p><p>Indiquez vos textes, votre ambiance et les couleurs que vous aimez.</p></section>
   <div class="personalisation-note"><span class="personalisation-note-icon">i</span><div><strong>Votre réservation doit déjà être confirmée.</strong><br>Remplissez ce formulaire tranquillement. Je vous recontacterai si un détail doit être précisé.</div></div>
 
-<form
-  id="personalisation-form"
-  autocomplete="on"
-  action="https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv"
->
+  <form id="personalisation-form" autocomplete="on">
     <input type="hidden" name="action" value="personnalisation">
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">1</span><span>Votre réservation</span></div><div class="personalisation-grid">
       <div class="personalisation-field"><label for="prenom">Prénom <span class="required">*</span></label><input class="personalisation-input" type="text" id="prenom" name="prenom" autocomplete="given-name" required></div>
@@ -94,7 +90,7 @@
       <div class="personalisation-field"><label for="ambiance">Thème ou ambiance à respecter</label><textarea class="personalisation-textarea" id="ambiance" name="ambiance" placeholder="Ex. champêtre, fleurs séchées, terracotta, chic, années 80…"></textarea></div>
       <div class="personalisation-field is-full"><label for="remarques">Une remarque ou une demande particulière ?</label><textarea class="personalisation-textarea" id="remarques" name="remarques" placeholder="Dites-moi tout ce qui peut m'aider à préparer votre contour photo."></textarea></div>
       <label class="choice-line personalisation-field is-full"><input type="checkbox" name="rgpd" required><span>J'accepte que ces informations soient utilisées pour préparer la personnalisation de mes photos.</span></label>
-    </div><div class="personalisation-submit"><button type="submit" class="button" id="submit-personnalisation">Envoyer mes choix</button><p>Merci pour votre confiance ♥</p></div></section>
+    </div><div class="personalisation-submit"><button type="button" class="button" id="submit-personnalisation">Envoyer mes choix</button><p>Merci pour votre confiance ♥</p></div></section>
   </form>
 
   <div class="personalisation-success" id="personalisation-success">
@@ -111,62 +107,70 @@ const mobileMenuToggle=document.querySelector('.mobile-menu-toggle'),mobileMenu=
 ['prenom','nom','lieu'].forEach(id=>{const field=document.getElementById(id);if(field)field.addEventListener('input',function(){this.value=this.value.toUpperCase()})});
 const choixLibre=document.getElementById('choix_libre'),colourInputs=[...document.querySelectorAll('input[name="couleurs"]')],couleurAutre=document.getElementById('couleur_autre');choixLibre.addEventListener('change',function(){colourInputs.forEach(input=>{if(this.checked)input.checked=false;input.disabled=this.checked});couleurAutre.disabled=this.checked});
 const params=new URLSearchParams(window.location.search);['prenom','nom','email','date','lieu','type'].forEach(id=>{const value=params.get(id),field=document.getElementById(id);if(value&&field)field.value=value});
-document.getElementById('personalisation-form').addEventListener('submit', async function(event){
-  event.preventDefault();
+const personnalisationForm = document.getElementById('personalisation-form');
+const personnalisationButton = document.getElementById('submit-personnalisation');
+const personnalisationSuccess = document.getElementById('personalisation-success');
 
-  const form = this;
-  const button = document.getElementById('submit-personnalisation');
-  const success = document.getElementById('personalisation-success');
-  const originalText = button.textContent;
+personnalisationButton.addEventListener('click', async function() {
+  if (!personnalisationForm.reportValidity()) return;
 
-  button.disabled = true;
-  button.textContent = 'Envoi en cours…';
+  const originalText = personnalisationButton.textContent;
+  personnalisationButton.disabled = true;
+  personnalisationButton.textContent = 'Envoi en cours…';
+
+  const couleursChoisies = [...document.querySelectorAll('input[name="couleurs"]:checked')]
+    .map(input => input.value);
+
+  const couleurs = document.getElementById('choix_libre').checked
+    ? 'Je vous laisse choisir les couleurs'
+    : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Non précisées');
+
+  const message = [
+    'PERSONNALISATION POPPY CLIC',
+    '',
+    'TEXTE PRINCIPAL : ' + (document.getElementById('texte_principal').value || ''),
+    'TEXTE SECONDAIRE : ' + (document.getElementById('texte_secondaire').value || 'Aucun'),
+    'STYLE : ' + (document.getElementById('style').value || 'Non précisé'),
+    'COULEURS : ' + couleurs,
+    'AUTRE COULEUR : ' + (document.getElementById('couleur_autre').value || 'Non précisée'),
+    'AMBIANCE / THÈME : ' + (document.getElementById('ambiance').value || 'Non précisé'),
+    'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune')
+  ].join('\n');
+
+  const params = new URLSearchParams({
+    action: 'personnalisation',
+    prenom: document.getElementById('prenom').value,
+    nom: document.getElementById('nom').value,
+    email: document.getElementById('email').value,
+    date: document.getElementById('date').value,
+    type: document.getElementById('type').value,
+    lieu: document.getElementById('lieu').value,
+    telephone: '',
+    formule: '',
+    message: message
+  });
+
+  const webhook = 'https://hook.eu1.make.com/v4b8g5tmwkmfgxaueplojoaj6u66gczv';
 
   try {
-    const data = new FormData(form);
-
-    const couleursChoisies = [...document.querySelectorAll('input[name="couleurs"]:checked')]
-      .map(input => input.value);
-
-    const couleurs = document.getElementById('choix_libre').checked
-      ? 'Je vous laisse choisir les couleurs'
-      : (couleursChoisies.length ? couleursChoisies.join(', ') : 'Non précisées');
-
-    const visuel = document.getElementById('visuel');
-    const visuelTexte = visuel && visuel.files && visuel.files.length
-      ? 'Oui - ' + visuel.files[0].name
-      : 'Non';
-
-    const message = [
-      'PERSONNALISATION POPPY CLIC',
-      '',
-      'TEXTE PRINCIPAL : ' + (document.getElementById('texte_principal').value || ''),
-      'TEXTE SECONDAIRE : ' + (document.getElementById('texte_secondaire').value || 'Aucun'),
-      'STYLE : ' + (document.getElementById('style').value || 'Non précisé'),
-      'COULEURS : ' + couleurs,
-      'AUTRE COULEUR : ' + (document.getElementById('couleur_autre').value || 'Non précisée'),
-      'AMBIANCE / THÈME : ' + (document.getElementById('ambiance').value || 'Non précisé'),
-      'REMARQUES : ' + (document.getElementById('remarques').value || 'Aucune'),
-      'VISUEL SÉLECTIONNÉ : ' + visuelTexte
-    ].join('\n');
-
-    data.set('message', message);
-
-    await fetch(form.action, {
-      method: 'POST',
-      body: data,
-      mode: 'no-cors'
+    await fetch(webhook + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors',
+      cache: 'no-store'
     });
 
-    form.style.display = 'none';
-    success.style.display = 'block';
+    personnalisationForm.style.display = 'none';
+    personnalisationSuccess.style.display = 'block';
 
     requestAnimationFrame(() => {
-      success.scrollIntoView({behavior:'smooth', block:'center'});
+      personnalisationSuccess.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
     });
   } catch (error) {
-    button.disabled = false;
-    button.textContent = originalText;
+    personnalisationButton.disabled = false;
+    personnalisationButton.textContent = originalText;
     alert('Une erreur est survenue. Merci de réessayer.');
   }
 });
