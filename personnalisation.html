@@ -86,6 +86,102 @@ max-width: 560px;
     border: 3px solid #c4362c;
     }
 
+
+    /* DIAPORAMA - créations déjà réalisées */
+    .templates-showcase{
+      display:none;
+      margin:1rem 0;
+      background:rgba(255,255,255,.55);
+      border:1px solid var(--pc-line);
+      border-radius:16px;
+      padding:1.4rem;
+    }
+    .templates-showcase.is-visible{display:block}
+    .templates-showcase-head{margin-bottom:1rem}
+    .templates-showcase-head h3{
+      font-family:"Fraunces",serif;
+      font-size:1.45rem;
+      margin:0 0 .35rem;
+      color:var(--pc-ink);
+    }
+    .templates-showcase-head p{
+      margin:0;
+      color:var(--pc-muted);
+      line-height:1.5;
+    }
+    .templates-slider{
+      width:min(100%,460px);
+      margin:0 auto;
+    }
+    .templates-stage{
+      overflow:hidden;
+      border-radius:12px;
+      background:#f5f3ed;
+      border:1px solid var(--pc-line);
+    }
+    .templates-stage img{
+      display:block;
+      width:100%;
+      height:auto;
+      aspect-ratio:3/2;
+      object-fit:contain;
+      background:#f5f3ed;
+    }
+    .templates-nav{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:.8rem;
+      margin-top:.8rem;
+    }
+    .templates-arrow{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid var(--pc-line);
+      background:#fff;
+      color:var(--pc-ink);
+      font-size:1.35rem;
+      cursor:pointer;
+    }
+    .templates-arrow:disabled{opacity:.35;cursor:not-allowed}
+    .templates-counter{
+      min-width:64px;
+      text-align:center;
+      font-size:.9rem;
+      color:var(--pc-muted);
+    }
+    .templates-dots{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:.4rem;
+      margin-top:.7rem;
+    }
+    .templates-dot{
+      width:8px;
+      height:8px;
+      padding:0;
+      border:0;
+      border-radius:50%;
+      background:#cfcac0;
+      cursor:pointer;
+    }
+    .templates-dot.is-active{background:var(--pc-red)}
+    .templates-note{
+      max-width:560px;
+      margin:.8rem auto 0;
+      text-align:center;
+      color:var(--pc-muted);
+      font-size:.86rem;
+      line-height:1.45;
+      font-style:italic;
+    }
+    @media(max-width:760px){
+      .templates-showcase{padding:1rem}
+      .templates-slider{width:100%}
+    }
+
     .personalisation-back{display:inline-block;margin-top:1.5rem;color:var(--pc-ink)}
     @media(max-width:760px){.personalisation-page{padding-top:.5rem}.personalisation-wrap{width:min(100% - 1.2rem,1120px)}.personalisation-hero{text-align:left;padding:1.5rem .25rem .8rem}.personalisation-hero p{margin-left:0}.personalisation-grid{grid-template-columns:1fr}.personalisation-field.is-full{grid-column:auto}.personalisation-card{padding:1rem;border-radius:13px}.personalisation-card-title{font-size:.92rem}.personalisation-note{align-items:flex-start}.colour-dot{width:40px;height:40px}}
   </style>
@@ -190,6 +286,32 @@ max-width: 560px;
       </label></div>
     </div></section>
 
+
+    <section class="templates-showcase" id="templates-showcase" aria-labelledby="templates-title">
+      <div class="templates-showcase-head">
+        <h3 id="templates-title">Quelques créations déjà réalisées</h3>
+        <p>Parcourez quelques exemples de contours réalisés pour de précédents événements.</p>
+      </div>
+
+      <div class="templates-slider">
+        <div class="templates-stage" id="templates-stage">
+          <img id="templates-current-image" src="" alt="">
+        </div>
+
+        <div class="templates-nav">
+          <button type="button" class="templates-arrow" id="templates-prev" aria-label="Création précédente">‹</button>
+          <span class="templates-counter" id="templates-counter"></span>
+          <button type="button" class="templates-arrow" id="templates-next" aria-label="Création suivante">›</button>
+        </div>
+
+        <div class="templates-dots" id="templates-dots" aria-label="Choisir un exemple"></div>
+      </div>
+
+      <p class="templates-note">
+        Ces exemples sont présentés à titre d’inspiration. Chaque création est personnalisée selon votre événement.
+      </p>
+    </section>
+
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">4</span><span>Vos autres préférences</span></div><div class="personalisation-grid">
       <div class="personalisation-field"><label for="visuel">Logo, invitation ou visuel de référence</label><input class="personalisation-input" type="file" id="visuel" name="visuel" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"><small>Formats acceptés : JPG, PNG ou PDF.</small></div>
       <div class="personalisation-field"><label for="ambiance">Thème ou ambiance à respecter</label><textarea class="personalisation-textarea" id="ambiance" name="ambiance" placeholder="Ex. champêtre, fleurs séchées, terracotta, chic, années 80…"></textarea></div>
@@ -244,6 +366,98 @@ function updateStylePreview(){
 
 styleSelect.addEventListener('change',updateStylePreview);
 updateStylePreview();
+
+
+// DIAPORAMA DES TEMPLATES DÉJÀ RÉALISÉS
+// Pour en ajouter plus tard : images/templates/template-01.png,
+// template-02.png, template-03.png, etc. (jusqu'à 50 ici).
+const templatesShowcase=document.getElementById('templates-showcase');
+const templatesImage=document.getElementById('templates-current-image');
+const templatesPrev=document.getElementById('templates-prev');
+const templatesNext=document.getElementById('templates-next');
+const templatesCounter=document.getElementById('templates-counter');
+const templatesDots=document.getElementById('templates-dots');
+const templatesStage=document.getElementById('templates-stage');
+
+let availableTemplates=[];
+let currentTemplateIndex=0;
+
+function templateFilename(n){
+  return 'images/templates/template-'+String(n).padStart(2,'0')+'.png';
+}
+
+function testTemplate(src,index){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>resolve({src,index});
+    img.onerror=()=>resolve(null);
+    img.src=src;
+  });
+}
+
+async function loadExistingTemplates(){
+  const tests=[];
+  for(let i=1;i<=50;i++){
+    tests.push(testTemplate(templateFilename(i),i));
+  }
+
+  const results=await Promise.all(tests);
+  availableTemplates=results.filter(Boolean).sort((a,b)=>a.index-b.index);
+
+  // Aucun template = la section reste complètement cachée.
+  if(!availableTemplates.length) return;
+
+  templatesShowcase.classList.add('is-visible');
+  renderTemplate(0);
+}
+
+function renderTemplate(index){
+  if(!availableTemplates.length) return;
+
+  currentTemplateIndex=(index+availableTemplates.length)%availableTemplates.length;
+  const item=availableTemplates[currentTemplateIndex];
+
+  templatesImage.src=item.src;
+  templatesImage.alt='Exemple de contour photo Poppy Clic '+(currentTemplateIndex+1);
+  templatesCounter.textContent=(currentTemplateIndex+1)+' / '+availableTemplates.length;
+
+  templatesPrev.disabled=availableTemplates.length<2;
+  templatesNext.disabled=availableTemplates.length<2;
+
+  templatesDots.innerHTML='';
+  availableTemplates.forEach((_,i)=>{
+    const dot=document.createElement('button');
+    dot.type='button';
+    dot.className='templates-dot'+(i===currentTemplateIndex?' is-active':'');
+    dot.setAttribute('aria-label','Afficher la création '+(i+1));
+    dot.addEventListener('click',()=>renderTemplate(i));
+    templatesDots.appendChild(dot);
+  });
+}
+
+templatesPrev.addEventListener('click',()=>renderTemplate(currentTemplateIndex-1));
+templatesNext.addEventListener('click',()=>renderTemplate(currentTemplateIndex+1));
+
+// Glissement gauche/droite sur téléphone.
+let templateTouchStartX=null;
+
+templatesStage.addEventListener('touchstart',e=>{
+  templateTouchStartX=e.changedTouches[0].clientX;
+},{passive:true});
+
+templatesStage.addEventListener('touchend',e=>{
+  if(templateTouchStartX===null || availableTemplates.length<2) return;
+
+  const delta=e.changedTouches[0].clientX-templateTouchStartX;
+
+  if(Math.abs(delta)>45){
+    renderTemplate(currentTemplateIndex+(delta<0?1:-1));
+  }
+
+  templateTouchStartX=null;
+},{passive:true});
+
+loadExistingTemplates();
 
 const choixLibre=document.getElementById('choix_libre');
 const colourInputs=[...document.querySelectorAll('input[name="couleurs"]')];
