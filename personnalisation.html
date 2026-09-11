@@ -28,7 +28,8 @@
     .personalisation-number{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--pc-red);color:#fff;font-family:"Fraunces",serif;font-size:1.25rem;letter-spacing:0}
     .personalisation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 1.25rem}
     .personalisation-field{display:flex;flex-direction:column;gap:.45rem}
-    .personalisation-field.is-full{grid-column:1/-1}
+    .personalisation-field.is-full{grid-column:1/-1;background: none;
+    color: black;}
     .personalisation-field label{font-weight:500}
     .personalisation-field small{color:var(--pc-muted);line-height:1.4}
     .personalisation-input,.personalisation-select,.personalisation-textarea{width:100%;box-sizing:border-box;border:1px solid #cfcac0;border-radius:8px;background:#fff;padding:.9rem 1rem;font:inherit;color:var(--pc-ink)}
@@ -49,15 +50,170 @@
     .custom-colour-row code{font-family:monospace;font-size:.88rem;color:var(--pc-muted);text-align:right}
     .choice-line{display:flex;align-items:center;gap:.55rem;margin-top:1rem;    background: #c4362c;
     color: #ffffff;}
-    .label.choice-line.personalisation-field.is-full {
-    background: none;
-    color: black;
-}
+
     @media(max-width:520px){.custom-colour-row{grid-template-columns:1fr auto}.custom-colour-row code{grid-column:1/-1;text-align:left;padding-left:1.6rem}}
     .personalisation-submit{text-align:center;padding:1.25rem 0 .25rem}.personalisation-submit .button{min-width:min(100%,330px)}.personalisation-submit p{color:var(--pc-muted);font-size:.95rem;margin-top:1rem}
     .personalisation-success{display:none;max-width:680px;margin:0 auto;padding:1.15rem 1rem;border-radius:12px;background:#eee8dc;text-align:center}
     .personalisation-success h2{font-family:"Fraunces",serif;font-size:1.45rem;margin:0 0 .4rem;color:var(--pc-ink)}
     .personalisation-success p{margin:0;color:var(--pc-muted);line-height:1.55}
+
+    /* Aperçu du style : format 10 x 15 horizontal (ratio 3:2) */
+    .style-preview{display:none;margin-top:1rem}
+    .style-preview.is-visible{display:block}
+    .style-preview-label{font-size:.92rem;font-weight:600;margin:0 0 .55rem}
+    .style-preview-frame{
+      --frame-main:#2f302c;
+      --frame-accent:#b79a5b;
+      position:relative;
+      width:min(100%,520px);
+      aspect-ratio:3/2;
+      overflow:hidden;
+      border-radius:10px;
+      background:#fbfaf6;
+      border:1px solid #d7d2c7;
+      box-shadow:0 10px 28px rgba(35,43,33,.08);
+    }
+    .style-preview-photo{
+      position:absolute;
+      inset:12% 8% 20%;
+      background:#e7e5df;
+      border:1px solid rgba(35,43,33,.12);
+      z-index:1;
+    }
+    .style-preview-frame::before{
+      content:"";
+      position:absolute;
+      inset:4.5%;
+      border:2px solid var(--frame-main);
+      border-radius:6px;
+      z-index:2;
+      pointer-events:none;
+    }
+    .style-preview-frame::after{
+      content:"";
+      position:absolute;
+      left:8%;
+      right:8%;
+      bottom:7%;
+      height:1px;
+      background:var(--frame-accent);
+      z-index:3;
+    }
+    .style-preview-name{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:8.5%;
+      z-index:4;
+      text-align:center;
+      font-family:"Fraunces",serif;
+      font-size:clamp(.9rem,2.2vw,1.15rem);
+      color:var(--frame-main);
+      background:#fbfaf6;
+      width:max-content;
+      max-width:78%;
+      margin:auto;
+      padding:0 .7rem;
+    }
+    .style-preview-ornament{
+      position:absolute;
+      z-index:5;
+      pointer-events:none;
+    }
+    .style-preview-note{
+      max-width:520px;
+      margin:.65rem 0 0;
+      color:var(--pc-muted);
+      font-size:.86rem;
+      line-height:1.45;
+      font-style:italic;
+    }
+
+    /* Élégant */
+    .style-preview-frame.style-elegant{--frame-main:#2f302c;--frame-accent:#b49355}
+    .style-preview-frame.style-elegant .ornament-a,
+    .style-preview-frame.style-elegant .ornament-b{
+      width:34px;height:34px;border:1px solid var(--frame-accent);
+      transform:rotate(45deg)
+    }
+    .style-preview-frame.style-elegant .ornament-a{top:7%;left:6%}
+    .style-preview-frame.style-elegant .ornament-b{right:6%;bottom:9%}
+
+    /* Champêtre */
+    .style-preview-frame.style-champetre{--frame-main:#6d7851;--frame-accent:#b39463}
+    .style-preview-frame.style-champetre .ornament-a,
+    .style-preview-frame.style-champetre .ornament-b{
+      width:52px;height:24px;border-radius:60% 0 60% 0;
+      background:rgba(109,120,81,.22);
+      border:1px solid rgba(109,120,81,.45);
+      transform:rotate(-28deg)
+    }
+    .style-preview-frame.style-champetre .ornament-a{top:7%;left:4%}
+    .style-preview-frame.style-champetre .ornament-b{right:4%;bottom:10%;transform:rotate(152deg)}
+
+    /* Bohème */
+    .style-preview-frame.style-boheme{--frame-main:#a65e43;--frame-accent:#d3a47b}
+    .style-preview-frame.style-boheme .ornament-a{
+      width:54px;height:54px;border-radius:50% 50% 0 0;
+      border:2px solid var(--frame-accent);border-bottom:0;left:5%;top:7%
+    }
+    .style-preview-frame.style-boheme .ornament-b{
+      width:38px;height:38px;border-radius:50%;
+      border:2px solid var(--frame-accent);right:6%;bottom:10%
+    }
+
+    /* Floral */
+    .style-preview-frame.style-floral{--frame-main:#7e5d72;--frame-accent:#c9a3b7}
+    .style-preview-frame.style-floral .ornament-a,
+    .style-preview-frame.style-floral .ornament-b{
+      width:48px;height:48px;border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 20%, #d9b4c4 0 16%, transparent 17%),
+        radial-gradient(circle at 80% 50%, #d9b4c4 0 16%, transparent 17%),
+        radial-gradient(circle at 50% 80%, #d9b4c4 0 16%, transparent 17%),
+        radial-gradient(circle at 20% 50%, #d9b4c4 0 16%, transparent 17%),
+        radial-gradient(circle at 50% 50%, #b77b96 0 13%, transparent 14%)
+    }
+    .style-preview-frame.style-floral .ornament-a{top:5%;left:4%}
+    .style-preview-frame.style-floral .ornament-b{right:4%;bottom:8%}
+
+    /* Minimaliste */
+    .style-preview-frame.style-minimaliste{--frame-main:#242424;--frame-accent:#242424}
+    .style-preview-frame.style-minimaliste::before{border-width:1px}
+    .style-preview-frame.style-minimaliste .ornament-a{
+      left:8%;top:8%;width:42px;height:1px;background:#242424
+    }
+    .style-preview-frame.style-minimaliste .ornament-b{
+      right:8%;bottom:10%;width:42px;height:1px;background:#242424
+    }
+
+    /* Festif */
+    .style-preview-frame.style-festif{--frame-main:#cf3e35;--frame-accent:#d7a930}
+    .style-preview-frame.style-festif .ornament-a,
+    .style-preview-frame.style-festif .ornament-b{
+      width:56px;height:40px;
+      background:
+        radial-gradient(circle at 10px 8px,#cf3e35 0 3px,transparent 4px),
+        radial-gradient(circle at 28px 18px,#e0b43c 0 3px,transparent 4px),
+        radial-gradient(circle at 46px 7px,#537f72 0 3px,transparent 4px),
+        radial-gradient(circle at 17px 32px,#8d6cb2 0 3px,transparent 4px),
+        radial-gradient(circle at 42px 31px,#e2788b 0 3px,transparent 4px)
+    }
+    .style-preview-frame.style-festif .ornament-a{top:5%;left:4%}
+    .style-preview-frame.style-festif .ornament-b{right:4%;bottom:8%;transform:rotate(180deg)}
+
+    /* Romantique */
+    .style-preview-frame.style-romantique{--frame-main:#9a6674;--frame-accent:#d9a9b5}
+    .style-preview-frame.style-romantique .ornament-a,
+    .style-preview-frame.style-romantique .ornament-b{
+      width:38px;height:38px;
+      border:2px solid var(--frame-accent);
+      border-radius:50% 50% 45% 45%;
+      transform:rotate(45deg)
+    }
+    .style-preview-frame.style-romantique .ornament-a{top:7%;left:5%}
+    .style-preview-frame.style-romantique .ornament-b{right:5%;bottom:10%}
+
     .personalisation-back{display:inline-block;margin-top:1.5rem;color:var(--pc-ink)}
     @media(max-width:760px){.personalisation-page{padding-top:.5rem}.personalisation-wrap{width:min(100% - 1.2rem,1120px)}.personalisation-hero{text-align:left;padding:1.5rem .25rem .8rem}.personalisation-hero p{margin-left:0}.personalisation-grid{grid-template-columns:1fr}.personalisation-field.is-full{grid-column:auto}.personalisation-card{padding:1rem;border-radius:13px}.personalisation-card-title{font-size:.92rem}.personalisation-note{align-items:flex-start}.colour-dot{width:40px;height:40px}}
   </style>
@@ -94,7 +250,34 @@
     </div></section>
 
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">3</span><span>Le style et les couleurs</span></div><div class="personalisation-grid">
-      <div class="personalisation-field"><label for="style">Style souhaité</label><select class="personalisation-select" id="style" name="style"><option value="">Choisir un style…</option><option>Élégant</option><option>Champêtre</option><option>Bohème</option><option>Floral</option><option>Minimaliste</option><option>Festif</option><option>Romantique</option><option>Je vous laisse choisir</option><option>Autre</option></select></div>
+      <div class="personalisation-field">
+        <label for="style">Style souhaité</label>
+        <select class="personalisation-select" id="style" name="style">
+          <option value="">Choisir un style…</option>
+          <option>Élégant</option>
+          <option>Champêtre</option>
+          <option>Bohème</option>
+          <option>Floral</option>
+          <option>Minimaliste</option>
+          <option>Festif</option>
+          <option>Romantique</option>
+          <option>Je vous laisse choisir</option>
+          <option>Autre</option>
+        </select>
+
+        <div class="style-preview" id="style-preview" aria-live="polite">
+          <p class="style-preview-label">Aperçu du style sélectionné</p>
+          <div class="style-preview-frame" id="style-preview-frame">
+            <div class="style-preview-photo" aria-hidden="true"></div>
+            <span class="style-preview-ornament ornament-a" aria-hidden="true"></span>
+            <span class="style-preview-ornament ornament-b" aria-hidden="true"></span>
+            <span class="style-preview-name" id="style-preview-name"></span>
+          </div>
+          <p class="style-preview-note">
+            Aperçu présenté à titre indicatif. La création finale sera personnalisée selon vos choix et pourra différer de cet exemple.
+          </p>
+        </div>
+      </div>
       <div><p class="colour-title">Couleurs principales <small>(plusieurs choix possibles · le code couleur sera transmis)</small></p><div class="colour-grid" id="colour-grid">
         <label class="colour-choice" title="Rouge"><input type="checkbox" name="couleurs" value="#C92727"><span class="colour-dot c-red"></span></label><label class="colour-choice" title="Rose"><input type="checkbox" name="couleurs" value="#EF8EA0"><span class="colour-dot c-pink"></span></label><label class="colour-choice" title="Rose poudré"><input type="checkbox" name="couleurs" value="#F3B8AE"><span class="colour-dot c-blush"></span></label><label class="colour-choice" title="Orange"><input type="checkbox" name="couleurs" value="#EF7C2F"><span class="colour-dot c-orange"></span></label><label class="colour-choice" title="Jaune"><input type="checkbox" name="couleurs" value="#F4C13B"><span class="colour-dot c-yellow"></span></label><label class="colour-choice" title="Vert"><input type="checkbox" name="couleurs" value="#45A24D"><span class="colour-dot c-green"></span></label><label class="colour-choice" title="Bleu canard"><input type="checkbox" name="couleurs" value="#328C96"><span class="colour-dot c-teal"></span></label><label class="colour-choice" title="Bleu"><input type="checkbox" name="couleurs" value="#2F5DA8"><span class="colour-dot c-blue"></span></label><label class="colour-choice" title="Violet"><input type="checkbox" name="couleurs" value="#9966CC"><span class="colour-dot c-purple"></span></label><label class="colour-choice" title="Lilas"><input type="checkbox" name="couleurs" value="#B8A9DC"><span class="colour-dot c-lilac"></span></label><label class="colour-choice" title="Noir"><input type="checkbox" name="couleurs" value="#222222"><span class="colour-dot c-black"></span></label><label class="colour-choice" title="Gris"><input type="checkbox" name="couleurs" value="#8B8B8B"><span class="colour-dot c-grey"></span></label><label class="colour-choice" title="Blanc"><input type="checkbox" name="couleurs" value="#FFFFFF"><span class="colour-dot c-white"></span></label><label class="colour-choice" title="Doré"><input type="checkbox" name="couleurs" value="#C89E48"><span class="colour-dot c-gold"></span></label><label class="colour-choice" title="Brun"><input type="checkbox" name="couleurs" value="#91603A"><span class="colour-dot c-brown"></span></label>
       </div><div class="custom-colours">
@@ -156,6 +339,40 @@
 const nav=document.getElementById('navbar');addEventListener('scroll',()=>nav.classList.toggle('is-scrolled',scrollY>20),{passive:true});
 const mobileMenuToggle=document.querySelector('.mobile-menu-toggle'),mobileMenu=document.getElementById('mobile-menu');if(mobileMenuToggle&&mobileMenu){const setMenu=open=>{nav.classList.toggle('mobile-menu-open',open);mobileMenuToggle.setAttribute('aria-expanded',open?'true':'false');mobileMenuToggle.setAttribute('aria-label',open?'Fermer le menu':'Ouvrir le menu');mobileMenu.setAttribute('aria-hidden',open?'false':'true')};mobileMenuToggle.addEventListener('click',()=>setMenu(!nav.classList.contains('mobile-menu-open')));mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)))}
 ['prenom','nom','lieu'].forEach(id=>{const field=document.getElementById(id);if(field)field.addEventListener('input',function(){this.value=this.value.toUpperCase()})});
+const styleSelect=document.getElementById('style');
+const stylePreview=document.getElementById('style-preview');
+const stylePreviewFrame=document.getElementById('style-preview-frame');
+const stylePreviewName=document.getElementById('style-preview-name');
+
+const stylePreviewClasses={
+  'Élégant':'style-elegant',
+  'Champêtre':'style-champetre',
+  'Bohème':'style-boheme',
+  'Floral':'style-floral',
+  'Minimaliste':'style-minimaliste',
+  'Festif':'style-festif',
+  'Romantique':'style-romantique'
+};
+
+function updateStylePreview(){
+  const value=styleSelect.value;
+  const previewClass=stylePreviewClasses[value];
+
+  if(!previewClass){
+    stylePreview.classList.remove('is-visible');
+    stylePreviewFrame.className='style-preview-frame';
+    stylePreviewName.textContent='';
+    return;
+  }
+
+  stylePreviewFrame.className='style-preview-frame '+previewClass;
+  stylePreviewName.textContent=value;
+  stylePreview.classList.add('is-visible');
+}
+
+styleSelect.addEventListener('change',updateStylePreview);
+updateStylePreview();
+
 const choixLibre=document.getElementById('choix_libre');
 const colourInputs=[...document.querySelectorAll('input[name="couleurs"]')];
 const customColourToggles=[...document.querySelectorAll('.custom-colour-toggle')];
