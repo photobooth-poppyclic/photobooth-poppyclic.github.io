@@ -220,6 +220,7 @@ max-width: 560px;
 
   <form id="personalisation-form" autocomplete="on">
     <input type="hidden" name="action" value="personnalisation">
+    <input type="hidden" id="reference" name="reference" value="">
     <section class="personalisation-card"><div class="personalisation-card-title"><span class="personalisation-number">1</span><span>Votre réservation</span></div><div class="personalisation-grid">
       <div class="personalisation-field"><label for="prenom">Prénom <span class="required">*</span></label><input class="personalisation-input" type="text" id="prenom" name="prenom" autocomplete="given-name" required></div>
       <div class="personalisation-field"><label for="nom">Nom <span class="required">*</span></label><input class="personalisation-input" type="text" id="nom" name="nom" autocomplete="family-name" required></div>
@@ -677,7 +678,7 @@ choixLibre.addEventListener('change',function(){
     toggle.disabled=this.checked;
   });
 });
-const params=new URLSearchParams(window.location.search);['prenom','nom','email','date','lieu','type'].forEach(id=>{const value=params.get(id),field=document.getElementById(id);if(value&&field)field.value=value});
+const params=new URLSearchParams(window.location.search);['prenom','nom','email','date','lieu','type','reference'].forEach(id=>{const value=params.get(id),field=document.getElementById(id);if(value&&field)field.value=value});
 const personnalisationForm = document.getElementById('personalisation-form');
 const personnalisationButton = document.getElementById('submit-personnalisation');
 const personnalisationSuccess = document.getElementById('personalisation-success');
@@ -750,6 +751,7 @@ personnalisationButton.addEventListener('click', function() {
   data.set('date', document.getElementById('date').value);
   data.set('type', document.getElementById('type').value);
   data.set('lieu', document.getElementById('lieu').value);
+  data.set('reference', document.getElementById('reference').value);
   data.set('telephone', '');
   data.set('formule', '');
   data.set('message', message);
