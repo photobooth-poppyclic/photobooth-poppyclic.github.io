@@ -1540,9 +1540,9 @@ if (new URLSearchParams(window.location.search).get('test') === '1') {
     restartAutoplay();
   });
 
-  fetch('avis.json', { cache: 'no-store' })
+  fetch('https://sosordi03.com/avis-poppy/public.php', { cache: 'no-store' })
     .then(response => {
-      if (!response.ok) throw new Error('avis.json introuvable');
+      if (!response.ok) throw new Error('service d’avis indisponible');
       return response.json();
     })
     .then(data => {
