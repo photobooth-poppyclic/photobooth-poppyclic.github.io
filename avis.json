@@ -2,9 +2,17 @@
   {
     "prenom": "Camille",
     "initiale": "D.",
-    "evenement": "Mariage",
+    "evenement": "Anniversaire",
     "date": "06/07/2026",
     "note": 5,
     "texte": "Très belle expérience avec Poppy Clic. Le photobooth a beaucoup plu à nos invités, les photos sont de très bonne qualité et l’installation soignée."
+  },
+  {
+    "prenom": "Élodie",
+    "initiale": "M.",
+    "evenement": "Mariage",
+    "date": "30/07/2026",
+    "note": 5,
+    "texte": "Nous avons adoré pour notre mariage. La qualité des photos est vraiment top et le photobooth lui-même est superbe. Son côté bois s’est parfaitement intégré à notre décoration et a apporté une vraie touche chic."
   }
 ]
