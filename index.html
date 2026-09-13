@@ -72,6 +72,7 @@
         <a href="#occasions" class="navbar_link">Occasions</a>
         <a href="#artisan" class="navbar_link">Le photobooth</a>
         <a href="#tarifs" class="navbar_link">Formules</a>
+        <a href="#avis" class="navbar_link">Avis</a>
         <a href="#faq" class="navbar_link">Questions</a>
         <a href="#reservation" class="navbar_link">Nous contacter</a>
       </nav>
@@ -98,8 +99,9 @@
         <a href="#occasions"><span>01</span><strong>Occasions</strong></a>
         <a href="#artisan"><span>02</span><strong>Le photobooth</strong></a>
         <a href="#tarifs"><span>03</span><strong>Formules</strong></a>
-        <a href="#faq"><span>04</span><strong>Questions</strong></a>
-        <a href="#reservation"><span>04</span><strong>Nous contacter</strong></a>
+        <a href="#avis"><span>04</span><strong>Avis clients</strong></a>
+        <a href="#faq"><span>05</span><strong>Questions</strong></a>
+        <a href="#reservation"><span>06</span><strong>Nous contacter</strong></a>
       </div>
     </div>
   </nav>
@@ -518,6 +520,66 @@
         </article>
 
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- AVIS CLIENTS -->
+<section class="section_reviews" id="avis" aria-labelledby="reviews-title">
+  <div class="padding-global">
+    <div class="container-large padding-section-large reviews_layout">
+
+      <div class="reviews_intro" data-reveal>
+        <span class="eyebrow is-light">Avis clients</span>
+
+        <h2 class="heading-style-h2 reviews_title" id="reviews-title">
+          Leurs souvenirs.<br>
+          Leurs mots.
+        </h2>
+
+        <p class="reviews_intro-text">
+          Des retours de clients ayant loué Poppy Clic pour leur événement.
+          Les avis publiés sont vérifiés avant leur mise en ligne.
+        </p>
+
+        <div class="reviews_average" id="reviews-average" hidden>
+          <div class="reviews_average-stars" id="reviews-average-stars" aria-hidden="true"></div>
+          <div>
+            <strong id="reviews-average-value"></strong>
+            <span id="reviews-average-count"></span>
+          </div>
+        </div>
+
+        <a class="button reviews_cta" href="avis.html">Laisser un avis</a>
+      </div>
+
+      <div class="reviews_panel" data-reveal>
+        <div class="reviews_empty" id="reviews-empty">
+          <span class="reviews_quote-mark" aria-hidden="true">“</span>
+          <h3>Les premiers avis arrivent bientôt.</h3>
+          <p>
+            Vous avez déjà loué Poppy Clic ? Partagez votre expérience en quelques instants.
+          </p>
+          <a class="button is-light" href="avis.html">Laisser le premier avis</a>
+        </div>
+
+        <div class="reviews_carousel" id="reviews-carousel" hidden>
+          <div class="reviews_viewport">
+            <div class="reviews_track" id="reviews-track"></div>
+          </div>
+
+          <div class="reviews_controls">
+            <div class="reviews_arrows">
+              <button class="reviews_arrow" id="reviews-prev" type="button" aria-label="Avis précédent">←</button>
+              <button class="reviews_arrow" id="reviews-next" type="button" aria-label="Avis suivant">→</button>
+            </div>
+
+            <div class="reviews_dots" id="reviews-dots" aria-label="Navigation des avis"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1316,5 +1378,212 @@ if (new URLSearchParams(window.location.search).get('test') === '1') {
   if (rgpd) rgpd.checked = true;
 }
 </script>
+
+<script>
+(() => {
+  const emptyState = document.getElementById('reviews-empty');
+  const carousel = document.getElementById('reviews-carousel');
+  const track = document.getElementById('reviews-track');
+  const prevButton = document.getElementById('reviews-prev');
+  const nextButton = document.getElementById('reviews-next');
+  const dotsWrap = document.getElementById('reviews-dots');
+  const average = document.getElementById('reviews-average');
+  const averageStars = document.getElementById('reviews-average-stars');
+  const averageValue = document.getElementById('reviews-average-value');
+  const averageCount = document.getElementById('reviews-average-count');
+
+  if (!emptyState || !carousel || !track) return;
+
+  const clampNote = note => Math.max(1, Math.min(5, Number(note) || 5));
+  const starString = note => {
+    const rounded = Math.round(clampNote(note));
+    return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
+  };
+
+  let reviews = [];
+  let index = 0;
+  let timer = null;
+
+  const cardsPerView = () => window.matchMedia('(max-width: 760px)').matches ? 1 : 2;
+  const maxIndex = () => Math.max(0, reviews.length - cardsPerView());
+
+  const buildCard = review => {
+    const article = document.createElement('article');
+    article.className = 'review_card';
+
+    const head = document.createElement('div');
+    head.className = 'review_card-head';
+
+    const stars = document.createElement('div');
+    stars.className = 'review_card-stars';
+    stars.setAttribute('aria-label', `${clampNote(review.note)} étoiles sur 5`);
+    stars.textContent = starString(review.note);
+
+    const quote = document.createElement('span');
+    quote.className = 'review_card-quote';
+    quote.setAttribute('aria-hidden', 'true');
+    quote.textContent = '“';
+
+    head.append(stars, quote);
+
+    const text = document.createElement('p');
+    text.className = 'review_card-text';
+    text.textContent = review.texte || '';
+
+    const footer = document.createElement('footer');
+    footer.className = 'review_card-footer';
+
+    const identity = document.createElement('div');
+    const name = document.createElement('strong');
+    const initiale = (review.initiale || '').trim();
+    name.textContent = [review.prenom || 'Client', initiale].filter(Boolean).join(' ');
+
+    const meta = document.createElement('span');
+    meta.textContent = [review.evenement, review.date].filter(Boolean).join(' · ');
+
+    identity.append(name, meta);
+
+    const badge = document.createElement('span');
+    badge.className = 'review_verified';
+    badge.textContent = 'Avis vérifié';
+
+    footer.append(identity, badge);
+    article.append(head, text, footer);
+
+    return article;
+  };
+
+  const createDots = () => {
+    dotsWrap.replaceChildren();
+    const count = maxIndex() + 1;
+
+    if (count <= 1) {
+      dotsWrap.hidden = true;
+      return;
+    }
+
+    dotsWrap.hidden = false;
+
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'reviews_dot';
+      dot.setAttribute('aria-label', `Afficher les avis à partir de la position ${i + 1}`);
+      dot.addEventListener('click', () => {
+        index = i;
+        update();
+        restartAutoplay();
+      });
+      dotsWrap.appendChild(dot);
+    }
+  };
+
+  const update = () => {
+    index = Math.min(index, maxIndex());
+
+    const perView = cardsPerView();
+    const percentage = 100 / perView;
+    const gap = 16;
+    track.style.transform = `translateX(calc(-${index * percentage}% - ${index * gap / perView}px))`;
+
+    prevButton.disabled = index <= 0;
+    nextButton.disabled = index >= maxIndex();
+
+    [...dotsWrap.children].forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+      dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+    });
+  };
+
+  const stopAutoplay = () => {
+    if (timer) clearInterval(timer);
+    timer = null;
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    if (reviews.length <= cardsPerView()) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    timer = setInterval(() => {
+      index = index >= maxIndex() ? 0 : index + 1;
+      update();
+    }, 6500);
+  };
+
+  const restartAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
+
+  prevButton.addEventListener('click', () => {
+    index = Math.max(0, index - 1);
+    update();
+    restartAutoplay();
+  });
+
+  nextButton.addEventListener('click', () => {
+    index = Math.min(maxIndex(), index + 1);
+    update();
+    restartAutoplay();
+  });
+
+  carousel.addEventListener('mouseenter', stopAutoplay);
+  carousel.addEventListener('mouseleave', startAutoplay);
+  carousel.addEventListener('focusin', stopAutoplay);
+  carousel.addEventListener('focusout', startAutoplay);
+
+  window.addEventListener('resize', () => {
+    createDots();
+    update();
+    restartAutoplay();
+  });
+
+  fetch('avis.json', { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error('avis.json introuvable');
+      return response.json();
+    })
+    .then(data => {
+      reviews = Array.isArray(data)
+        ? data.filter(review =>
+            review &&
+            typeof review.texte === 'string' &&
+            review.texte.trim() &&
+            Number(review.note) >= 1 &&
+            Number(review.note) <= 5
+          )
+        : [];
+
+      if (!reviews.length) {
+        emptyState.hidden = false;
+        carousel.hidden = true;
+        average.hidden = true;
+        return;
+      }
+
+      track.replaceChildren(...reviews.map(buildCard));
+      emptyState.hidden = true;
+      carousel.hidden = false;
+
+      const moyenne = reviews.reduce((sum, review) => sum + clampNote(review.note), 0) / reviews.length;
+      averageStars.textContent = starString(moyenne);
+      averageValue.textContent = `${moyenne.toFixed(1).replace('.', ',')} / 5`;
+      averageCount.textContent = `${reviews.length} avis publié${reviews.length > 1 ? 's' : ''}`;
+      average.hidden = false;
+
+      createDots();
+      update();
+      startAutoplay();
+    })
+    .catch(() => {
+      emptyState.hidden = false;
+      carousel.hidden = true;
+      average.hidden = true;
+    });
+})();
+</script>
+
 </body>
 </html>
