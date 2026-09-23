@@ -12,16 +12,16 @@
 <script>
 const params = new URLSearchParams(window.location.search);
 const tel = params.get('tel');
-
+const prenom = params.get('prenom') || '';
 const message =
-`Bonjour 😊
+``${prenom ? 'Bonjour ' + prenom : 'Bonjour'} 😊
 
 Merci beaucoup pour votre réservation Poppy Clic 📸✨
 Votre demande a bien été enregistrée et votre date est maintenant bloquée pendant 48 heures.
 
 Pour confirmer définitivement votre réservation ✅, il vous suffit de me retourner par e-mail le contrat signé que je viens de vous envoyer.
 
-ATTENTION : Sans retour dans ce délai, la date sera libérée et redeviendra disponible.
+✅ ATTENTION : Sans retour dans ce délai, la date sera libérée et redeviendra disponible.
 
 Toutes les informations concernant votre réservation sont également indiquées dans cet e-mail 📩
 Si vous ne le trouvez pas dans votre boîte de réception, pensez à vérifier vos spams / courriers indésirables.
