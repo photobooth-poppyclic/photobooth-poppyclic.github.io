@@ -19,6 +19,165 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="images/hero-photobooth.png" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
+
+<!-- POP-UP DISPONIBILITÉ : styles autonomes pour ne pas modifier style.css -->
+<style>
+  .pc-availability-modal[hidden] { display: none; }
+
+  .pc-availability-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(20, 25, 19, 0.72);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .pc-availability-modal-dialog {
+    position: relative;
+    width: min(860px, 100%);
+    max-height: min(760px, calc(100vh - 48px));
+    overflow: auto;
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+    background: #f7f3ec;
+    border-radius: 24px;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+  }
+
+  .pc-availability-modal-media {
+    min-height: 430px;
+    overflow: hidden;
+    border-radius: 24px 0 0 24px;
+  }
+
+  .pc-availability-modal-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .pc-availability-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(30px, 5vw, 58px);
+    color: #232b21;
+  }
+
+  .pc-availability-modal-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .pc-availability-modal-content h2 {
+    margin: 0 0 10px;
+    font-family: "Fraunces", serif;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    line-height: 1.02;
+    font-weight: 500;
+  }
+
+  .pc-availability-modal-date {
+    margin: 0 0 22px;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .pc-availability-modal-copy {
+    margin: 0 0 14px;
+    line-height: 1.65;
+  }
+
+  .pc-availability-modal-note {
+    margin: 3px 0 24px;
+    font-size: 0.88rem;
+    opacity: 0.72;
+  }
+
+  .pc-availability-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .pc-availability-modal-secondary {
+    border: 0;
+    background: transparent;
+    padding: 10px 4px;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .pc-availability-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #232b21;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14);
+  }
+
+  .pc-availability-modal-close:focus-visible,
+  .pc-availability-modal-secondary:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .pc-availability-modal {
+      padding: 14px;
+      align-items: center;
+    }
+
+    .pc-availability-modal-dialog {
+      grid-template-columns: 1fr;
+      max-height: calc(100vh - 28px);
+      border-radius: 20px;
+    }
+
+    .pc-availability-modal-media {
+      min-height: 210px;
+      max-height: 30vh;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .pc-availability-modal-content {
+      padding: 28px 24px 30px;
+    }
+
+    .pc-availability-modal-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .pc-availability-modal-actions .button,
+    .pc-availability-modal-secondary {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -824,6 +983,62 @@
   </div>
 </section>
 
+<!-- POP-UP : DATE DISPONIBLE -->
+<div
+  class="pc-availability-modal"
+  id="availability-success-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="availability-success-title"
+  aria-describedby="availability-success-copy"
+  hidden>
+  <div class="pc-availability-modal-dialog">
+    <button
+      class="pc-availability-modal-close"
+      id="availability-modal-close"
+      type="button"
+      aria-label="Fermer la fenêtre">×</button>
+
+    <div class="pc-availability-modal-media" aria-hidden="true">
+      <img
+        src="images/photobooth-poppy3.jpg"
+        alt=""
+        loading="lazy"
+        decoding="async">
+    </div>
+
+    <div class="pc-availability-modal-content">
+      <span class="pc-availability-modal-kicker">Bonne nouvelle ✨</span>
+      <h2 id="availability-success-title">Votre date est disponible !</h2>
+      <p class="pc-availability-modal-date" id="availability-modal-date"></p>
+
+      <p class="pc-availability-modal-copy" id="availability-success-copy">
+        Vous avez déjà fait le premier pas : votre date est libre. Poppy Clic peut maintenant
+        s’inviter à votre événement avec son photobooth en bois massif, des photos numériques
+        illimitées et de beaux souvenirs à partager avec vos invités.
+      </p>
+
+      <p class="pc-availability-modal-copy">
+        Continuez dans votre lancée : votre date est déjà ajoutée au formulaire, il ne reste
+        que quelques informations à me laisser pour votre demande.
+      </p>
+
+      <p class="pc-availability-modal-note">
+        La disponibilité reste à confirmer au moment de votre demande.
+      </p>
+
+      <div class="pc-availability-modal-actions">
+        <button class="button" id="availability-modal-continue" type="button">
+          Continuer ma demande
+        </button>
+        <button class="pc-availability-modal-secondary" id="availability-modal-later" type="button">
+          Pas maintenant
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FAQ -->
 <section class="section_faq" id="faq">
   <div class="padding-global">
@@ -1143,6 +1358,91 @@ const availabilityCheckInput = document.getElementById('availability-date');
 const availabilityCheckButton = document.getElementById('availability-check-button');
 const availabilityCheckStatus = document.getElementById('availability-check-status');
 
+// Pop-up affiché uniquement après une vérification rapide positive.
+const availabilityModal = document.getElementById('availability-success-modal');
+const availabilityModalDate = document.getElementById('availability-modal-date');
+const availabilityModalClose = document.getElementById('availability-modal-close');
+const availabilityModalContinue = document.getElementById('availability-modal-continue');
+const availabilityModalLater = document.getElementById('availability-modal-later');
+let availabilityModalPreviousFocus = null;
+
+function formatAvailabilityDate(dateString) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  const formatted = new Intl.DateTimeFormat('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+function openAvailabilityModal(dateString) {
+  if (!availabilityModal) return;
+
+  availabilityModalPreviousFocus = document.activeElement;
+
+  if (availabilityModalDate) {
+    availabilityModalDate.textContent = formatAvailabilityDate(dateString);
+  }
+
+  availabilityModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  requestAnimationFrame(() => {
+    availabilityModalContinue?.focus();
+  });
+}
+
+function closeAvailabilityModal() {
+  if (!availabilityModal) return;
+
+  availabilityModal.hidden = true;
+  document.body.style.overflow = '';
+
+  if (availabilityModalPreviousFocus instanceof HTMLElement) {
+    availabilityModalPreviousFocus.focus({ preventScroll: true });
+  }
+}
+
+availabilityModalClose?.addEventListener('click', closeAvailabilityModal);
+availabilityModalLater?.addEventListener('click', closeAvailabilityModal);
+
+availabilityModal?.addEventListener('click', (event) => {
+  if (event.target === availabilityModal) closeAvailabilityModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && availabilityModal && !availabilityModal.hidden) {
+    closeAvailabilityModal();
+  }
+});
+
+availabilityModalContinue?.addEventListener('click', () => {
+  const selectedDate = availabilityCheckInput?.value || '';
+
+  if (dateInput && selectedDate) {
+    dateInput.value = selectedDate;
+    dateInput.setCustomValidity('');
+    lastCheckedDate = selectedDate;
+    dateAvailabilityState = 'available';
+  }
+
+  // Ferme sans remettre le focus sur le bouton de vérification.
+  availabilityModalPreviousFocus = null;
+  closeAvailabilityModal();
+
+  const reservationForm = document.getElementById('reservation-form');
+  if (reservationForm) {
+    reservationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => {
+      document.getElementById('prenom')?.focus({ preventScroll: true });
+    }, 650);
+  }
+});
+
 let dateAvailabilityState = 'unknown';
 let lastCheckedDate = '';
 
@@ -1271,6 +1571,8 @@ async function runQuickAvailabilityCheck() {
         'Cette date est disponible. Vous pouvez envoyer votre demande.'
       );
     }
+
+    openAvailabilityModal(selectedDate);
   } else if (state === 'busy') {
     setQuickAvailabilityStatus(
       'busy',
