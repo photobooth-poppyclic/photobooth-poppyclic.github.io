@@ -1,38 +1,1900 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SMS Poppy Clic</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-poppy.png">
+<link rel="apple-touch-icon" href="images/favicon-poppy.png">
+<title>Poppy Clic | Location photobooth à Beaulon et dans l’Allier</title>
+<meta name="description" content="Location de photobooth en bois à Beaulon et dans l’Allier pour mariages, anniversaires et événements. Photos illimitées, impressions HD et installation.">
+<meta property="og:site_name" content="Poppy Clic">
+<meta property="og:title" content="Poppy Clic | Location photobooth à Beaulon et dans l’Allier">
+<meta property="og:type" content="website">
+  <meta property="og:image" content="https://poppyclic.fr/images/photobooth-poppy3.jpg">
+<meta property="og:url" content="https://poppyclic.fr/">
+  <link rel="canonical" href="https://poppyclic.fr/">
+<meta name="theme-color" content="#232B21">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/hero-photobooth.png" fetchpriority="high">
+<link rel="stylesheet" href="style.css">
+
+<!-- POP-UP DISPONIBILITÉ : styles autonomes pour ne pas modifier style.css -->
+<style>
+  .pc-availability-modal[hidden] { display: none; }
+
+  .pc-availability-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(20, 25, 19, 0.72);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .pc-availability-modal-dialog {
+    position: relative;
+    width: min(860px, 100%);
+    max-height: min(760px, calc(100vh - 48px));
+    overflow: auto;
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+    background: #f7f3ec;
+    border-radius: 24px;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+  }
+
+  .pc-availability-modal-media {
+    min-height: 430px;
+    overflow: hidden;
+    border-radius: 24px 0 0 24px;
+  }
+
+  .pc-availability-modal-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .pc-availability-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(30px, 5vw, 58px);
+    color: #232b21;
+  }
+
+  .pc-availability-modal-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .pc-availability-modal-content h2 {
+    margin: 0 0 10px;
+    font-family: "Fraunces", serif;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    line-height: 1.02;
+    font-weight: 500;
+  }
+
+  .pc-availability-modal-date {
+    margin: 0 0 22px;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .pc-availability-modal-copy {
+    margin: 0 0 14px;
+    line-height: 1.65;
+  }
+
+  .pc-availability-modal-note {
+    margin: 3px 0 24px;
+    font-size: 0.88rem;
+    opacity: 0.72;
+  }
+
+  .pc-availability-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .pc-availability-modal-secondary {
+    border: 0;
+    background: transparent;
+    padding: 10px 4px;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .pc-availability-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #232b21;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14);
+  }
+
+  .pc-availability-modal-close:focus-visible,
+  .pc-availability-modal-secondary:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .pc-availability-modal {
+      padding: 14px;
+      align-items: center;
+    }
+
+    .pc-availability-modal-dialog {
+      grid-template-columns: 1fr;
+      max-height: calc(100vh - 28px);
+      border-radius: 20px;
+    }
+
+    .pc-availability-modal-media {
+      min-height: 210px;
+      max-height: 30vh;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .pc-availability-modal-content {
+      padding: 28px 24px 30px;
+    }
+
+    .pc-availability-modal-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .pc-availability-modal-actions .button,
+    .pc-availability-modal-secondary {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://poppyclic.fr/#poppy-clic",
+  "name": "Poppy Clic",
+  "url": "https://poppyclic.fr/",
+  "logo": "https://poppyclic.fr/images/logo-poppy-clic.png",
+  "image": "https://poppyclic.fr/images/photobooth-poppy3.jpg",
+  "description": "Location de photobooth en bois pour mariages, anniversaires, baptêmes et événements dans l’Allier.",
+  "telephone": "+33661499712",
+  "email": "infos@sosordi03.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "13 rue du Meuble",
+    "postalCode": "03230",
+    "addressLocality": "Beaulon",
+    "addressCountry": "FR"
+  },
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Allier"
+  },
+  "priceRange": "€€"
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Poppy Clic",
+  "alternateName": "Poppy Clic Photobooth",
+  "url": "https://poppyclic.fr/"
+}
+</script>
 </head>
 <body>
+<div class="page-wrapper">
 
-<p>Ouverture du SMS…</p>
+<!-- NAVBAR -->
+<header class="navbar_component" id="navbar">
+  <div class="padding-global">
+    <div class="container-large navbar_container">
+<a href="#top" class="navbar_brand">
+  <img
+    src="images/logo-poppy-clic.png"
+    alt="Poppy Clic Photobooth"
+    class="navbar_logo-image" decoding="async">
+</a>
+      <nav class="navbar_menu">
+        <a href="#occasions" class="navbar_link">Occasions</a>
+        <a href="#artisan" class="navbar_link">Le photobooth</a>
+        <a href="#tarifs" class="navbar_link">Formules</a>
+        <a href="#avis" class="navbar_link">Avis</a>
+        <a href="#faq" class="navbar_link">Questions</a>
+        <a href="#reservation" class="navbar_link">Nous contacter</a>
+      </nav>
+      <a href="#reservation" class="button">Vérifiez votre date</a>
+
+      <button
+        class="mobile-menu-toggle"
+        type="button"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </div>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="padding-global">
+      <div class="container-large mobile-menu-inner">
+        <a href="#occasions"><span>01</span><strong>Occasions</strong></a>
+        <a href="#artisan"><span>02</span><strong>Le photobooth</strong></a>
+        <a href="#tarifs"><span>03</span><strong>Formules</strong></a>
+        <a href="#avis"><span>04</span><strong>Avis clients</strong></a>
+        <a href="#faq"><span>05</span><strong>Questions</strong></a>
+        <a href="#reservation"><span>06</span><strong>Nous contacter</strong></a>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="section_hero">
+  <div class="padding-global">
+    <div class="container-large hero_layout">
+
+      <div class="hero_intro">
+        <span class="eyebrow is-visible hero_kicker">
+          Location de photobooth à Beaulon · Mariages & événements
+        </span>
+
+        <div class="hero_price-premium" aria-label="Location à partir de 159 euros la soirée">
+          <span class="hero_price-from">À partir de</span>
+
+          <div class="hero_price-amount">
+            <strong>159</strong><span>€</span>
+          </div>
+
+          <div class="hero_price-side">
+            <strong>La soirée</strong>
+            <span>Photos numériques illimitées</span>
+          </div>
+        </div>
+
+        <h1 class="heading-style-h1 hero_title">
+          Location de photobooth <em>à Beaulon</em> et dans l’Allier.
+        </h1>
+      </div>
+
+      <figure class="hero_visual" aria-label="Photobooth Poppy Clic installé lors d'un mariage">
+        <div class="hero_visual-frame">
+          <img src="images/photobooth-poppy3.jpg
+" alt="Photobooth Poppy Clic en bois installé pendant un mariage" loading="eager" decoding="async" fetchpriority="high">
+        </div>
+        <figcaption class="hero_visual-badge">
+          <span>Location clé en main</span>
+          <strong>Le photobooth vient à votre événement.</strong>
+          <small>Installation · mise en service · reprise</small>
+        </figcaption>
+      </figure>
+
+      <div class="hero_detail">
+        <p class="text-size-large text-color-muted hero_text">
+          Poppy Clic propose la location de photobooth à Beaulon et dans un rayon de 30 km pour vos mariages, anniversaires et événements.
+        </p>
+
+        <div class="button-group hero_actions">
+          <a href="#reservation" class="button">Vérifier la disponibilité</a>
+          <a href="#tarifs" class="button is-secondary">Voir les formules</a>
+        </div>
+
+        <div class="hero_proof hero_proof-premium">
+          <div class="hero_proof-item">
+            <span class="hero_proof-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48">
+                <path d="M29 8a9 9 0 0 0-10 12L7 32a4 4 0 0 0 0 6 4 4 0 0 0 6 0l12-12A9 9 0 0 0 37 16l-6 6-5-5 6-6A9 9 0 0 0 29 8z"/>
+              </svg>
+            </span>
+            <div>
+              <span class="hero_proof-label">Clé en main</span>
+              <p class="text-size-small text-color-muted">Installation, mise en service et reprise</p>
+            </div>
+          </div>
+
+          <div class="hero_proof-item">
+            <span class="hero_proof-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48">
+                <rect x="8" y="14" width="32" height="24" rx="3"/>
+                <path d="M17 14l3-5h8l3 5"/>
+                <circle cx="24" cy="26" r="8"/>
+              </svg>
+            </span>
+            <div>
+              <span class="hero_proof-label">Sur place</span>
+              <p class="text-size-small text-color-muted">Appareil photo Nikon haute qualité</p>
+            </div>
+          </div>
+
+          <div class="hero_proof-item">
+            <span class="hero_proof-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48">
+                <path d="M42 7L19 29"/>
+                <path d="M42 7L29 41l-10-12L7 20z"/>
+              </svg>
+            </span>
+            <div>
+              <span class="hero_proof-label">Après</span>
+              <p class="text-size-small text-color-muted">Toutes les photos envoyées sous 24 h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BANDEAU DÉFILANT -->
+<section class="section_marquee" aria-hidden="true">
+  <div class="marquee_track">
+    <div class="marquee_item">Bois massif</div>
+    <div class="marquee_item">Fabrication artisanale</div>
+    <div class="marquee_item">Photos numériques illimitées</div>
+    <div class="marquee_item">Contour personnalisé</div>
+    <div class="marquee_item">Photos sous 24 h</div>
+    <div class="marquee_item">Installation autour de Beaulon</div>
+    <div class="marquee_item">Bois massif</div>
+    <div class="marquee_item">Fabrication artisanale</div>
+    <div class="marquee_item">Photos numériques illimitées</div>
+    <div class="marquee_item">Contour personnalisé</div>
+    <div class="marquee_item">Photos sous 24 h</div>
+    <div class="marquee_item">Installation autour de Beaulon</div>
+  </div>
+</section>
+
+<!-- OCCASIONS -->
+<section class="section_occasions" id="occasions">
+  <div class="padding-global">
+    <div class="container-large padding-section-large">
+      <div class="section_header" data-reveal>
+        <span class="eyebrow">Pour quel moment</span>
+        <h2 class="heading-style-h2">Des souvenirs à créer, quel que soit l’événement.</h2>
+        <p class="text-size-large text-color-muted">
+          Un photobooth qui trouve naturellement sa place dans chaque événement.
+        </p>
+  
+        
+      </div>
+
+      <div class="occasions_list">
+        <div class="occasions_cards is-visible" data-reveal="">
+        <article class="occasion_card">
+          <div class="occasion_card-copy">
+            <span class="occasion_icon">♡</span>
+            <h3>Mariages</h3>
+            <p>Des souvenirs élégants pour une journée unique.</p>
+          </div>
+          <img src="images/mariage-poppy.png" alt="Ambiance de mariage" loading="lazy" decoding="async">
+        </article>
+
+        <article class="occasion_card">
+          <div class="occasion_card-copy">
+            <span class="occasion_icon">◌</span>
+            <h3>Anniversaires</h3>
+            <p>Petits ou grands, tout le monde finit devant l'objectif.</p>
+          </div>
+          <img src="images/anniversaire-poppy.png" alt="Ambiance d'anniversaire" loading="lazy" decoding="async">
+        </article>
+
+        <article class="occasion_card">
+          <div class="occasion_card-copy">
+            <span class="occasion_icon">♧</span>
+            <h3>Baptêmes</h3>
+            <p>Un souvenir doux et joyeux à partager avec vos proches.</p>
+          </div>
+          <img src="images/Baptêmes.png
+" alt="Ambiance de baptême" loading="lazy" decoding="async">
+        </article>
+
+        <article class="occasion_card">
+          <div class="occasion_card-copy">
+            <span class="occasion_icon">◇</span>
+            <h3>Soirées pros</h3>
+            <p>Une animation qui crée du lien sans alourdir l'événement.</p>
+          </div>
+          <img src="images/entreprise.png
+" alt="Soirée professionnelle" loading="lazy" decoding="async">
+        </article>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ARTISAN -->
+<section class="section_artisan" id="artisan">
+  <div class="padding-global">
+    <div class="container-large padding-section-large artisan_layout">
+      <div data-reveal>
+        <span class="eyebrow is-light">Le photobooth</span>
+        <h2 class="heading-style-h2 artisan_title">Du bois massif et du matériel choisi pour la qualité des photos.</h2>
+        <p class="text-size-large text-color-muted">
+          La structure de Poppy Clic est réalisée en bois massif par un menuisier local. Une fabrication soignée,
+          pensée pour s'intégrer naturellement à votre décoration.
+        </p>
+        <p class="text-size-large text-color-muted artisan_second-text">
+          À l'intérieur, un appareil photo Nikon haute qualité et une imprimante professionnelle assurent de belles
+          photos et des impressions HD pendant votre soirée.
+        </p>
+        <div class="artisan_specs">
+          <div class="artisan_spec" style="--i:0"><span>Structure</span><span>Bois massif · menuisier local</span></div>
+          <div class="artisan_spec" style="--i:1"><span>Appareil photo</span><span>Nikon haute qualité</span></div>
+          <div class="artisan_spec" style="--i:2"><span>Impression</span><span>Imprimante professionnelle</span></div>
+          <div class="artisan_spec" style="--i:3"><span>Installation</span><span>Assurée personnellement</span></div>
+        </div>
+      </div>
+
+      <figure class="artisan_media" data-reveal style="--i:1">
+        <img src="images/hero-photobooth.png
+" alt="Détail du photobooth Poppy Clic en bois massif" loading="lazy" decoding="async">
+        <figcaption>
+          <span>Fabrication locale</span>
+          <strong>Un vrai meuble en bois massif.</strong>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section class="section_pricing" id="tarifs">
+  <div class="padding-global">
+    <div class="container-large padding-section-large">
+      <div class="section_header pricing_header" data-reveal>
+        <span class="eyebrow">Les formules</span>
+        <h2 class="heading-style-h2">Trois formules pour votre soirée.</h2>
+        <p class="text-size-large text-color-muted">
+          Toutes les formules comprennent les photos numériques illimitées et l'installation de Poppy Clic
+          dans un rayon de 30 km autour de Beaulon.
+        </p>
+      </div>
+
+      <div class="pricing_list">
+        <article class="pricing_item" data-reveal style="--i:0">
+          <span class="pricing_meta">La soirée</span>
+          <h3 class="pricing_name">Essentiel</h3>
+          <div class="pricing_price"><span class="pricing_amount">159&nbsp;€</span></div>
+          <ul class="pricing_features">
+            <li class="pricing_feature">Photos numériques illimitées</li>
+            <li class="pricing_feature">Appareil photo Nikon haute qualité</li>
+            <li class="pricing_feature">Photobooth en bois massif</li>
+            <li class="pricing_feature">Contour personnalisé proposé</li>
+            <li class="pricing_feature">Installation et récupération incluses dans un rayon de 30 km autour de Beaulon.</li>
+            <li class="pricing_feature">Lien de téléchargement de toutes les photos sous 24 h</li>
+          </ul>
+          <a href="#reservation" class="button is-secondary">Choisir Essentiel</a>
+        </article>
+
+        <article class="pricing_item is-featured" data-reveal style="--i:1">
+          <span class="pricing_badge">Avec impressions</span>
+          <span class="pricing_meta">La soirée</span>
+          <h3 class="pricing_name">Signature</h3>
+          <div class="pricing_price"><span class="pricing_amount">259&nbsp;€</span></div>
+          <ul class="pricing_features">
+            <li class="pricing_feature">Photos numériques illimitées</li>
+            <li class="pricing_feature"><strong>250 impressions photo HD</strong></li>
+            <li class="pricing_feature">Imprimante professionnelle</li>
+            <li class="pricing_feature">Appareil photo Nikon haute qualité</li>
+            <li class="pricing_feature">Contour personnalisé proposé</li>
+            <li class="pricing_feature">Installation et récupération jusqu'à 30 km autour de Beaulon</li>
+            <li class="pricing_feature">Lien de téléchargement de toutes les photos sous 24 h</li>
+          </ul>
+          <a href="#reservation" class="button is-light">Choisir Signature</a>
+        </article>
+
+        <article class="pricing_item" data-reveal style="--i:2">
+          <span class="pricing_meta">La soirée</span>
+          <h3 class="pricing_name">Grand Jour</h3>
+          <div class="pricing_price"><span class="pricing_amount">359&nbsp;€</span></div>
+          <ul class="pricing_features">
+            <li class="pricing_feature">Photos numériques illimitées</li>
+            <li class="pricing_feature"><strong>500 impressions photo HD</strong></li>
+            <li class="pricing_feature">Imprimante professionnelle</li>
+            <li class="pricing_feature">Appareil photo Nikon haute qualité</li>
+            <li class="pricing_feature">Contour personnalisé proposé</li>
+            <li class="pricing_feature">Installation et récupération jusqu'à 30 km autour de Beaulon</li>
+            <li class="pricing_feature">Lien de téléchargement de toutes les photos sous 24 h</li>
+          </ul>
+          <a href="#reservation" class="button is-secondary">Choisir Grand Jour</a>
+        </article>
+      </div>
+
+      <div class="rental_infos" data-reveal>
+        <div class="rental_info">
+          <span class="rental_info-title">Installation</span>
+          <p>Je viens personnellement installer Poppy Clic sur le lieu de votre événement dans un rayon de 30 km autour de Beaulon.</p>
+        </div>
+        <div class="rental_info">
+          <span class="rental_info-title">Après la soirée</span>
+          <p>Dans les 24 h suivant la récupération, vous recevez par e-mail un lien pour télécharger toutes les photos prises pendant la soirée.</p>
+        </div>
+        <div class="rental_info is-caution">
+          <span class="rental_info-title">Caution</span>
+          <p>Un chèque de caution de <strong>1 500 €</strong> est demandé. Il n'est pas encaissé et est restitué à la récupération du matériel, sous réserve de sa restitution en bon état.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section class="section_gallery" aria-label="Ambiances d’événements">
+  <div class="padding-global">
+    <div class="container-large gallery_layout">
+      <div class="gallery_intro" data-reveal>
+        <span class="eyebrow">En situation</span>
+        <h2 class="heading-style-h2">Des photos, des rires, et des souvenirs à emporter.</h2>
+        <p class="text-size-large text-color-muted">Poppy Clic trouve sa place aussi bien dans une réception élégante que dans une soirée plus festive.</p>
+      </div>
+      <div class="gallery_grid" data-reveal>
+        <figure class="gallery_photo is-large"><img src="images/poppy-clic3.png
+" alt="Photobooth Poppy Clic installé lors d’un mariage" loading="lazy" decoding="async"></figure>
+        <figure class="gallery_photo"><img src="images/poppy-clic1.jpg
+" alt="Invités réunis pour une photo de soirée" loading="lazy" decoding="async"></figure>
+        <figure class="gallery_photo"><img src="images/poppy-clic2.jpg
+" alt="Ambiance festive pendant une soirée" loading="lazy" decoding="async"></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCE -->
+<section class="section_included">
+  <div class="padding-global">
+    <div class="container-large experience_layout">
+
+      <div class="experience_intro" data-reveal>
+        <span class="eyebrow">L'expérience</span>
+
+        <h2 class="heading-style-h2 experience_title">
+          Simple pour vous.<br>
+          Amusant pour vos invités.
+        </h2>
+
+        <p class="text-color-muted experience_intro-text">
+          Poppy Clic est installé et prêt à fonctionner avant l'arrivée
+          de vos invités. Il ne reste plus qu'à sourire.
+        </p>
+      </div>
+
+      <div class="experience_cards" data-reveal>
+
+        <article class="experience_card">
+          <div class="experience_icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M7 27h26v10H7z"/>
+              <path d="M33 30h5l4 4v3h-9z"/>
+              <path d="M11 18h17v9H11z"/>
+              <circle cx="14" cy="38" r="3"/>
+              <circle cx="35" cy="38" r="3"/>
+              <path d="M17 18v9"/>
+            </svg>
+          </div>
+          <div class="experience_card-copy">
+            <span class="experience_number">01</span>
+            <h3>Installé pour vous</h3>
+            <p>
+              Je viens personnellement installer et mettre en service
+              Poppy Clic dans un rayon de 30 km autour de Beaulon.
+            </p>
+          </div>
+        </article>
+
+        <article class="experience_card">
+          <div class="experience_icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <rect x="13" y="12" width="24" height="28" rx="1"/>
+              <path d="M17 31l6-6 5 5 4-4 5 5"/>
+              <circle cx="31" cy="19" r="2.5"/>
+              <path d="M10 16h3M10 20h3M10 24h3"/>
+            </svg>
+          </div>
+          <div class="experience_card-copy">
+            <span class="experience_number">02</span>
+            <h3>Photos numériques illimitées</h3>
+            <p>
+              Vos invités profitent du photobooth pendant toute la soirée,
+              sans limite sur le nombre de photos numériques.
+            </p>
+          </div>
+        </article>
+
+        <article class="experience_card">
+          <div class="experience_icon is-gold" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <rect x="11" y="11" width="26" height="26"/>
+              <rect x="15" y="15" width="18" height="18"/>
+              <path d="M11 17h4M33 17h4M11 31h4M33 31h4"/>
+            </svg>
+          </div>
+          <div class="experience_card-copy">
+            <span class="experience_number">03</span>
+            <h3>Contour personnalisé</h3>
+            <p>
+              Un contour personnalisé vous est proposé pour accorder
+              vos photos à l'univers de votre événement.
+            </p>
+          </div>
+        </article>
+
+        <article class="experience_card">
+          <div class="experience_icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M8 15h32v22H8z"/>
+              <path d="M8 16l16 13 16-13"/>
+              <path class="icon-accent" d="M20 23l4 4 7-7"/>
+            </svg>
+          </div>
+          <div class="experience_card-copy">
+            <span class="experience_number">04</span>
+            <h3>Vos photos sous 24 h</h3>
+            <p>
+              Après récupération de Poppy Clic, vous recevez par e-mail
+              un lien pour télécharger toutes les photos de la soirée.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- AVIS CLIENTS -->
+<section class="section_reviews" id="avis" aria-labelledby="reviews-title">
+  <div class="padding-global">
+    <div class="container-large padding-section-large reviews_layout">
+
+      <div class="reviews_intro" data-reveal>
+        <span class="eyebrow is-light">Avis clients</span>
+
+        <h2 class="heading-style-h2 reviews_title" id="reviews-title">
+          Leurs souvenirs.<br>
+          Leurs mots.
+        </h2>
+
+        <p class="reviews_intro-text">
+          Des retours de clients ayant loué Poppy Clic pour leur événement.
+          Les avis publiés sont vérifiés avant leur mise en ligne.
+        </p>
+
+        <div class="reviews_average" id="reviews-average" hidden>
+          <div class="reviews_average-stars" id="reviews-average-stars" aria-hidden="true"></div>
+          <div>
+            <strong id="reviews-average-value"></strong>
+            <span id="reviews-average-count"></span>
+          </div>
+        </div>
+
+        <a class="button reviews_cta" href="avis.html">Laisser un avis</a>
+      </div>
+
+      <div class="reviews_panel" data-reveal>
+        <div class="reviews_empty" id="reviews-empty">
+          <span class="reviews_quote-mark" aria-hidden="true">“</span>
+          <h3>Les premiers avis arrivent bientôt.</h3>
+          <p>
+            Vous avez déjà loué Poppy Clic ? Partagez votre expérience en quelques instants.
+          </p>
+          <a class="button is-light" href="avis.html">Laisser le premier avis</a>
+        </div>
+
+        <div class="reviews_carousel" id="reviews-carousel" hidden>
+          <div class="reviews_viewport">
+            <div class="reviews_track" id="reviews-track"></div>
+          </div>
+
+          <div class="reviews_controls">
+            <div class="reviews_arrows">
+              <button class="reviews_arrow" id="reviews-prev" type="button" aria-label="Avis précédent">←</button>
+              <button class="reviews_arrow" id="reviews-next" type="button" aria-label="Avis suivant">→</button>
+            </div>
+
+            <div class="reviews_dots" id="reviews-dots" aria-label="Navigation des avis"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ÉTAPES -->
+<section class="section_steps">
+  <div class="padding-global">
+    <div class="container-large reservation_layout">
+
+      <div class="reservation_header" data-reveal>
+        <span class="eyebrow">Réservation</span>
+        <h2 class="heading-style-h2">
+          Trois étapes pour préparer votre soirée.
+        </h2>
+      </div>
+
+      <div class="reservation_steps" data-reveal>
+
+        <article class="reservation_step">
+          <div class="reservation_step-number">01</div>
+
+          <div class="reservation_step-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M8 18h22v22H8z"/>
+              <path d="M30 23h7v17h-7"/>
+              <path d="M13 18v-5h14v5"/>
+              <path class="icon-accent" d="M33 15v9M33 15h6"/>
+            </svg>
+          </div>
+
+          <div class="reservation_step-content">
+            <h3>Vous m'écrivez</h3>
+            <p>
+              Indiquez votre date, le lieu, le type d'événement
+              et la formule qui vous intéresse.
+            </p>
+          </div>
+        </article>
+
+        <article class="reservation_step">
+          <div class="reservation_step-number">02</div>
+
+          <div class="reservation_step-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M8 11h32v24H24l-9 6v-6H8z"/>
+              <circle class="icon-accent-fill" cx="18" cy="23" r="2"/>
+              <circle class="icon-accent-fill" cx="24" cy="23" r="2"/>
+              <circle class="icon-accent-fill" cx="30" cy="23" r="2"/>
+            </svg>
+          </div>
+
+          <div class="reservation_step-content">
+            <h3>Je vous réponds</h3>
+            <p>
+              Je vérifie votre réservation et je reviens vers vous
+              sous 24 h avec les informations nécessaires.
+            </p>
+          </div>
+        </article>
+
+        <article class="reservation_step">
+          <div class="reservation_step-number">03</div>
+
+          <div class="reservation_step-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <rect x="8" y="12" width="32" height="28" rx="2"/>
+              <path d="M8 20h32M16 8v8M32 8v8"/>
+              <circle cx="29" cy="31" r="7"/>
+              <path class="icon-accent" d="M26 31l2 2 4-5"/>
+            </svg>
+          </div>
+
+          <div class="reservation_step-content">
+            <h3>Le jour J</h3>
+            <p>
+              J'installe et teste personnellement Poppy Clic,
+              puis je récupère le matériel après votre soirée.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FORMULAIRE -->
+<section class="section_contact" id="reservation">
+  <div class="padding-global">
+    <div class="container-large padding-section-large contact_layout">
+      <div class="contact_intro" data-reveal>
+        <span class="eyebrow is-light">Demande de location</span>
+        <h2 class="heading-style-h2 contact_title">Parlez-moi de votre événement.</h2>
+        <p class="text-size-large text-color-muted">
+          Décrivez votre événement et recevez réponse sous 24 h ouvrées.
+        </p>
+        <div class="contact_reassurance">
+          <strong>Une question avant de réserver ?</strong>
+          <p>Vous pouvez également me joindre au <a href="tel:+33661499712">06 61 49 97 12</a>.</p>
+        </div>
+
+        <div class="availability_checker" id="disponibilites">
+          <span class="availability_checker-kicker">Disponibilités</span>
+          <h3>Vérifiez votre date.</h3>
+          <p class="availability_checker-copy">
+            Choisissez la date de votre événement : Poppy Clic vérifie instantanément si elle est encore libre.
+          </p>
+
+          <div class="availability_checker-controls">
+            <label class="availability_checker-label" for="availability-date">Date de votre événement</label>
+            <div class="availability_checker-row">
+              <input
+                class="availability_checker-input"
+                type="date"
+                id="availability-date"
+                aria-describedby="availability-check-status">
+              <button
+                class="button availability_checker-button"
+                type="button"
+                id="availability-check-button">
+                Vérifier la date
+              </button>
+            </div>
+          </div>
+
+          <p
+            id="availability-check-status"
+            class="availability_checker-status"
+            role="status"
+            aria-live="polite"></p>
+
+          <p class="availability_checker-note">
+            Une date disponible reste à confirmer au moment de votre demande.
+          </p>
+        </div>
+      </div>
+
+      <!-- Branche l'attribut action sur ton service de formulaire (Formspree, Basin, Make…) -->
+      <form id="reservation-form" class="form_component" method="POST" action="https://script.google.com/macros/s/AKfycbzBVBv2SV4g1yjcXxPncsd7EsKRFbQNKIpy4nISPOwOe2f4jI4zxDJkeS7BA_N02Z2x9w/exec" data-reveal style="--i:1">
+        <div class="form_grid">
+          <div class="form_field">
+            <label class="form_label" for="prenom">Prénom *</label>
+            <input class="form_input" type="text" id="prenom" name="prenom" autocomplete="given-name" required>
+          </div>
+          <div class="form_field">
+            <label class="form_label" for="nom">Nom *</label>
+            <input class="form_input" type="text" id="nom" name="nom" autocomplete="family-name" required>
+          </div>
+          <div class="form_field">
+<label class="form_label" for="email">E-mail *</label>
+<input
+  class="form_input"
+  type="email"
+  id="email"
+  name="email"
+  autocomplete="email"
+  required
+  pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}"
+  title="Veuillez saisir une adresse e-mail valide, par exemple nom@exemple.fr"
+>
+          </div>
+          <div class="form_field">
+<label class="form_label" for="tel">Téléphone *</label>
+<input
+  class="form_input"
+  type="tel"
+  id="tel"
+  name="telephone"
+  autocomplete="tel"
+  required
+  pattern="0[1-9]([ .\-]?[0-9]{2}){4}"
+  title="Veuillez saisir un numéro français à 10 chiffres, par exemple 06 12 34 56 78"
+>
+          </div>
+          <div class="form_field">
+            <label class="form_label" for="type">Type d'événement *</label>
+            <select class="form_select" id="type" name="type" required>
+              <option value="">Choisir…</option>
+              <option>Mariage</option>
+              <option>Baptême / Communion</option>
+              <option>Anniversaire</option>
+              <option>Baby shower</option>
+              <option>Entreprise</option>
+              <option>Association</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form_field">
+            <label class="form_label" for="date">Date souhaitée *</label>
+            <input class="form_input" type="date" id="date" name="date" required>
+            <p
+              id="date-availability-status"
+              class="date-availability-status"
+              role="status"
+              aria-live="polite">
+            </p>
+          </div>
+          <div class="form_field">
+            <label class="form_label" for="lieu">Lieu*  <p class="location-info">
+   Max 30km autour de Beaulon.
+</p>.</label>
+           
+            <input class="form_input" type="text" id="lieu" name="lieu" required>
+          </div>
+<div class="form_field">
+  <label class="form_label" for="formule">Formule *</label>
+  <select class="form_select" id="formule" name="formule" required>
+    <option value="">Choisir une formule…</option>
+    
+    <option>Essentiel</option>
+    <option>Signature</option>
+    <option>Grand Jour</option>
+  </select>
+</div>
+          <div class="form_field is-full">
+            <label class="form_label" for="message">Votre événement en quelques mots</label>
+            <textarea class="form_textarea" id="message" name="message" placeholder="Nombre d'invités, horaires, salle, idée de cadre photo…"></textarea>
+          </div>
+          <label class="form_check">
+            <input type="checkbox" name="rgpd" required>
+            <span>J'accepte que mes informations soient utilisées pour répondre à ma demande.</span>
+          </label>
+          <button type="submit" class="button">Envoyer ma demande</button>
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+  <label for="website">Site internet</label>
+  <input
+    type="text"
+    id="website"
+    name="website"
+    tabindex="-1"
+    autocomplete="off"
+  >
+</div>
+        </div>
+      </form>
+      <div id="form-success" style="display:none;">
+  <h3>Merci, votre demande est bien partie.</h3>
+  <p>Je reviens vers vous rapidement pour confirmer votre réservation.</p>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- POP-UP : DATE DISPONIBLE -->
+<div
+  class="pc-availability-modal"
+  id="availability-success-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="availability-success-title"
+  aria-describedby="availability-success-copy"
+  hidden>
+  <div class="pc-availability-modal-dialog">
+    <button
+      class="pc-availability-modal-close"
+      id="availability-modal-close"
+      type="button"
+      aria-label="Fermer la fenêtre">×</button>
+
+    <div class="pc-availability-modal-media" aria-hidden="true">
+      <img
+        src="images/photobooth-poppy3.jpg"
+        alt=""
+        loading="lazy"
+        decoding="async">
+    </div>
+
+    <div class="pc-availability-modal-content">
+      <span class="pc-availability-modal-kicker">Bonne nouvelle ✨</span>
+      <h2 id="availability-success-title">Votre date est disponible !</h2>
+      <p class="pc-availability-modal-date" id="availability-modal-date"></p>
+
+      <p class="pc-availability-modal-copy" id="availability-success-copy">
+        Vous avez déjà fait le premier pas : votre date est libre. Poppy Clic peut maintenant
+        s’inviter à votre événement avec son photobooth en bois massif, des photos numériques
+        illimitées et de beaux souvenirs à partager avec vos invités.
+      </p>
+
+      <p class="pc-availability-modal-copy">
+        Continuez dans votre lancée : votre date est déjà ajoutée au formulaire, il ne reste
+        que quelques informations à me laisser pour votre demande.
+      </p>
+
+      <p class="pc-availability-modal-note">
+        La disponibilité reste à confirmer au moment de votre demande.
+      </p>
+
+      <div class="pc-availability-modal-actions">
+        <button class="button" id="availability-modal-continue" type="button">
+          Continuer ma demande
+        </button>
+        <button class="pc-availability-modal-secondary" id="availability-modal-later" type="button">
+          Pas maintenant
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section_faq" id="faq">
+  <div class="padding-global">
+    <div class="container-medium padding-section-large">
+      <div class="section_header" data-reveal>
+        <span class="eyebrow">Questions fréquentes</span>
+        <h2 class="heading-style-h2">Avant de réserver.</h2>
+      </div>
+      <div class="faq_list" data-reveal>
+        <details class="faq_item">
+          <summary class="faq_question">Comment vérifier si ma date est disponible ?</summary>
+          <p class="faq_answer">Remplissez le formulaire avec votre date et le lieu de l'événement. Je vérifie la disponibilité et je vous réponds sous 24 h. Vous pouvez aussi me joindre au 06 61 49 97 12.</p>
+        </details>
+        <details class="faq_item">
+          <summary class="faq_question">Le contour des photos peut-il être personnalisé ?</summary>
+          <p class="faq_answer">Oui. Un contour personnalisé vous est proposé afin d'adapter les photos à votre événement.</p>
+        </details>
+        <details class="faq_item">
+          <summary class="faq_question">Le photobooth fonctionne-t-il de façon autonome ?</summary>
+          <p class="faq_answer">Oui. Je viens personnellement l'installer et le mettre en service avant votre événement. Il est ensuite prévu pour être utilisé simplement par vos invités pendant la soirée.</p>
+        </details>
+        <details class="faq_item">
+          <summary class="faq_question">Que comprennent les impressions ?</summary>
+          <p class="faq_answer">La formule Signature comprend 250 impressions photo HD et la formule Grand Jour 500 impressions photo HD. La formule Essentiel comprend les photos numériques illimitées sans impressions.</p>
+        </details>
+        <details class="faq_item">
+          <summary class="faq_question">Le déplacement est-il compris ?</summary>
+          <p class="faq_answer">    Oui. La livraison, l’installation et la récupération de Poppy Clic
+    sont comprises dans un rayon maximum de 30 km autour de Beaulon.
+    Les locations au-delà de cette zone ne sont pas proposées et
+    le photobooth ne peut pas être retiré directement par le client.</p>
+        </details>
+        <details class="faq_item">
+          <summary class="faq_question">Une caution est-elle demandée ?</summary>
+          <p class="faq_answer">Oui. Un chèque de caution de 1 500 € est demandé. Il n'est pas encaissé et est restitué à la récupération du matériel, sous réserve de sa restitution en bon état.</p>
+        </details>
+        <details class="faq_item">
+          <summary class="faq_question">Quand vais-je recevoir les photos numériques ?</summary>
+          <p class="faq_answer">Dans les 24 h suivant la récupération de Poppy Clic, vous recevez par e-mail un lien pour télécharger toutes les photos prises pendant votre soirée.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER PREMIUM -->
+<footer class="pc-footer">
+
+  <div class="padding-global">
+    <div class="container-large pc-footer-main">
+
+      <!-- MARQUE -->
+      <div class="pc-footer-brand">
+
+        <div class="pc-footer-logo">
+          
+          <a href="#top" class="navbar_brand">
+  <img
+    src="images/logo-poppy-clic.png"
+    alt="Poppy Clic Photobooth"
+    class="navbar_logo-image" decoding="async">
+</a>
+        </div>
+
+        <p class="pc-footer-description">
+          Location de photobooth artisanal en bois pour mariages,
+          anniversaires, baptêmes et événements.
+        </p>
+
+        <div class="pc-footer-signature">
+          <span></span>
+          Une activité proposée par
+          <strong>SOS ORDI 03</strong>
+        </div>
+
+      </div>
+
+
+      <!-- CONTACT -->
+      <div class="pc-footer-column">
+
+        <span class="pc-footer-title">Contact</span>
+
+        <div class="pc-footer-contact">
+
+          <!-- ADRESSE -->
+          <div class="pc-footer-contact-item">
+
+            <span class="pc-footer-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21s-6-5.4-6-11a6 6 0 1 1 12 0c0 5.6-6 11-6 11z"/>
+                <circle cx="12" cy="10" r="2.3"/>
+              </svg>
+            </span>
+
+            <div>
+              <span>13 rue du Meuble</span>
+              <span>03230 Beaulon</span>
+            </div>
+
+          </div>
+
+
+          <!-- TÉLÉPHONE -->
+          <div class="pc-footer-contact-item">
+
+            <span class="pc-footer-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/>
+              </svg>
+            </span>
+
+            <a href="tel:+33661499712">
+              06 61 49 97 12
+            </a>
+
+          </div>
+
+
+          <!-- EMAIL -->
+          <div class="pc-footer-contact-item">
+
+            <span class="pc-footer-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="1"/>
+                <path d="m4 7 8 6 8-6"/>
+              </svg>
+            </span>
+
+            <a href="mailto:infos@sosordi03.com">
+              poppyclic@gmail.com
+            </a>
+
+          </div>
+
+
+          <!-- SITE -->
+          <div class="pc-footer-contact-item">
+
+            <span class="pc-footer-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M3 12h18"/>
+                <path d="M12 3c3 3 4 6 4 9s-1 6-4 9"/>
+                <path d="M12 3c-3 3-4 6-4 9s1 6 4 9"/>
+              </svg>
+            </span>
+
+            <a href="https://sosordi03.com"
+               target="_blank"
+               rel="noopener">
+              sosordi03.com
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+      <div class="pc-footer-column">
+
+        <span class="pc-footer-title">Poppy Clic</span>
+
+        <nav class="pc-footer-nav">
+
+          <a href="#occasions">
+            <span>›</span>
+            Occasions
+          </a>
+
+          <a href="#artisan">
+            <span>›</span>
+            Le photobooth
+          </a>
+
+          <a href="#tarifs">
+            <span>›</span>
+            Formules
+          </a>
+
+          <a href="#reservation">
+            <span>›</span>
+            Réservation
+          </a>
+
+          <a href="#faq">
+            <span>›</span>
+            Questions fréquentes
+          </a>
+
+        </nav>
+
+      </div>
+
+
+      <!-- CTA -->
+      <div class="pc-footer-cta">
+
+        <span class="pc-footer-title">
+          Votre événement
+        </span>
+
+        <h3>
+          Votre date est peut-être
+          encore libre.
+        </h3>
+
+        <p>
+          Une réponse sous 24 h pour vérifier
+          la disponibilité de Poppy Clic.
+        </p>
+
+        <a href="#reservation" class="button pc-footer-button">
+          Vérifier ma date
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- BAS DU FOOTER -->
+  <div class="pc-footer-bottom">
+
+    <div class="padding-global">
+
+      <div class="container-large pc-footer-bottom-inner">
+
+        <div class="pc-footer-company">
+          <strong>Poppy Clic</strong>
+          <span>Une activité de SOS ORDI 03</span>
+          <span>EI Nelly Lacombe · SIREN 493 789 572</span>
+        </div>
+
+        <nav class="pc-footer-legal">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <a href="confidentialite.html">Confidentialité</a>
+          <a href="cgv.html">CGV</a>
+        </nav>
+
+        <span class="pc-footer-copyright">
+          © <span id="year">2026</span> Poppy Clic
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+</div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const tel = params.get('tel');
-const prenom = params.get('prenom') || '';
-const message =
-``${prenom ? 'Bonjour ' + prenom : 'Bonjour'} 😊
+// Année du footer
+document.getElementById('year').textContent = new Date().getFullYear();
 
-Merci beaucoup pour votre réservation Poppy Clic 📸✨
-Votre demande a bien été enregistrée et votre date est maintenant bloquée pendant 48 heures.
+// Ombre de la navbar au scroll
+const nav = document.getElementById('navbar');
+addEventListener('scroll', () => nav.classList.toggle('is-scrolled', scrollY > 20), {passive:true});
 
-Pour confirmer définitivement votre réservation ✅, il vous suffit de me retourner par e-mail le contrat signé que je viens de vous envoyer.
+// Apparition des blocs au scroll : ajoute .is-visible une seule fois
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+  });
+}, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-✅ ATTENTION : Sans retour dans ce délai, la date sera libérée et redeviendra disponible.
+// Navigation mobile
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
 
-Toutes les informations concernant votre réservation sont également indiquées dans cet e-mail 📩
-Si vous ne le trouvez pas dans votre boîte de réception, pensez à vérifier vos spams / courriers indésirables.
+if (mobileMenuToggle && mobileMenu) {
+  const setMenu = (open) => {
+    nav.classList.toggle('mobile-menu-open', open);
+    mobileMenuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileMenuToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  };
 
-À bientôt 😊
-Nelly – Poppy Clic 🌸`;
+  mobileMenuToggle.addEventListener('click', () => {
+    setMenu(!nav.classList.contains('mobile-menu-open'));
+  });
 
-if (tel) {
-  window.location.href =
-    'sms:' + tel + '?body=' + encodeURIComponent(message);
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenu(false);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 991) setMenu(false);
+  }, {passive:true});
 }
+</script>
+  <script>
+/* ============================================================
+   VÉRIFICATION DE DISPONIBILITÉ POPPY CLIC
+   Le webhook Make existant est conservé.
+   ============================================================ */
+const AVAILABILITY_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzBVBv2SV4g1yjcXxPncsd7EsKRFbQNKIpy4nISPOwOe2f4jI4zxDJkeS7BA_N02Z2x9w/exec';
+
+const dateInput = document.getElementById('date');
+const dateAvailabilityStatus = document.getElementById('date-availability-status');
+
+const availabilityCheckInput = document.getElementById('availability-date');
+const availabilityCheckButton = document.getElementById('availability-check-button');
+const availabilityCheckStatus = document.getElementById('availability-check-status');
+
+// Pop-up affiché uniquement après une vérification rapide positive.
+const availabilityModal = document.getElementById('availability-success-modal');
+const availabilityModalDate = document.getElementById('availability-modal-date');
+const availabilityModalClose = document.getElementById('availability-modal-close');
+const availabilityModalContinue = document.getElementById('availability-modal-continue');
+const availabilityModalLater = document.getElementById('availability-modal-later');
+let availabilityModalPreviousFocus = null;
+
+function formatAvailabilityDate(dateString) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  const formatted = new Intl.DateTimeFormat('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+function openAvailabilityModal(dateString) {
+  if (!availabilityModal) return;
+
+  availabilityModalPreviousFocus = document.activeElement;
+
+  if (availabilityModalDate) {
+    availabilityModalDate.textContent = formatAvailabilityDate(dateString);
+  }
+
+  availabilityModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  requestAnimationFrame(() => {
+    availabilityModalContinue?.focus();
+  });
+}
+
+function closeAvailabilityModal() {
+  if (!availabilityModal) return;
+
+  availabilityModal.hidden = true;
+  document.body.style.overflow = '';
+
+  if (availabilityModalPreviousFocus instanceof HTMLElement) {
+    availabilityModalPreviousFocus.focus({ preventScroll: true });
+  }
+}
+
+availabilityModalClose?.addEventListener('click', closeAvailabilityModal);
+availabilityModalLater?.addEventListener('click', closeAvailabilityModal);
+
+availabilityModal?.addEventListener('click', (event) => {
+  if (event.target === availabilityModal) closeAvailabilityModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && availabilityModal && !availabilityModal.hidden) {
+    closeAvailabilityModal();
+  }
+});
+
+availabilityModalContinue?.addEventListener('click', () => {
+  const selectedDate = availabilityCheckInput?.value || '';
+
+  if (dateInput && selectedDate) {
+    dateInput.value = selectedDate;
+    dateInput.setCustomValidity('');
+    lastCheckedDate = selectedDate;
+    dateAvailabilityState = 'available';
+  }
+
+  // Ferme sans remettre le focus sur le bouton de vérification.
+  availabilityModalPreviousFocus = null;
+  closeAvailabilityModal();
+
+  const reservationForm = document.getElementById('reservation-form');
+  if (reservationForm) {
+    reservationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => {
+      document.getElementById('prenom')?.focus({ preventScroll: true });
+    }, 650);
+  }
+});
+
+let dateAvailabilityState = 'unknown';
+let lastCheckedDate = '';
+
+const availabilityIsConfigured =
+  AVAILABILITY_WEBHOOK_URL.startsWith('https://') &&
+  !AVAILABILITY_WEBHOOK_URL.includes('COLLER_ICI');
+
+function setDateAvailabilityStatus(state, message) {
+  dateAvailabilityState = state;
+
+  if (!dateAvailabilityStatus) return;
+
+  dateAvailabilityStatus.className =
+    'date-availability-status' + (state ? ' is-' + state : '');
+  dateAvailabilityStatus.textContent = message || '';
+}
+
+function setQuickAvailabilityStatus(state, message) {
+  if (!availabilityCheckStatus) return;
+
+  availabilityCheckStatus.className =
+    'availability_checker-status' + (state ? ' is-' + state : '');
+  availabilityCheckStatus.textContent = message || '';
+}
+
+async function requestDateAvailability(date) {
+  if (!date || !availabilityIsConfigured) return 'unknown';
+
+  try {
+    const separator = AVAILABILITY_WEBHOOK_URL.includes('?') ? '&' : '?';
+    const response = await fetch(
+      AVAILABILITY_WEBHOOK_URL + separator + 'date=' + encodeURIComponent(date),
+      { method: 'GET', cache: 'no-store' }
+    );
+
+    if (!response.ok) throw new Error('Réponse indisponible');
+
+    const result = (await response.text()).trim();
+
+    if (result === '1') return 'busy';
+    if (result === '0') return 'available';
+
+    throw new Error('Réponse inattendue');
+
+  } catch (error) {
+    return 'error';
+  }
+}
+
+async function checkDateAvailability(date) {
+  if (!date) {
+    lastCheckedDate = '';
+    setDateAvailabilityStatus('unknown', '');
+    if (dateInput) dateInput.setCustomValidity('');
+    return 'unknown';
+  }
+
+  if (!availabilityIsConfigured) {
+    lastCheckedDate = '';
+    setDateAvailabilityStatus('unknown', '');
+    if (dateInput) dateInput.setCustomValidity('');
+    return 'unknown';
+  }
+
+  lastCheckedDate = date;
+  setDateAvailabilityStatus('checking', 'Vérification de la disponibilité…');
+
+  const state = await requestDateAvailability(date);
+
+  if (state === 'busy') {
+    if (dateInput) dateInput.setCustomValidity('Cette date est déjà réservée.');
+    setDateAvailabilityStatus(
+      'busy',
+      'Cette date est déjà réservée. Choisissez une autre date.'
+    );
+    return 'busy';
+  }
+
+  if (state === 'available') {
+    if (dateInput) dateInput.setCustomValidity('');
+    setDateAvailabilityStatus(
+      'available',
+      'Cette date est disponible. Vous pouvez envoyer votre demande.'
+    );
+    return 'available';
+  }
+
+  if (dateInput) dateInput.setCustomValidity('');
+  setDateAvailabilityStatus(
+    'error',
+    'Vérification automatique momentanément indisponible. La date sera confirmée avec votre demande.'
+  );
+  return 'error';
+}
+
+async function runQuickAvailabilityCheck() {
+  if (!availabilityCheckInput || !availabilityCheckButton) return;
+
+  const selectedDate = availabilityCheckInput.value;
+
+  if (!selectedDate) {
+    setQuickAvailabilityStatus('busy', 'Choisissez d’abord une date.');
+    availabilityCheckInput.focus();
+    return;
+  }
+
+  availabilityCheckButton.disabled = true;
+  const originalText = availabilityCheckButton.textContent;
+  availabilityCheckButton.textContent = 'Vérification…';
+  setQuickAvailabilityStatus('checking', 'Vérification en cours…');
+
+  const state = await requestDateAvailability(selectedDate);
+
+  if (state === 'available') {
+    setQuickAvailabilityStatus(
+      'available',
+      'Cette date est disponible. Remplissez le formulaire : votre date y a déjà été ajoutée.'
+    );
+
+    if (dateInput) {
+      dateInput.value = selectedDate;
+      dateInput.setCustomValidity('');
+      lastCheckedDate = selectedDate;
+      setDateAvailabilityStatus(
+        'available',
+        'Cette date est disponible. Vous pouvez envoyer votre demande.'
+      );
+    }
+
+    openAvailabilityModal(selectedDate);
+  } else if (state === 'busy') {
+    setQuickAvailabilityStatus(
+      'busy',
+      'Cette date est déjà réservée. Essayez une autre date.'
+    );
+  } else {
+    setQuickAvailabilityStatus(
+      'error',
+      'Vérification momentanément indisponible. Vous pouvez tout de même envoyer votre demande.'
+    );
+  }
+
+  availabilityCheckButton.disabled = false;
+  availabilityCheckButton.textContent = originalText;
+}
+
+if (availabilityCheckButton) {
+  availabilityCheckButton.addEventListener('click', runQuickAvailabilityCheck);
+}
+
+if (availabilityCheckInput) {
+  availabilityCheckInput.addEventListener('change', () => {
+    setQuickAvailabilityStatus('unknown', '');
+  });
+}
+
+if (dateInput) {
+  dateInput.addEventListener('change', () => {
+    checkDateAvailability(dateInput.value);
+  });
+}
+</script>
+
+  <script>
+const form = document.getElementById('reservation-form');
+const success = document.getElementById('form-success');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  /* Recontrôle la date au moment de l'envoi.
+     Une date confirmée occupée bloque uniquement l'envoi du formulaire. */
+  if (availabilityIsConfigured && dateInput && dateInput.value) {
+    let availabilityState = dateAvailabilityState;
+
+    if (
+      lastCheckedDate !== dateInput.value ||
+      !['available', 'busy', 'error'].includes(availabilityState)
+    ) {
+      availabilityState = await checkDateAvailability(dateInput.value);
+    }
+
+    if (availabilityState === 'busy') {
+      dateInput.reportValidity();
+      dateInput.focus();
+      return;
+    }
+  }
+
+  const button = form.querySelector('button[type="submit"]');
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = 'Envoi en cours...';
+
+  try {
+    const data = new FormData(form);
+
+    await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      mode: 'no-cors'
+    });
+
+form.style.display = 'none';
+success.style.display = 'block';
+
+requestAnimationFrame(() => {
+  success.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+});
+
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = originalText;
+    alert("Une erreur est survenue. Merci de réessayer.");
+  }
+});
+</script>
+  <script>
+['prenom', 'nom', 'lieu'].forEach(function(id) {
+  const field = document.getElementById(id);
+
+  if (field) {
+    field.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+  }
+});
+</script>
+  <script>
+if (new URLSearchParams(window.location.search).get('test') === '1') {
+  document.getElementById('prenom').value = 'TEST';
+  document.getElementById('nom').value = 'POPPY CLIC';
+  document.getElementById('email').value = 'nellylac@gmail.com';
+  document.getElementById('tel').value = '0661499712';
+  document.getElementById('type').value = 'Mariage';
+  document.getElementById('lieu').value = 'BEAULON';
+  document.getElementById('formule').value = 'Signature';
+  document.getElementById('message').value = 'Ceci est une demande de test Poppy Clic.';
+
+  const rgpd = document.querySelector('input[name="rgpd"]');
+  if (rgpd) rgpd.checked = true;
+}
+</script>
+
+<script>
+(() => {
+  const emptyState = document.getElementById('reviews-empty');
+  const carousel = document.getElementById('reviews-carousel');
+  const track = document.getElementById('reviews-track');
+  const prevButton = document.getElementById('reviews-prev');
+  const nextButton = document.getElementById('reviews-next');
+  const dotsWrap = document.getElementById('reviews-dots');
+  const average = document.getElementById('reviews-average');
+  const averageStars = document.getElementById('reviews-average-stars');
+  const averageValue = document.getElementById('reviews-average-value');
+  const averageCount = document.getElementById('reviews-average-count');
+
+  if (!emptyState || !carousel || !track) return;
+
+  const clampNote = note => Math.max(1, Math.min(5, Number(note) || 5));
+  const starString = note => {
+    const rounded = Math.round(clampNote(note));
+    return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
+  };
+
+  let reviews = [];
+  let index = 0;
+  let timer = null;
+
+  const cardsPerView = () => window.matchMedia('(max-width: 760px)').matches ? 1 : 2;
+  const maxIndex = () => Math.max(0, reviews.length - cardsPerView());
+
+  const buildCard = review => {
+    const article = document.createElement('article');
+    article.className = 'review_card';
+
+    const head = document.createElement('div');
+    head.className = 'review_card-head';
+
+    const stars = document.createElement('div');
+    stars.className = 'review_card-stars';
+    stars.setAttribute('aria-label', `${clampNote(review.note)} étoiles sur 5`);
+    stars.textContent = starString(review.note);
+
+    const quote = document.createElement('span');
+    quote.className = 'review_card-quote';
+    quote.setAttribute('aria-hidden', 'true');
+    quote.textContent = '“';
+
+    head.append(stars, quote);
+
+    const text = document.createElement('p');
+    text.className = 'review_card-text';
+    text.textContent = review.texte || '';
+
+    const footer = document.createElement('footer');
+    footer.className = 'review_card-footer';
+
+    const identity = document.createElement('div');
+    const name = document.createElement('strong');
+    const initiale = (review.initiale || '').trim();
+    name.textContent = [review.prenom || 'Client', initiale].filter(Boolean).join(' ');
+
+    const meta = document.createElement('span');
+    meta.textContent = [review.evenement, review.date].filter(Boolean).join(' · ');
+
+    identity.append(name, meta);
+
+    const badge = document.createElement('span');
+    badge.className = 'review_verified';
+    badge.textContent = 'Avis vérifié';
+
+    footer.append(identity, badge);
+    article.append(head, text, footer);
+
+    return article;
+  };
+
+  const createDots = () => {
+    dotsWrap.replaceChildren();
+    const count = maxIndex() + 1;
+
+    if (count <= 1) {
+      dotsWrap.hidden = true;
+      return;
+    }
+
+    dotsWrap.hidden = false;
+
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'reviews_dot';
+      dot.setAttribute('aria-label', `Afficher les avis à partir de la position ${i + 1}`);
+      dot.addEventListener('click', () => {
+        index = i;
+        update();
+        restartAutoplay();
+      });
+      dotsWrap.appendChild(dot);
+    }
+  };
+
+  const update = () => {
+    index = Math.min(index, maxIndex());
+
+    const perView = cardsPerView();
+    const percentage = 100 / perView;
+    const gap = 16;
+    track.style.transform = `translateX(calc(-${index * percentage}% - ${index * gap / perView}px))`;
+
+    prevButton.disabled = index <= 0;
+    nextButton.disabled = index >= maxIndex();
+
+    [...dotsWrap.children].forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+      dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+    });
+  };
+
+  const stopAutoplay = () => {
+    if (timer) clearInterval(timer);
+    timer = null;
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    if (reviews.length <= cardsPerView()) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    timer = setInterval(() => {
+      index = index >= maxIndex() ? 0 : index + 1;
+      update();
+    }, 6500);
+  };
+
+  const restartAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
+
+  prevButton.addEventListener('click', () => {
+    index = Math.max(0, index - 1);
+    update();
+    restartAutoplay();
+  });
+
+  nextButton.addEventListener('click', () => {
+    index = Math.min(maxIndex(), index + 1);
+    update();
+    restartAutoplay();
+  });
+
+  carousel.addEventListener('mouseenter', stopAutoplay);
+  carousel.addEventListener('mouseleave', startAutoplay);
+  carousel.addEventListener('focusin', stopAutoplay);
+  carousel.addEventListener('focusout', startAutoplay);
+
+  window.addEventListener('resize', () => {
+    createDots();
+    update();
+    restartAutoplay();
+  });
+
+  fetch('https://sosordi03.com/avis-poppy/public.php', { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error('service d’avis indisponible');
+      return response.json();
+    })
+    .then(data => {
+      reviews = Array.isArray(data)
+        ? data.filter(review =>
+            review &&
+            typeof review.texte === 'string' &&
+            review.texte.trim() &&
+            Number(review.note) >= 1 &&
+            Number(review.note) <= 5
+          )
+        : [];
+
+      if (!reviews.length) {
+        emptyState.hidden = false;
+        carousel.hidden = true;
+        average.hidden = true;
+        return;
+      }
+
+      track.replaceChildren(...reviews.map(buildCard));
+      emptyState.hidden = true;
+      carousel.hidden = false;
+
+      const moyenne = reviews.reduce((sum, review) => sum + clampNote(review.note), 0) / reviews.length;
+      averageStars.textContent = starString(moyenne);
+      averageValue.textContent = `${moyenne.toFixed(1).replace('.', ',')} / 5`;
+      averageCount.textContent = `${reviews.length} avis publié${reviews.length > 1 ? 's' : ''}`;
+      average.hidden = false;
+
+      createDots();
+      update();
+      startAutoplay();
+    })
+    .catch(() => {
+      emptyState.hidden = false;
+      carousel.hidden = true;
+      average.hidden = true;
+    });
+})();
 </script>
 
 </body>
